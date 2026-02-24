@@ -109,11 +109,9 @@ function injectBMCWidget() {
         text-decoration: none;
     `;
 
-    // BMC Cup SVG
+    // BMC Cup Logo
     bmc.innerHTML = `
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.688-.201l-5.942-.002c-.348.005-.67.101-.944.274-1.011.655-1.243 1.544-1.194 2.6.074 1.538.4 3.058.dish 4.574.198.797.4 1.592.617 2.381a4.21 4.21 0 001.752 2.47 5.1 5.1 0 002.904.807 5.094 5.094 0 002.9-.81 4.22 4.22 0 001.75-2.472c.057-.212.115-.422.168-.635a.997 0 00.623.234h.003a1 1 0 00.99-1.21zM4 6h2v12H4a2 2 0 01-2-2V8a2 2 0 012-2z" />
-        </svg>
+        <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="BMC" style="width: 32px; height: 32px;">
     `;
 
     bmc.onmouseenter = () => bmc.style.transform = 'scale(1.1)';
