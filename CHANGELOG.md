@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.3] — 2026-02-24
+
+### Fixed
+- Replaced malformed inline SVG in the floating Buy Me a Coffee widget with the official BMC image logo to resolve console parsing errors.
+
+---
+
+## [1.0.2] — 2026-02-24
+
+### Changed
+- Replaced the external BMC script widget with a native DOM HTML/CSS floating button. This completely bypasses NotebookLM's strict Content Security Policy (CSP) which was blocking the external script.
+
+---
+
+## [1.0.1] — 2026-02-24
+
+### Added
+- Added Buy Me a Coffee widget injection directly into the NotebookLM page via `content.js`.
+
+### Fixed
+- Fixed broken SVG path in the popup's Buy Me a Coffee button by replacing it with the official `<img>` logo.
+
+---
+
 ## [1.0.0] — 2026-02-24
 
 ### Added

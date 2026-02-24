@@ -7,7 +7,7 @@
 **A browser extension that brings 216 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)
@@ -228,6 +228,10 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.0.3] — 2026-02-24
+- 🐛 Fixed malformed inline SVG in the floating Buy Me a Coffee widget, replacing it with the official BMC image logo to resolve console parsing errors
+- ✨ Replaced the external BMC script widget with a native DOM injection to completely bypass NotebookLM's strict Content Security Policy (CSP)
 
 ### [v1.0.0] — 2026-02-24 · Initial Release
 
