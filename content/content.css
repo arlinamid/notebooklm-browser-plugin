@@ -1,0 +1,36 @@
+/* ===== Prompt Architect — Minimal CSS (only toast + focus) ===== */
+/* Almost everything uses NLM's native CSS classes */
+
+/* Toast notification — the only truly custom element */
+#pa-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1b5e20;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Google Sans', system-ui, sans-serif;
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+#pa-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Subtle focus ring on select when hovered */
+.pa-native-select:hover {
+    border-color: var(--mat-form-field-hover-outline-color, rgba(0, 0, 0, .87)) !important;
+}
+
+.pa-native-select:focus {
+    border-color: var(--mat-form-field-focus-outline-color, #1a73e8) !important;
+    border-width: 2px;
+}

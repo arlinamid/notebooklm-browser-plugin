@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Architect</title>
+  <link rel="stylesheet" href="popup.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="pa-header">
+    <div class="pa-header-top">
+      <div class="pa-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <span class="pa-title" id="appTitle">Prompt Architect</span>
+      </div>
+      <div class="pa-header-controls">
+        <div class="pa-lang-toggle">
+          <button class="pa-lang-btn active" data-lang="en">EN</button>
+          <button class="pa-lang-btn" data-lang="hu">HU</button>
+        </div>
+        <button class="pa-btn-icon pa-btn-about" id="btnAbout" title="About">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+        </button>
+        <button class="pa-btn-icon pa-btn-new" id="btnNewPrompt" title="New Prompt">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <p class="pa-subtitle" id="appSubtitle">Browse & apply prompts to NotebookLM Studio cards</p>
+  </header>
+
+  <!-- Format Tabs -->
+  <div class="pa-format-tabs" id="formatTabs">
+    <button class="pa-format-tab active" data-format="audio-overview">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+        <path
+          d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+      </svg>
+      <span>Audio</span>
+    </button>
+    <button class="pa-format-tab" data-format="video-overview">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="23 7 16 12 23 17 23 7" />
+        <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+      </svg>
+      <span>Video</span>
+    </button>
+    <button class="pa-format-tab" data-format="slide-deck">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+      <span>Slides</span>
+    </button>
+    <button class="pa-format-tab" data-format="infographic">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+        <line x1="9" y1="21" x2="9" y2="9" />
+      </svg>
+      <span>Infographic</span>
+    </button>
+    <button class="pa-format-tab" data-format="configure-chat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+      </svg>
+      <span>Configure</span>
+    </button>
+    <button class="pa-format-tab" data-format="flashcards">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="10" x2="22" y2="10" />
+      </svg>
+      <span>Cards</span>
+    </button>
+    <button class="pa-format-tab" data-format="quiz">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+      <span>Quiz</span>
+    </button>
+    <button class="pa-format-tab" data-format="report">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+      <span>Report</span>
+    </button>
+    <button class="pa-format-tab" data-format="data-table">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+        <line x1="3" y1="15" x2="21" y2="15" />
+        <line x1="9" y1="3" x2="9" y2="21" />
+        <line x1="15" y1="3" x2="15" y2="21" />
+      </svg>
+      <span>Table</span>
+    </button>
+    <button class="pa-format-tab" data-format="text-chat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+      <span>Chat</span>
+    </button>
+  </div>
+
+  <!-- Filters Bar -->
+  <div class="pa-filters">
+    <div class="pa-filter-row" id="categoryFilters"></div>
+    <div class="pa-search-row">
+      <div class="pa-search-wrap">
+        <svg class="pa-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input type="text" class="pa-search-input" id="searchInput" placeholder="Search prompts...">
+      </div>
+      <select class="pa-level-select" id="levelSelect">
+        <option value="all">All Levels</option>
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Cards Container -->
+  <div class="pa-cards" id="cardsContainer">
+    <!-- Cards rendered by JS -->
+  </div>
+
+  <!-- Empty State -->
+  <div class="pa-empty" id="emptyState" style="display:none;">
+    <p id="emptyMsg">No prompts found.</p>
+    <button class="pa-btn-link" id="btnClearFilters">Clear filters</button>
+  </div>
+
+  <!-- Editor Modal -->
+  <div class="pa-modal-overlay" id="editorOverlay" style="display:none;">
+    <div class="pa-modal">
+      <div class="pa-modal-header">
+        <h2 id="editorTitle">Create New Prompt</h2>
+        <button class="pa-modal-close" id="editorClose">&times;</button>
+      </div>
+      <div class="pa-modal-body">
+        <div class="pa-form-row">
+          <label id="edLabelTitle">Title</label>
+          <input type="text" id="edTitle" placeholder="Ex: Minimalist Pitch Deck">
+        </div>
+        <div class="pa-form-row-2col">
+          <div>
+            <label id="edLabelFormat">Format</label>
+            <select id="edFormat">
+              <option value="audio-overview">Audio</option>
+              <option value="video-overview">Video</option>
+              <option value="slide-deck">Slides</option>
+              <option value="infographic">Infographic</option>
+              <option value="configure-chat">Configure</option>
+              <option value="flashcards">Cards</option>
+              <option value="quiz">Quiz</option>
+              <option value="report">Report</option>
+              <option value="data-table">Table</option>
+              <option value="text-chat">Chat</option>
+            </select>
+          </div>
+          <div>
+            <label id="edLabelCategory">Category</label>
+            <select id="edCategory"></select>
+          </div>
+        </div>
+        <div class="pa-form-row-2col">
+          <div>
+            <label id="edLabelLevel">Level</label>
+            <select id="edLevel">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div>
+            <label id="edLabelSettings">Settings</label>
+            <input type="text" id="edSettings" placeholder="Source: Custom">
+          </div>
+        </div>
+        <div class="pa-form-row">
+          <label id="edLabelDesc">Description</label>
+          <input type="text" id="edDescription" placeholder="A short summary...">
+        </div>
+        <div class="pa-form-row">
+          <label id="edLabelPrompt">Prompt Instructions</label>
+          <textarea id="edPrompt" rows="10" placeholder="Write the full instructions for NotebookLM here..."></textarea>
+        </div>
+      </div>
+      <div class="pa-modal-footer">
+        <button class="pa-btn-secondary" id="edCancel">Cancel</button>
+        <button class="pa-btn-primary" id="edSave">Save Prompt</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../data/i18n.js"></script>
+  <script src="popup.js"></script>
+  <!-- About Overlay -->
+  <div class="pa-about-overlay" id="aboutOverlay">
+    <div class="pa-about-panel">
+      <button class="pa-about-close" id="btnAboutClose">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <img class="pa-about-avatar" src="https://avatars.githubusercontent.com/u/67795466?v=4" alt="János Rózsavölgyi">
+
+      <h2 class="pa-about-name">János Rózsavölgyi</h2>
+      <p class="pa-about-handle">@arlinamid &nbsp;·&nbsp; Hungary 🇭🇺</p>
+
+      <p class="pa-about-desc">
+        <strong>Prompt Architect</strong> — a browser extension that brings curated
+        prompt templates directly into NotebookLM's Studio panels and chat input.
+      </p>
+
+      <div class="pa-about-links">
+        <a class="pa-about-link pa-about-github" href="https://github.com/arlinamid" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          github.com/arlinamid
+        </a>
+        <a class="pa-about-link pa-about-coffee" href="https://buymeacoffee.com/arlinamid" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.688-.201l-5.942-.002c-.348.005-.67.101-.944.274-1.011.655-1.243 1.544-1.194 2.6.074 1.538.4 3.058.dish 4.574.198.797.4 1.592.617 2.381a4.21 4.21 0 001.752 2.47 5.1 5.1 0 002.904.807 5.094 5.094 0 002.9-.81 4.22 4.22 0 001.75-2.472c.057-.212.115-.422.168-.635a.997 0 00.623.234h.003a1 1 0 00.99-1.21zM4 6h2v12H4a2 2 0 01-2-2V8a2 2 0 012-2z" />
+          </svg>
+          Buy Me a Coffee ☕
+        </a>
+      </div>
+
+      <p class="pa-about-version">Version 1.0 &nbsp;·&nbsp; MIT License</p>
+    </div>
+  </div>
+
+</body>
+
+</html>
