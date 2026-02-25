@@ -7,18 +7,23 @@ let userPrompts = [];
 let language = 'en';
 let templatesLoaded = false;
 
-// Format → NLM modal textarea selector
-// Note: 'quiz' and 'flashcards' share the same textarea aria-label;
-// they are differentiated in scanForModals() by the dialog heading text.
-const FORMAT_TO_TEXTAREA = {
-    'configure-chat': 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"]',
-    'audio-overview': 'textarea[aria-label*="focus on in this episode"], textarea[aria-label*="What should the AI hosts"]',
-    'video-overview': 'textarea[id*="videoFocus"], textarea[aria-label*="focus"]',
-    'infographic': 'textarea[aria-label="Describe the infographic you want to create"]',
-    'slide-deck': 'textarea[aria-label="Describe the slide deck you want to create"]',
-    'report': 'textarea[aria-label*="describe the kind of report"]',
-    'data-table': 'textarea[aria-label="Describe the data table you want to create"]',
-    '_study-aid': 'textarea[aria-label="Text area for custom topic"]', // quiz + flashcards
+// We still need to find configure-chat directly as it's not a standard studio card
+const CONFIGURE_CHAT_SELECTOR = 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"], .configure-notebook-dialog textarea.mat-mdc-input-element';
+
+// Global tracker for the last opened studio format
+let lastOpenedFormat = null;
+
+// Map Material Icons to our internal format keys
+const ICON_TO_FORMAT = {
+    'audio_magic_eraser': 'audio-overview',
+    'subscriptions': 'video-overview',
+    'stacked_bar_chart': 'infographic',
+    'tablet': 'slide-deck',
+    'auto_tab_group': 'report',
+    'table_view': 'data-table',
+    'quiz': 'quiz',
+    'cards_star': 'flashcards',
+    'flowchart': 'mindmap'
 };
 
 const I18N = {
@@ -155,6 +160,28 @@ async function init() {
     await waitForElement('.query-box-input, .create-artifact-button-container', 15000);
     console.log('[PA] Page loaded, starting observers');
 
+    // Add global click listener to track which modal is being opened
+    document.addEventListener('click', (e) => {
+        // Find if they clicked an edit button or a card itself
+        const target = e.target.closest('.create-artifact-button-container, .edit-button, button[aria-label="Customize Report"]');
+        if (!target) return;
+
+        // Try to find the associated mat-icon
+        let iconEl = target.querySelector('mat-icon');
+        // If clicking an edit button specifically, the icon might be on the parent card
+        if (!iconEl && target.closest('.create-artifact-button-container')) {
+            iconEl = target.closest('.create-artifact-button-container').querySelector('mat-icon');
+        }
+
+        if (iconEl) {
+            const iconName = iconEl.textContent.trim();
+            if (ICON_TO_FORMAT[iconName]) {
+                lastOpenedFormat = ICON_TO_FORMAT[iconName];
+                console.log('[PA] User opened format:', lastOpenedFormat, 'via icon:', iconName);
+            }
+        }
+    }, true); // use capture phase to get it early
+
     // Inject into chat
     injectChatButton();
 
@@ -168,48 +195,67 @@ async function init() {
 }
 
 // ===== Scan for Modal Textareas =====
-// Instead of finding the modal container first, we directly look for known textareas
-// that appear when a customize dialog is open
+// We directly look for textareas that appear when a dialog is open
 function scanForModals() {
     if (!templatesLoaded) return;
 
-    for (const [formatKey, selector] of Object.entries(FORMAT_TO_TEXTAREA)) {
-        const textareas = document.querySelectorAll(selector);
-        textareas.forEach(textarea => {
-            // Skip if already injected (check parent)
-            if (textarea.parentElement?.querySelector('.pa-injected')) return;
-            // Also check grandparent (mat-form-field wraps textarea)
-            const formField = textarea.closest('mat-form-field, .mat-mdc-form-field');
-            const insertionParent = formField?.parentElement || textarea.parentElement;
-            if (!insertionParent) return;
-            if (insertionParent.querySelector('.pa-injected')) return;
+    // We look for general modal textareas or the specific configure chat one
+    const textareas = document.querySelectorAll(`mat-dialog-container textarea.mat-mdc-input-element, configurable-form-dialog textarea, mat-dialog-container .textarea-container textarea, ${CONFIGURE_CHAT_SELECTOR}`);
 
-            // Skip textareas in the main chat (not in a dialog/panel)
-            const isInOverlay = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-overlay-pane, .cdk-dialog-container, .mat-mdc-dialog-surface, [class*="configure"], [class*="settings"]');
-            const isConfigureChat = formatKey === 'configure-chat';
-            if (!isInOverlay && !isConfigureChat) return;
-            if (isConfigureChat && textarea.classList.contains('query-box-input')) return;
+    textareas.forEach(textarea => {
+        // Skip if already injected (check parent)
+        if (textarea.parentElement?.querySelector('.pa-injected')) return;
+        // Also check grandparent (mat-form-field wraps textarea)
+        const formField = textarea.closest('mat-form-field, .mat-mdc-form-field');
+        const insertionParent = formField?.parentElement || textarea.parentElement;
+        if (!insertionParent) return;
+        if (insertionParent.querySelector('.pa-injected')) return;
 
-            // Resolve '_study-aid' → 'quiz' or 'flashcards' by dialog heading
-            let format = formatKey;
-            if (formatKey === '_study-aid') {
-                const dialog = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-dialog-container, .mat-mdc-dialog-surface, .cdk-overlay-pane');
-                const headingText = (dialog?.querySelector('h1, h2, h3, [mat-dialog-title], .dialog-title')?.textContent || '').toLowerCase();
-                if (headingText.includes('quiz')) format = 'quiz';
-                else if (headingText.includes('flash') || headingText.includes('card')) format = 'flashcards';
-                else return; // cannot determine — skip
+        // Skip textareas in the main chat
+        const isInOverlay = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-overlay-pane, .cdk-dialog-container, .mat-mdc-dialog-surface, [class*="configure"], [class*="settings"]');
+        const isConfigureChat = textarea.matches(CONFIGURE_CHAT_SELECTOR);
+        if (!isInOverlay && !isConfigureChat) return;
+        if (isConfigureChat && textarea.classList.contains('query-box-input')) return;
+
+        let format = null;
+
+        if (isConfigureChat) {
+            format = 'configure-chat';
+        } else {
+            // Try to figure out format from a header icon first
+            const dialog = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-dialog-container, .mat-mdc-dialog-surface, .cdk-overlay-pane');
+            const headerIcon = dialog?.querySelector('mat-icon.dialog-icon, .mat-mdc-dialog-title mat-icon');
+
+            if (headerIcon && ICON_TO_FORMAT[headerIcon.textContent.trim()]) {
+                format = ICON_TO_FORMAT[headerIcon.textContent.trim()];
+            } else if (lastOpenedFormat) {
+                // Fallback to the globally tracked last format clicked
+                format = lastOpenedFormat;
+            } else {
+                // Desperate fallback for older UI checking aria-label
+                const label = (textarea.getAttribute('aria-label') || '').toLowerCase();
+                if (label.includes('audio')) format = 'audio-overview';
+                else if (label.includes('video')) format = 'video-overview';
+                else if (label.includes('infographic')) format = 'infographic';
+                else if (label.includes('slide')) format = 'slide-deck';
+                else if (label.includes('report')) format = 'report';
+                else if (label.includes('data table')) format = 'data-table';
+                else if (label.includes('quiz')) format = 'quiz';
+                else if (label.includes('flash') || label.includes('card')) format = 'flashcards';
             }
+        }
 
-            const templates = getTemplatesForFormat(format);
-            if (templates.length === 0) return;
+        if (!format) return;
 
-            console.log('[PA] Injecting into modal for format:', format, 'templates:', templates.length);
+        const templates = getTemplatesForFormat(format);
+        if (templates.length === 0) return;
 
-            const section = createTemplateSection(templates, textarea, format);
-            const insertBefore = formField || textarea;
-            insertBefore.parentElement.insertBefore(section, insertBefore);
-        });
-    }
+        console.log('[PA] Injecting into modal for format:', format, 'templates:', templates.length);
+
+        const section = createTemplateSection(templates, textarea, format);
+        const insertBefore = formField || textarea;
+        insertBefore.parentElement.insertBefore(section, insertBefore);
+    });
 }
 
 // ===== Create Template Section (using NLM classes) =====
@@ -336,7 +382,8 @@ function createTemplateSection(templates, textarea, format) {
 function injectChatButton() {
     if (!templatesLoaded) return;
 
-    const chatTextarea = document.querySelector('textarea.query-box-input, textarea[aria-label="Query box"]');
+    // Language-agnostic class-based selector instead of aria-label
+    const chatTextarea = document.querySelector('textarea.query-box-input');
     if (!chatTextarea) return;
 
     // DOM: ... → parent → div.query-box → div.input-group → form → div.message-container → textarea

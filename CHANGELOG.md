@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.4] — 2026-02-25
+
+### Changed
+- Refactored DOM selectors to be language-agnostic using Material Design icon mapping and class-based targeting. This ensures the extension works correctly across all NotebookLM UI localizations (EN, HU, etc.).
+- Implemented a global click tracker to identify Studio card formats based on icon text before modals open.
+
+---
+
 ## [1.0.3] — 2026-02-24
 
 ### Fixed
