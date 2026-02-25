@@ -8,7 +8,7 @@ let language = 'en';
 let templatesLoaded = false;
 
 // We still need to find configure-chat directly as it's not a standard studio card
-const CONFIGURE_CHAT_SELECTOR = 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"], .configure-notebook-dialog textarea.mat-mdc-input-element';
+const CONFIGURE_CHAT_SELECTOR = 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"], .configure-notebook-dialog textarea.mat-mdc-input-element, textarea.custom-input-textarea, .prompt-section-custom-input textarea';
 
 // Global tracker for the last opened studio format
 let lastOpenedFormat = null;

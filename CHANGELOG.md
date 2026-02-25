@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.6] — 2026-02-25
+
+### Fixed
+- Fixed missing prompt templates in the "Configure chat" (Csevegés konfigurálása) modal by adding support for specialized Material Design textarea classes (`.custom-input-textarea`).
+
+---
+
 ## [1.0.5] — 2026-02-25
 
 ### Fixed
