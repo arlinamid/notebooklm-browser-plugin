@@ -7,7 +7,7 @@
 **A browser extension that brings 216 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)
@@ -64,7 +64,7 @@
 
 ## 🚀 Installation
 
-> **No Chrome Web Store listing yet.** Install manually in Developer Mode — takes under 2 minutes.
+> **Official Listing:** [Available on the Chrome Web Store](https://chromewebstore.google.com/detail/prompt-architect-for-note/hbojldopcfiblmknflcfedcdapmnmapm?hl=en&authuser=0)
 
 ### Step 1 — Download
 
@@ -228,6 +228,11 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.1.0] — 2026-02-25
+- ✨ **Cross-Device Sync:** Saved prompts and language settings are now synchronized across all devices via Chrome sync storage.
+- 🔄 **Data Migration:** Automatic migration of locally saved prompts to the cloud on first run.
+- 🛠️ **Refactored Selectors:** Language-agnostic selectors for all Studio cards (Audio, Video, Slides, Quiz, etc.) and chat customization.
 
 ### [v1.0.3] — 2026-02-24
 - 🐛 Fixed malformed inline SVG in the floating Buy Me a Coffee widget, replacing it with the official BMC image logo to resolve console parsing errors
