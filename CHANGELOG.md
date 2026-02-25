@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.5] — 2026-02-25
+
+### Fixed
+- Added support for "Reports" customization modals by improving the click tracker to handle gallery-to-modal transitions.
+- Added missing `tune` (Configure notebook) icon mapping for chat customization sidebar.
+- Added Hungarian terms to the language-agnostic logic fallback (e.g., "jelentés", "hang", "dia").
+
+---
+
 ## [1.0.4] — 2026-02-25
 
 ### Changed

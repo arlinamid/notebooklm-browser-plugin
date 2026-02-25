@@ -20,10 +20,13 @@ const ICON_TO_FORMAT = {
     'stacked_bar_chart': 'infographic',
     'tablet': 'slide-deck',
     'auto_tab_group': 'report',
+    'summarize': 'report',
+    'description': 'report',
     'table_view': 'data-table',
     'quiz': 'quiz',
     'cards_star': 'flashcards',
-    'flowchart': 'mindmap'
+    'flowchart': 'mindmap',
+    'tune': 'configure-chat'
 };
 
 const I18N = {
@@ -162,15 +165,22 @@ async function init() {
 
     // Add global click listener to track which modal is being opened
     document.addEventListener('click', (e) => {
-        // Find if they clicked an edit button or a card itself
-        const target = e.target.closest('.create-artifact-button-container, .edit-button, button[aria-label="Customize Report"]');
+        // Find if they clicked an edit button, a card, or specifically a report customize button
+        const target = e.target.closest('.create-artifact-button-container, .edit-button, button[aria-label*="Customize"], button[aria-label*="testreszabása"]');
         if (!target) return;
 
         // Try to find the associated mat-icon
         let iconEl = target.querySelector('mat-icon');
+
         // If clicking an edit button specifically, the icon might be on the parent card
         if (!iconEl && target.closest('.create-artifact-button-container')) {
             iconEl = target.closest('.create-artifact-button-container').querySelector('mat-icon');
+        }
+
+        // If we are in the Reports gallery, the icon in the card header identifies the whole category
+        const reportCard = target.closest('.artifact-button-content, mat-card');
+        if (!iconEl && reportCard) {
+            iconEl = reportCard.querySelector('mat-icon');
         }
 
         if (iconEl) {
@@ -232,16 +242,19 @@ function scanForModals() {
                 // Fallback to the globally tracked last format clicked
                 format = lastOpenedFormat;
             } else {
-                // Desperate fallback for older UI checking aria-label
+                // Desperate fallback for older UI or specific localized labels
                 const label = (textarea.getAttribute('aria-label') || '').toLowerCase();
-                if (label.includes('audio')) format = 'audio-overview';
-                else if (label.includes('video')) format = 'video-overview';
-                else if (label.includes('infographic')) format = 'infographic';
-                else if (label.includes('slide')) format = 'slide-deck';
-                else if (label.includes('report')) format = 'report';
-                else if (label.includes('data table')) format = 'data-table';
-                else if (label.includes('quiz')) format = 'quiz';
-                else if (label.includes('flash') || label.includes('card')) format = 'flashcards';
+                const placeholder = (textarea.getAttribute('placeholder') || '').toLowerCase();
+                const combined = label + ' ' + placeholder;
+
+                if (combined.includes('audio') || combined.includes('hang')) format = 'audio-overview';
+                else if (combined.includes('video') || combined.includes('videó')) format = 'video-overview';
+                else if (combined.includes('infographic') || combined.includes('infografika')) format = 'infographic';
+                else if (combined.includes('slide') || combined.includes('dia') || combined.includes('prezentáció')) format = 'slide-deck';
+                else if (combined.includes('report') || combined.includes('jelentés')) format = 'report';
+                else if (combined.includes('data table') || combined.includes('adattábla')) format = 'data-table';
+                else if (combined.includes('quiz') || combined.includes('kvíz')) format = 'quiz';
+                else if (combined.includes('flash') || combined.includes('card') || combined.includes('tanulókártya')) format = 'flashcards';
             }
         }
 
