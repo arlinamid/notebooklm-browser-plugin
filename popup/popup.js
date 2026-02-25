@@ -17,13 +17,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     const resp = await fetch(chrome.runtime.getURL('data/templates.json'));
     allTemplates = await resp.json();
 
-    // Load user prompts
-    const stored = await chrome.storage.local.get('userPrompts');
-    userPrompts = stored.userPrompts || [];
+    // Load data from sync with migration from local
+    let stored = await chrome.storage.sync.get(['userPrompts', 'language', 'migrationDone']);
 
-    // Load language
-    const langStored = await chrome.storage.local.get('language');
-    language = langStored.language || 'en';
+    if (!stored.migrationDone) {
+        const localData = await chrome.storage.local.get(['userPrompts', 'language']);
+        if (localData.userPrompts && localData.userPrompts.length > 0) {
+            console.log('[PA] Migrating prompts from local to sync (Popup)...');
+            userPrompts = localData.userPrompts;
+            language = localData.language || 'en';
+            await chrome.storage.sync.set({
+                userPrompts,
+                language,
+                migrationDone: true
+            });
+            await chrome.storage.local.remove('userPrompts');
+        } else {
+            await chrome.storage.sync.set({ migrationDone: true });
+            userPrompts = [];
+            language = stored.language || 'en';
+        }
+    } else {
+        userPrompts = stored.userPrompts || [];
+        language = stored.language || 'en';
+    }
 
     initUI();
     render();
@@ -42,7 +59,7 @@ function initUI() {
         btn.classList.toggle('active', btn.dataset.lang === language);
         btn.addEventListener('click', () => {
             language = btn.dataset.lang;
-            chrome.storage.local.set({ language });
+            chrome.storage.sync.set({ language });
             document.querySelectorAll('.pa-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === language));
             initUI();
             render();
@@ -301,7 +318,7 @@ function copyPrompt(prompt, btn, t) {
 
 function deletePrompt(id) {
     userPrompts = userPrompts.filter(p => p.id !== id);
-    chrome.storage.local.set({ userPrompts });
+    chrome.storage.sync.set({ userPrompts });
     render();
 }
 
@@ -351,7 +368,7 @@ function savePrompt() {
         userPrompts.unshift(newPrompt);
     }
 
-    chrome.storage.local.set({ userPrompts });
+    chrome.storage.sync.set({ userPrompts });
     closeEditor();
     render();
 }

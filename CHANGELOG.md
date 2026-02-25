@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] — 2026-02-25
+
+### Added
+- **Cross-Device Sync:** Saved prompts and language settings are now automatically synchronized across all devices where you are signed into Chrome.
+- **Data Migration:** Existing locally saved prompts are automatically migrated to the cloud on first run.
+
+---
+
 ## [1.0.6] — 2026-02-25
 
 ### Fixed

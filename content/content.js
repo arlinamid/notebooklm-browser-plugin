@@ -146,12 +146,37 @@ async function init() {
         return;
     }
 
-    // Load user settings
+    // Load user settings with migration from local to sync
     try {
-        const stored = await chrome.storage.local.get(['userPrompts', 'language']);
-        userPrompts = stored.userPrompts || [];
-        language = stored.language || 'en';
-    } catch (e) { /* ignore */ }
+        // 1. Try to load from sync
+        let stored = await chrome.storage.sync.get(['userPrompts', 'language', 'migrationDone']);
+
+        // 2. If not migrated yet, check local
+        if (!stored.migrationDone) {
+            const localData = await chrome.storage.local.get(['userPrompts', 'language']);
+            if (localData.userPrompts && localData.userPrompts.length > 0) {
+                console.log('[PA] Migrating prompts from local to sync...');
+                userPrompts = localData.userPrompts;
+                language = localData.language || 'en';
+                // Save to sync immediately
+                await chrome.storage.sync.set({
+                    userPrompts,
+                    language,
+                    migrationDone: true
+                });
+                // Optional: clear local prompts to avoid confusion, but keep language as fallback
+                await chrome.storage.local.remove('userPrompts');
+            } else {
+                // No local data, just mark as migrated to avoid future checks
+                await chrome.storage.sync.set({ migrationDone: true });
+            }
+        } else {
+            userPrompts = stored.userPrompts || [];
+            language = stored.language || 'en';
+        }
+    } catch (e) {
+        console.error('[PA] Storage init error:', e);
+    }
 
     // Inject plugin stylesheet once
     injectGlobalStyles();
@@ -532,7 +557,7 @@ async function saveCurrentInput(textarea, format) {
     };
 
     userPrompts.unshift(newPrompt);
-    await chrome.storage.local.set({ userPrompts });
+    await chrome.storage.sync.set({ userPrompts });
 
     flashToast(t.saved);
 
@@ -736,7 +761,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 // Whenever the popup deletes/edits a prompt or switches language, we
 // update in-memory state and re-render all injected UI elements.
 chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'local') return;
+    if (area !== 'sync') return;
 
     let needsRefresh = false;
 
