@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] — 2026-02-28
+
+### Added
+- **6 new Infographic visual style templates** (EN + HU) for artistic and editorial use cases:
+  - *Expressive Cubist Abstract* — geometric fragmentation, mixed-media canvas, vibrant magenta/cyan/violet palette
+  - *Geometric Mosaic* — stained-glass polygonal composition, deep blue + warm orange, handcrafted painterly finish
+  - *Mixed-Media Expressionist* — bold brushwork, collage textures, musical notation fragments, warm orange palette
+  - *Hybrid Conceptual Collage* — double exposure, urban architectural montage, blueprint overlays, editorial poster aesthetic
+  - *Dark Neo-Noir* — chiaroscuro lighting, oil-paint expressionism, red/black palette, crime poster aesthetic
+  - *Brutalist Editorial* — Swiss typography, xerox grunge textures, strict black/white/red palette
+- **HU: Manga Comic infographic template** — 4 variants (classic B&W, shōnen action, editorial scientific, chibi/educational)
+
+### Changed
+- **Expanded slide-deck and visual-style prompts** (8 styles, EN + HU): replaced single-line style descriptions with detailed YAML design specifications covering Global Settings, Color Palette, Typography, Composition rules, Layout Variations, and Design Rules. Affected styles: `black-orange-creative`, `deformed-flat-persona`, `manga-style`, `mincho-handwritten-mix`, `pink-street-style`, `royal-blue-red-watercolor`, `seminar-minimal-text`, `yellow-black-editorial`
+- Template count: 217 → 229
+
+---
+
 ## [1.1.0] — 2026-02-25
 
 ### Added
