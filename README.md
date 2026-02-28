@@ -4,10 +4,10 @@
 
 # Prompt Architect for NotebookLM
 
-**A browser extension that brings 216 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
+**A browser extension that brings 229 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)
@@ -26,7 +26,7 @@
   <tr>
     <td align="center" width="50%">
       <img src="docs/screenshots/popup-templates.png" alt="Popup with templates" width="100%">
-      <em>Browse & filter 216 prompt templates in the popup</em>
+      <em>Browse & filter 229 prompt templates in the popup</em>
     </td>
     <td align="center" width="50%">
       <img src="docs/screenshots/injected-dropdown.png" alt="Injected dropdown in NLM" width="100%">
@@ -53,7 +53,7 @@
 |---|---|---|
 | 🎯 | **Studio Integration** | Injects template dropdowns into Audio, Video, Slides, Infographic, Configure Chat, Flashcards, Quiz, Report, and Data Table panels |
 | 💬 | **Chat Templates** | Adds a compact template selector above the NotebookLM chat input |
-| 📚 | **216 Templates** | 108 English + 108 Hungarian prompts across 10+ categories |
+| 📚 | **229 Templates** | 114 English + 115 Hungarian prompts across 10+ categories |
 | 🌍 | **Bilingual UI** | Full EN / HU interface with one-click language switching |
 | 🌙 | **Auto Dark/Light Mode** | Completely adapts to OS theme — no manual toggle needed |
 | ✏️ | **Custom Prompts** | Create, edit, and delete your own prompt templates |
@@ -228,6 +228,12 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.2.0] — 2026-02-28
+- 🎨 **6 new Infographic visual style templates** (EN + HU): Expressive Cubist Abstract, Geometric Mosaic, Mixed-Media Expressionist, Hybrid Conceptual Collage, Dark Neo-Noir, Brutalist Editorial
+- 📖 **HU: Manga Comic infographic** — 4 variants (classic B&W, shōnen action, editorial, chibi)
+- ✨ **Expanded slide-deck & visual-style prompts** (8 styles, EN + HU): single-line descriptions replaced with detailed YAML design specs (color palettes, typography, layout variations, design rules)
+- 📊 Template count: 217 → 229
 
 ### [v1.1.0] — 2026-02-25
 - ✨ **Cross-Device Sync:** Saved prompts and language settings are now synchronized across all devices via Chrome sync storage.
