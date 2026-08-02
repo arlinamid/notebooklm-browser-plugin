@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   When there is no valid target — a shared or featured notebook, which has no Studio panel — the
   prompt is copied to the clipboard and the popup says why, instead of silently landing in chat.
+- ℹ️ **The About panel had said "Version 1.0" since the first release.** It was hardcoded in
+  `popup.html` and never updated, so every user saw the wrong version regardless of what they had
+  installed. It now reads `chrome.runtime.getManifest().version`, which cannot drift.
 - 🔤 **The card preview showed boilerplate instead of the prompt.** Since v1.3.0 every template
   opens with a grounding block, and templates with fill-in slots also carry a bracket-handling
   rule, so the popup preview was showing identical scaffolding on every card. The preview now

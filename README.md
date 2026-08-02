@@ -251,6 +251,11 @@ notebooklm-browser-plugin/
 
 ## 📦 Releases
 
+### [v1.3.1] — 2026-08-02
+- 🎯 **Apply from the popup went to the chat box regardless of format** — an Audio Overview brief or a Configure Chat persona all landed in chat. Apply now opens the panel that matches the prompt and writes into its field.
+- 🔤 Card previews show the prompt again instead of the grounding boilerplate
+- ℹ️ The About panel showed "Version 1.0" since the first release — it now reads the real version from the manifest
+
 ### [v1.3.0] — 2026-08-02
 - 🚨 **Fixes the "Gemini Notebook" migration** — NotebookLM moved to `notebook.google.com`, which left the extension completely inactive. Both domains are now supported.
 - 🛠️ **Rewritten Studio detection** for the rebuilt dialogs: `configurable-form-dialog`, `report-customization-dialog`, and `configure-notebook-settings`
