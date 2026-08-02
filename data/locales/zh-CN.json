@@ -65,7 +65,12 @@
       "noTarget": "找不到可放置的位置。已改为复制。",
       "settings": "设置",
       "edit": "编辑",
-      "delete": "删除"
+      "delete": "删除",
+      "saveFailed": "无法保存提示词。",
+      "hide": "隐藏此模板",
+      "restore": "再次显示此模板",
+      "hidden": "已隐藏",
+      "syncFull": "已保存到此设备。同步存储已满，无法同步到其他电脑。"
     }
   },
   "templates": {

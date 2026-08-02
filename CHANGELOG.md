@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.2] — 2026-08-02
+
+### Fixed
+- 🈳 **Five UI strings were missing from all ten translated locales.** v1.4.1 added `hide`,
+  `restore`, `hidden`, `saveFailed` and `syncFull` to the English and Hungarian tables, but the
+  locale files had been generated before that — so a German or Japanese user would have seen the
+  chip render as literally "undefined (1)".
+- **The underlying cause is fixed too, not just the data.** `strings()` returned the locale's table
+  wholesale, so any key added after a locale was generated became `undefined`. It now deep-merges the
+  locale over English, which means a missing translation degrades to English instead of breaking the
+  UI. The same fix is applied to the strings injected into NotebookLM.
+
+### Added
+- `scripts/translate-missing-ui.js` — sends only the keys a locale is actually missing, so topping up
+  after adding a string is one fast call per language rather than a full re-translation.
+
 ## [1.4.1] — 2026-08-02
 
 Addresses feedback from Chrome Web Store reviews.

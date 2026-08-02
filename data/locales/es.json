@@ -65,7 +65,12 @@
       "noTarget": "No se ha encontrado dónde poner esto. Se ha copiado en su lugar.",
       "settings": "Ajustes",
       "edit": "Editar",
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "saveFailed": "No se pudo guardar el prompt.",
+      "hide": "Ocultar esta plantilla",
+      "restore": "Mostrar de nuevo esta plantilla",
+      "hidden": "Oculta",
+      "syncFull": "Guardado en este dispositivo. El almacenamiento de sincronización está lleno, así que no llegará a tus otros ordenadores."
     }
   },
   "templates": {

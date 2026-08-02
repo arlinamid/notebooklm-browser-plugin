@@ -100,8 +100,25 @@ const I18N = {
  * back to English rather than throwing — reading I18N['de'].chatLabel used to
  * kill the whole injection with "Cannot read properties of undefined".
  */
+/**
+ * Deep-merges translated strings over the English set, so a key added after a
+ * locale was generated falls back instead of rendering as "undefined". Returning
+ * locale.ui wholesale is what left five new keys blank in all ten languages.
+ */
+function paMergeStrings(base, override) {
+    if (!override) return base;
+    const out = { ...base };
+    for (const [k, v] of Object.entries(override)) {
+        out[k] = (v && typeof v === 'object' && !Array.isArray(v))
+            ? paMergeStrings(base[k] || {}, v)
+            : v;
+    }
+    return out;
+}
+
 function uiStrings() {
-    return (locale && locale.content) || I18N[language] || I18N.en;
+    const base = I18N[language] || I18N.en;
+    return paMergeStrings(paMergeStrings(I18N.en, base), locale && locale.content);
 }
 
 // ===== Placeholder slots =====

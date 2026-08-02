@@ -65,7 +65,12 @@
       "noTarget": "Não foi possível encontrar onde colocar isto. Copiado em vez disso.",
       "settings": "Configurações",
       "edit": "Editar",
-      "delete": "Excluir"
+      "delete": "Excluir",
+      "saveFailed": "Não foi possível salvar o prompt.",
+      "hide": "Ocultar este modelo",
+      "restore": "Mostrar este modelo de novo",
+      "hidden": "Oculto",
+      "syncFull": "Salvo neste dispositivo. O armazenamento de sincronização está cheio, então não aparecerá nos seus outros computadores."
     }
   },
   "templates": {

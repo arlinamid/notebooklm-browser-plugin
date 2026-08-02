@@ -57,9 +57,26 @@ function composeBody(entry, lang) {
     return parts.join('\n\n');
 }
 
-/** UI strings: locale file → bundled i18n.js → English. */
+/**
+ * Deep-merges translated strings over the English set, so a key added after a
+ * locale was generated falls back instead of rendering as "undefined". Returning
+ * locale.ui wholesale is what left five new keys blank in all ten languages.
+ */
+function paMergeStrings(base, override) {
+    if (!override) return base;
+    const out = { ...base };
+    for (const [k, v] of Object.entries(override)) {
+        out[k] = (v && typeof v === 'object' && !Array.isArray(v))
+            ? paMergeStrings(base[k] || {}, v)
+            : v;
+    }
+    return out;
+}
+
+/** UI strings: locale file over bundled i18n.js over English. */
 function strings() {
-    return (locale && locale.ui) || I18N[language] || I18N.en;
+    const base = I18N[language] || I18N.en;
+    return paMergeStrings(paMergeStrings(I18N.en, base), locale && locale.ui);
 }
 
 /** Title/description for a template, translated when the locale provides it. */

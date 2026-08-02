@@ -64,6 +64,11 @@
       "openedStudio": "Opened Studio panel",
       "noStudio": "Open one of your own notebooks first — Studio panels only exist there. Copied instead.",
       "noTarget": "Couldn't find a place to put this. Copied instead.",
+      "saveFailed": "Could not save the prompt.",
+      "hide": "Hide this template",
+      "restore": "Show this template again",
+      "hidden": "Hidden",
+      "syncFull": "Saved on this device. Sync storage is full, so it won't reach your other computers.",
       "settings": "Settings",
       "edit": "Edit",
       "delete": "Delete"

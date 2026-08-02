@@ -65,7 +65,12 @@
       "noTarget": "Impossible de trouver où le placer. Copié à la place.",
       "settings": "Paramètres",
       "edit": "Modifier",
-      "delete": "Supprimer"
+      "delete": "Supprimer",
+      "saveFailed": "Impossible d’enregistrer le prompt.",
+      "hide": "Masquer ce modèle",
+      "restore": "Afficher à nouveau ce modèle",
+      "hidden": "Masqué",
+      "syncFull": "Enregistré sur cet appareil. Le stockage de synchronisation est plein ; il n’apparaîtra pas sur vos autres ordinateurs."
     }
   },
   "templates": {

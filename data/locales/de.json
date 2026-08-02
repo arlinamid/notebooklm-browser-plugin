@@ -65,7 +65,12 @@
       "noTarget": "Kein passender Ort dafür gefunden. Stattdessen kopiert.",
       "settings": "Einstellungen",
       "edit": "Bearbeiten",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "saveFailed": "Prompt konnte nicht gespeichert werden.",
+      "hide": "Diese Vorlage ausblenden",
+      "restore": "Diese Vorlage wieder anzeigen",
+      "hidden": "Ausgeblendet",
+      "syncFull": "Auf diesem Gerät gespeichert. Sync-Speicher ist voll, daher wird es nicht mit deinen anderen Computern synchronisiert."
     }
   },
   "templates": {

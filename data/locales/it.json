@@ -65,7 +65,12 @@
       "noTarget": "Non ho trovato dove inserirlo. Copiato invece.",
       "settings": "Impostazioni",
       "edit": "Modifica",
-      "delete": "Elimina"
+      "delete": "Elimina",
+      "saveFailed": "Impossibile salvare il prompt.",
+      "hide": "Nascondi questo modello",
+      "restore": "Mostra di nuovo questo modello",
+      "hidden": "Nascosto",
+      "syncFull": "Salvato su questo dispositivo. Lo spazio di sincronizzazione è pieno, quindi non sarà disponibile sugli altri computer."
     }
   },
   "templates": {
