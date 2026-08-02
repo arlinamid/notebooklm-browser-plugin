@@ -24,7 +24,9 @@ const TOKEN = /\[[A-Za-zÁÉÍÓÖŐÚÜŰ][^\]\n]{1,40}\]/g;
 // in the hand-written boilerplate.)
 const SCRIPTS = {
   hangul: /[가-힯]/g,
-  kana: /[぀-ヿ]/g,
+  // U+30FB (・) is shared CJK punctuation, present 30x in the English source
+  // itself — matching it would flag every locale that faithfully preserved it.
+  kana: /[぀-ヺヽ-ヿ]/g,
   cyrillic: /[Ѐ-ӿ]/g,
   devanagari: /[ऀ-ॿ]/g,
   han: /[一-鿿]/g
@@ -117,6 +119,10 @@ for (const file of files) {
   const withBody = Object.keys(locT).filter(id => locT[id] && locT[id].body);
   if (withBody.length) {
     let bodyErrs = 0;
+    const ratios = withBody
+      .map(id => locT[id].body.length / Math.max(1, (srcTmpl[id] || {}).body?.length || 1))
+      .sort((a, b) => a - b);
+    const median = ratios[Math.floor(ratios.length / 2)] || 1;
     for (const id of Object.keys(srcTmpl)) {
       const srcBody = srcTmpl[id].body || '';
       const locBody = (locT[id] || {}).body;
@@ -136,10 +142,12 @@ for (const file of files) {
       // A translation that is byte-identical almost certainly did not happen
       if (srcBody.length > 200 && srcBody === locBody) note('body identical to English');
 
-      // Wildly different length usually means truncation or a runaway generation
+      // Length is judged against this language's own median, not an absolute
+      // band: Chinese renders at ~44% of English character count and German at
+      // ~113%, so one fixed threshold flags a whole language as truncated.
       const ratio = locBody.length / Math.max(1, srcBody.length);
-      if (ratio < 0.45) note(`body only ${(ratio * 100).toFixed(0)}% of English length — likely truncated`);
-      if (ratio > 2.5) note(`body ${(ratio * 100).toFixed(0)}% of English length — likely runaway`);
+      if (ratio < median * 0.55) note(`body ${(ratio * 100).toFixed(0)}% of English length vs ${(median * 100).toFixed(0)}% typical for ${code} — likely truncated`);
+      if (ratio > median * 1.9) note(`body ${(ratio * 100).toFixed(0)}% of English length vs ${(median * 100).toFixed(0)}% typical for ${code} — likely runaway`);
 
       // Every user-fillable slot must be mapped and actually present in the body
       const slots = srcTmpl[id].slots || [];
