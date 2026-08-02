@@ -116,6 +116,11 @@ function initUI() {
     // New prompt button
     document.getElementById('btnNewPrompt').onclick = () => openEditor(null);
 
+    // About panel version — read from the manifest so it can never drift again.
+    // It had been hardcoded as "Version 1.0" since the first release.
+    const versionEl = document.getElementById('aboutVersion');
+    if (versionEl) versionEl.textContent = 'Version ' + chrome.runtime.getManifest().version;
+
     // About button
     const aboutOverlay = document.getElementById('aboutOverlay');
     document.getElementById('btnAbout').onclick = () => aboutOverlay.classList.add('open');
