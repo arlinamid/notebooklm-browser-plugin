@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.3] — 2026-08-02
+
+### Fixed
+- 🌐 **Switching language on the NotebookLM page reverted to English for every language except
+  Hungarian.** The content script's storage listener called `loadLocale()` without awaiting it.
+  That function clears `locale` before fetching, so the injected UI was rebuilt while the locale was
+  still empty — English — and nothing redrew once the fetch landed.
+
+  English and Hungarian masked it completely: they return early with no fetch and read from the
+  bundled string table, so they always switched correctly. Every other language failed.
+
 ## [1.4.2] — 2026-08-02
 
 ### Fixed

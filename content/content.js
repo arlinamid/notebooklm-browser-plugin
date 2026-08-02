@@ -1239,7 +1239,11 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
 
     if (changes.language) {
         language = changes.language.newValue || 'en';
-        loadLocale(language);
+        // Must be awaited: loadLocale() clears `locale` before fetching, so
+        // refreshing without waiting rebuilt the UI in English and never redrew
+        // once the fetch landed. en and hu hid the bug — they return early with
+        // no fetch and read from the bundled table.
+        await loadLocale(language);
         needsRefresh = true;
         console.log('[PA] language synced from storage:', language);
     }
