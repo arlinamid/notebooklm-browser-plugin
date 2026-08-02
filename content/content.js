@@ -7,8 +7,19 @@ let userPrompts = [];
 let language = 'en';
 let templatesLoaded = false;
 
-// We still need to find configure-chat directly as it's not a standard studio card
-const CONFIGURE_CHAT_SELECTOR = 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"], .configure-notebook-dialog textarea.mat-mdc-input-element, textarea.custom-input-textarea, .prompt-section-custom-input textarea';
+// We still need to find configure-chat directly as it's not a standard studio card.
+// 2026 UI renamed the dialog host to <configure-notebook-settings>, the inner
+// classes (.prompt-section-custom-input / .custom-input-textarea) survived.
+const CONFIGURE_CHAT_SELECTOR = 'textarea[aria-label*="Custom prompt to control"], textarea[aria-label*="custom prompt"], configure-notebook-settings textarea, .configure-notebook-dialog textarea.mat-mdc-input-element, textarea.custom-input-textarea, .prompt-section-custom-input textarea';
+
+// Textareas that look like modal inputs but must never be touched
+const IGNORED_TEXTAREA_CLASSES = [
+    'query-box-input',     // main chat composer
+    'query-box-textarea'   // "Discover sources" web-search box in the source panel
+];
+
+// Hosts that identify a NotebookLM customization overlay
+const DIALOG_HOST_SELECTOR = 'mat-dialog-container, [role="dialog"], .cdk-overlay-pane, .cdk-dialog-container, .mat-mdc-dialog-surface, configurable-form-dialog, report-customization-dialog, configure-notebook-settings';
 
 // Global tracker for the last opened studio format
 let lastOpenedFormat = null;
@@ -29,6 +40,21 @@ const ICON_TO_FORMAT = {
     'tune': 'configure-chat'
 };
 
+// Secondary, English-only mapping used when the mat-icon lookup fails.
+// The studio create cards expose aria-label="Audio Overview" etc.
+const LABEL_TO_FORMAT = {
+    'audio overview': 'audio-overview',
+    'video overview': 'video-overview',
+    'slide deck': 'slide-deck',
+    'infographic': 'infographic',
+    'reports': 'report',
+    'report': 'report',
+    'data table': 'data-table',
+    'quiz': 'quiz',
+    'flashcards': 'flashcards',
+    'mind map': 'mindmap'
+};
+
 const I18N = {
     en: {
         sectionLabel: 'Prompt Template',
@@ -39,7 +65,13 @@ const I18N = {
         chatLabel: '📚 Templates',
         savePrompt: 'Save current text as Template',
         saved: '✓ Saved!',
-        namePrompt: 'Enter a name for this prompt template:'
+        namePrompt: 'Enter a name for this prompt template:',
+        slotsTitle: n => `${n} placeholder${n > 1 ? 's' : ''} still to fill`,
+        slotsHint: 'Studio generates in one shot — it cannot ask you for these.',
+        slotsApply: 'Fill in',
+        slotsDismiss: 'Leave as is',
+        slotsDone: '✓ All placeholders filled',
+        slotsPlaceholder: 'value…'
     },
     hu: {
         sectionLabel: 'Prompt Sablon',
@@ -50,9 +82,81 @@ const I18N = {
         chatLabel: '📚 Sablonok',
         savePrompt: 'Jelenlegi szöveg mentése sablonként',
         saved: '✓ Mentve!',
-        namePrompt: 'Add meg a prompt sablon nevét:'
+        namePrompt: 'Add meg a prompt sablon nevét:',
+        slotsTitle: n => `${n} kitöltendő hely maradt`,
+        slotsHint: 'A Studio egy lépésben generál — ezeket nem fogja megkérdezni.',
+        slotsApply: 'Kitöltés',
+        slotsDismiss: 'Maradjon így',
+        slotsDone: '✓ Minden hely kitöltve',
+        slotsPlaceholder: 'érték…'
     }
 };
+
+// ===== Placeholder slots =====
+// Studio panels generate in a single shot: there is no conversation, so an
+// unfilled [SLOT] is silently sent to the model. We surface them instead.
+const SLOT_TOKEN = /\[[A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű][^\]\n]{1,60}\]/g;
+
+// Structural section markers (RISEN framework etc.) and the grounding
+// boilerplate's own self-reference are not user-fillable.
+const SLOT_IGNORE = /^\[(ROLE|INSTRUCTIONS|STEPS|END GOAL|NARROWING|CONTEXT|OBJECTIVE|STYLE|TONE|AUDIENCE|RESPONSE|RESPONSE FORMAT|VISUAL STYLE|AI FOCUS|SQUARE BRACKETS|SZEREP|UTASÍTÁSOK|LÉPÉSEK|VÉGCÉL|SZŰKÍTÉS|KONTEXTUS|CÉL|STÍLUS|HANGNEM|KÖZÖNSÉG|VÁLASZ|VÁLASZFORMÁTUM|VIZUÁLIS STÍLUS|SZÖGLETES ZÁRÓJELBEN)\]$/i;
+
+// The sentence explaining bracket handling — pointless once nothing is left to fill.
+const SLOT_RULE_LINE = /^.*(SQUARE BRACKETS|SZÖGLETES ZÁRÓJELBEN).*$\n?\n?/im;
+
+// Distinguishes a slot the USER must fill from output scaffolding the MODEL fills.
+// The corpus splits cleanly on case: [TOPIC], [SOURCE A], [SZAKTERÜLET] are
+// parameters, while [quote], [Source, p.X], [answer], [thesis verbatim] describe
+// what the model should emit. Prompting the user for the latter is noise, so this
+// stays deliberately conservative — anything it skips is still covered by the
+// prompt's own rule telling the model to infer unfilled slots from the sources.
+function isUserSlot(token) {
+    const inner = token.slice(1, -1).trim();
+    if (inner.replace(/[^\p{L}]/gu, '').length < 2) return false;   // [1-5], [x]
+
+    // Entirely upper-case → a parameter: [TOPIC], [WHAT TO IGNORE], [TÉMA]
+    if (inner === inner.toUpperCase()) return true;
+
+    // ALL-CAPS lead-in with an inline example: [AUDIENCE: tech leads],
+    // [SOLUTION/TOOL being evaluated]
+    if (/^\p{Lu}[\p{Lu}\d/ ]*\p{Lu}(?=\s*[:\s])/u.test(inner)) return true;
+
+    // A slash-separated choice with no spaces: [beginner/intermediate/advanced]
+    if (/^[^\s/]+(\/[^\s/]+)+$/.test(inner)) return true;
+
+    // Phrased as an instruction to the reader
+    if (/^(e\.?g\.?|your\b|you\b|describe\b|list\b|insert\b|enter\b|specify\b|upload\b|pl\.|saját\b|add meg\b|írd\b|sorold\b|töltsd\b)/i.test(inner)) return true;
+
+    return false;
+}
+
+// Any bracket token left in the text, including model-side scaffolding.
+// While one survives, the prompt's bracket-handling rule still earns its place.
+function hasAnyBracketToken(text) {
+    return text.split('\n').some(line => {
+        const matches = line.match(SLOT_TOKEN);
+        if (!matches) return false;
+        return matches.some(tok =>
+            !line.includes(tok + '(') && !SLOT_IGNORE.test(tok) && line.trim() !== tok
+        );
+    });
+}
+
+function collectSlots(text) {
+    const found = new Set();
+    text.split('\n').forEach(line => {
+        const matches = line.match(SLOT_TOKEN);
+        if (!matches) return;
+        matches.forEach(tok => {
+            if (line.includes(tok + '(')) return;   // markdown link
+            if (SLOT_IGNORE.test(tok)) return;      // structural marker
+            if (line.trim() === tok) return;        // lone marker on its own line
+            if (!isUserSlot(tok)) return;           // model-side output scaffold
+            found.add(tok);
+        });
+    });
+    return [...found];
+}
 
 // ===== Global Styles =====
 function injectGlobalStyles() {
@@ -154,20 +258,17 @@ async function init() {
         // 2. If not migrated yet, check local
         if (!stored.migrationDone) {
             const localData = await chrome.storage.local.get(['userPrompts', 'language']);
+            userPrompts = mergePrompts(stored.userPrompts, localData.userPrompts);
+            language = stored.language || localData.language || 'en';
+
             if (localData.userPrompts && localData.userPrompts.length > 0) {
-                console.log('[PA] Migrating prompts from local to sync...');
-                userPrompts = localData.userPrompts;
-                language = localData.language || 'en';
-                // Save to sync immediately
-                await chrome.storage.sync.set({
-                    userPrompts,
-                    language,
-                    migrationDone: true
-                });
-                // Optional: clear local prompts to avoid confusion, but keep language as fallback
+                console.log('[PA] Migrating', localData.userPrompts.length, 'prompt(s) from local to sync...');
+                await chrome.storage.sync.set({ userPrompts, language, migrationDone: true });
+                // Clear local prompts to avoid confusion, but keep language as fallback
                 await chrome.storage.local.remove('userPrompts');
             } else {
-                // No local data, just mark as migrated to avoid future checks
+                // No local data, just mark as migrated to avoid future checks.
+                // Never write userPrompts here — anything already in sync must survive.
                 await chrome.storage.sync.set({ migrationDone: true });
             }
         } else {
@@ -190,43 +291,52 @@ async function init() {
 
     // Add global click listener to track which modal is being opened
     document.addEventListener('click', (e) => {
-        // Find if they clicked an edit button, a card, or specifically a report customize button
-        const target = e.target.closest('.create-artifact-button-container, .edit-button, button[aria-label*="Customize"], button[aria-label*="testreszabása"]');
+        // Find if they clicked an edit button, a create card, or a report customize button
+        const target = e.target.closest('.create-artifact-button-container, basic-create-artifact-button, .edit-button, button[aria-label*="Customize"], button[aria-label*="testreszabása"]');
         if (!target) return;
 
-        // Try to find the associated mat-icon
-        let iconEl = target.querySelector('mat-icon');
+        // The create card wraps both the artifact icon and the edit button, so
+        // always resolve up to it before looking for the identifying icon.
+        const card = target.closest('.create-artifact-button-container, basic-create-artifact-button')
+            || target.closest('.artifact-button-content, mat-card')
+            || target;
 
-        // If clicking an edit button specifically, the icon might be on the parent card
-        if (!iconEl && target.closest('.create-artifact-button-container')) {
-            iconEl = target.closest('.create-artifact-button-container').querySelector('mat-icon');
-        }
+        // .artifact-icon is the format icon; a bare mat-icon lookup would find
+        // the chevron/edit glyph on the button itself.
+        const iconEl = card.querySelector('mat-icon.artifact-icon') || card.querySelector('mat-icon');
+        const iconName = iconEl ? iconEl.textContent.trim() : '';
 
-        // If we are in the Reports gallery, the icon in the card header identifies the whole category
-        const reportCard = target.closest('.artifact-button-content, mat-card');
-        if (!iconEl && reportCard) {
-            iconEl = reportCard.querySelector('mat-icon');
-        }
+        const label = (card.getAttribute('aria-label') || target.getAttribute('aria-label') || '')
+            .replace(/^Customize\s+/i, '').trim().toLowerCase();
 
-        if (iconEl) {
-            const iconName = iconEl.textContent.trim();
-            if (ICON_TO_FORMAT[iconName]) {
-                lastOpenedFormat = ICON_TO_FORMAT[iconName];
-                console.log('[PA] User opened format:', lastOpenedFormat, 'via icon:', iconName);
-            }
+        const format = ICON_TO_FORMAT[iconName] || LABEL_TO_FORMAT[label];
+        if (format) {
+            lastOpenedFormat = format;
+            console.log('[PA] User opened format:', format, '(icon:', iconName || '—', '/ label:', label || '—', ')');
         }
     }, true); // use capture phase to get it early
 
     // Inject into chat
     injectChatButton();
 
-    // Watch for modals and DOM changes
-    const observer = new MutationObserver(() => {
-        scanForModals();
-        injectChatButton();
-    });
+    // Watch for modals and DOM changes. NotebookLM's Angular app mutates the DOM
+    // constantly, so coalesce bursts into one scan per animation frame.
+    let scanQueued = false;
+    const queueScan = () => {
+        if (scanQueued) return;
+        scanQueued = true;
+        requestAnimationFrame(() => {
+            scanQueued = false;
+            scanForModals();
+            injectChatButton();
+        });
+    };
 
+    const observer = new MutationObserver(queueScan);
     observer.observe(document.body, { childList: true, subtree: true });
+
+    // First pass immediately — the studio panel may already be rendered
+    queueScan();
 }
 
 // ===== Scan for Modal Textareas =====
@@ -234,55 +344,26 @@ async function init() {
 function scanForModals() {
     if (!templatesLoaded) return;
 
-    // We look for general modal textareas or the specific configure chat one
-    const textareas = document.querySelectorAll(`mat-dialog-container textarea.mat-mdc-input-element, configurable-form-dialog textarea, mat-dialog-container .textarea-container textarea, ${CONFIGURE_CHAT_SELECTOR}`);
+    // We look for general modal textareas or the specific configure chat one.
+    // `configurable-form-dialog textarea` is what catches the Video Overview
+    // focus box, which is a plain textarea without any mat-mdc-* classes.
+    const textareas = document.querySelectorAll(
+        `mat-dialog-container textarea, configurable-form-dialog textarea, report-customization-dialog textarea, ${CONFIGURE_CHAT_SELECTOR}`
+    );
 
     textareas.forEach(textarea => {
-        // Skip if already injected (check parent)
-        if (textarea.parentElement?.querySelector('.pa-injected')) return;
-        // Also check grandparent (mat-form-field wraps textarea)
-        const formField = textarea.closest('mat-form-field, .mat-mdc-form-field');
-        const insertionParent = formField?.parentElement || textarea.parentElement;
-        if (!insertionParent) return;
-        if (insertionParent.querySelector('.pa-injected')) return;
+        if (IGNORED_TEXTAREA_CLASSES.some(c => textarea.classList.contains(c))) return;
 
-        // Skip textareas in the main chat
-        const isInOverlay = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-overlay-pane, .cdk-dialog-container, .mat-mdc-dialog-surface, [class*="configure"], [class*="settings"]');
         const isConfigureChat = textarea.matches(CONFIGURE_CHAT_SELECTOR);
+        const isInOverlay = textarea.closest(DIALOG_HOST_SELECTOR);
         if (!isInOverlay && !isConfigureChat) return;
-        if (isConfigureChat && textarea.classList.contains('query-box-input')) return;
 
-        let format = null;
+        const anchor = findInsertAnchor(textarea);
+        const insertionParent = anchor.parentElement;
+        if (!insertionParent) return;
+        if (insertionParent.querySelector(':scope > .pa-injected')) return;
 
-        if (isConfigureChat) {
-            format = 'configure-chat';
-        } else {
-            // Try to figure out format from a header icon first
-            const dialog = textarea.closest('mat-dialog-container, [role="dialog"], .cdk-dialog-container, .mat-mdc-dialog-surface, .cdk-overlay-pane');
-            const headerIcon = dialog?.querySelector('mat-icon.dialog-icon, .mat-mdc-dialog-title mat-icon');
-
-            if (headerIcon && ICON_TO_FORMAT[headerIcon.textContent.trim()]) {
-                format = ICON_TO_FORMAT[headerIcon.textContent.trim()];
-            } else if (lastOpenedFormat) {
-                // Fallback to the globally tracked last format clicked
-                format = lastOpenedFormat;
-            } else {
-                // Desperate fallback for older UI or specific localized labels
-                const label = (textarea.getAttribute('aria-label') || '').toLowerCase();
-                const placeholder = (textarea.getAttribute('placeholder') || '').toLowerCase();
-                const combined = label + ' ' + placeholder;
-
-                if (combined.includes('audio') || combined.includes('hang')) format = 'audio-overview';
-                else if (combined.includes('video') || combined.includes('videó')) format = 'video-overview';
-                else if (combined.includes('infographic') || combined.includes('infografika')) format = 'infographic';
-                else if (combined.includes('slide') || combined.includes('dia') || combined.includes('prezentáció')) format = 'slide-deck';
-                else if (combined.includes('report') || combined.includes('jelentés')) format = 'report';
-                else if (combined.includes('data table') || combined.includes('adattábla')) format = 'data-table';
-                else if (combined.includes('quiz') || combined.includes('kvíz')) format = 'quiz';
-                else if (combined.includes('flash') || combined.includes('card') || combined.includes('tanulókártya')) format = 'flashcards';
-            }
-        }
-
+        const format = isConfigureChat ? 'configure-chat' : detectDialogFormat(textarea);
         if (!format) return;
 
         const templates = getTemplatesForFormat(format);
@@ -291,9 +372,55 @@ function scanForModals() {
         console.log('[PA] Injecting into modal for format:', format, 'templates:', templates.length);
 
         const section = createTemplateSection(templates, textarea, format);
-        const insertBefore = formField || textarea;
-        insertBefore.parentElement.insertBefore(section, insertBefore);
+        insertionParent.insertBefore(section, anchor);
     });
+}
+
+// Pick the nicest place to drop the selector above the prompt field.
+// Ordered most-specific first so each dialog type gets a sane layout.
+function findInsertAnchor(textarea) {
+    return textarea.closest('.text-form-field-container')      // audio / slides / infographic / quiz / flashcards / mind map
+        || textarea.closest('.custom-topic-card')              // video overview
+        || textarea.closest('.prompt-section-custom-input')    // configure chat
+        || textarea.closest('mat-form-field, .mat-mdc-form-field') // reports "create your own"
+        || textarea;
+}
+
+function detectDialogFormat(textarea) {
+    const dialog = textarea.closest(DIALOG_HOST_SELECTOR);
+
+    // 1. The dialog header icon is the most reliable signal. The 2026 UI uses
+    //    .dialog-title-icon in configurable-form-dialog and .dialog-icon in the
+    //    report dialog, and the report header also carries a back-arrow icon —
+    //    so scan every header icon and take the first one we recognise.
+    if (dialog) {
+        const headerIcons = dialog.querySelectorAll(
+            'mat-icon.dialog-title-icon, mat-icon.dialog-icon, .mat-mdc-dialog-title mat-icon, .dialog-title mat-icon'
+        );
+        for (const icon of headerIcons) {
+            const mapped = ICON_TO_FORMAT[icon.textContent.trim()];
+            if (mapped) return mapped;
+        }
+    }
+
+    // 2. Fall back to the studio card the user clicked to get here
+    if (lastOpenedFormat) return lastOpenedFormat;
+
+    // 3. Last resort — sniff the field's own labels
+    const combined = (
+        (textarea.getAttribute('aria-label') || '') + ' ' +
+        (textarea.getAttribute('placeholder') || '')
+    ).toLowerCase();
+
+    if (combined.includes('audio') || combined.includes('hosts') || combined.includes('episode') || combined.includes('hang')) return 'audio-overview';
+    if (combined.includes('video') || combined.includes('videó')) return 'video-overview';
+    if (combined.includes('infographic') || combined.includes('infografika')) return 'infographic';
+    if (combined.includes('slide') || combined.includes('dia') || combined.includes('prezentáció')) return 'slide-deck';
+    if (combined.includes('report') || combined.includes('jelentés')) return 'report';
+    if (combined.includes('data table') || combined.includes('adattábla')) return 'data-table';
+    if (combined.includes('quiz') || combined.includes('kvíz')) return 'quiz';
+    if (combined.includes('flash') || combined.includes('card') || combined.includes('tanulókártya')) return 'flashcards';
+    return null;
 }
 
 // ===== Create Template Section (using NLM classes) =====
@@ -388,6 +515,9 @@ function createTemplateSection(templates, textarea, format) {
             setNativeValue(textarea, text);
             textarea.focus();
             flashToast(I18N[language].applied);
+            // Studio generates in one shot — surface any [SLOTS] before Generate
+            refreshSlotPanel(section, textarea);
+            watchSlots(section, textarea);
         }
     });
 
@@ -416,6 +546,123 @@ function createTemplateSection(templates, textarea, format) {
     return section;
 }
 
+// ===== Placeholder Filler Panel =====
+// Rendered right under the template dropdown whenever the applied text still
+// has [SLOTS]. Filling one substitutes every occurrence in the textarea.
+function refreshSlotPanel(host, textarea) {
+    const t = I18N[language];
+    let panel = host.querySelector(':scope > .pa-slots');
+    const slots = collectSlots(textarea.value || '');
+
+    if (slots.length === 0) {
+        if (panel) {
+            // Nothing bracketed left at all — drop the now-pointless bracket rule
+            if (panel.dataset.touched === '1'
+                && !hasAnyBracketToken(textarea.value)
+                && SLOT_RULE_LINE.test(textarea.value)) {
+                setNativeValue(textarea, textarea.value.replace(SLOT_RULE_LINE, ''));
+            }
+            panel.remove();
+        }
+        return;
+    }
+
+    // Panel already showing exactly these slots — leave the user's typing alone
+    if (panel && panel.dataset.slots === slots.join(' ')) return;
+
+    const touched = panel ? panel.dataset.touched : '0';
+    if (panel) panel.remove();
+
+    panel = document.createElement('div');
+    panel.className = 'pa-slots';
+    panel.dataset.slots = slots.join(' ');
+    panel.dataset.touched = touched || '0';
+
+    const head = document.createElement('div');
+    head.className = 'pa-slots-head';
+    head.innerHTML = `<span class="pa-slots-title">⚠ ${t.slotsTitle(slots.length)}</span>
+        <span class="pa-slots-hint">${t.slotsHint}</span>`;
+    panel.appendChild(head);
+
+    const grid = document.createElement('div');
+    grid.className = 'pa-slots-grid';
+    const inputs = [];
+
+    slots.forEach(tok => {
+        const row = document.createElement('label');
+        row.className = 'pa-slot-row';
+
+        const name = document.createElement('span');
+        name.className = 'pa-slot-name';
+        name.textContent = tok.slice(1, -1);
+        name.title = tok;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'pa-slot-input';
+        input.placeholder = t.slotsPlaceholder;
+        input.dataset.token = tok;
+        // Keep Enter/Escape from reaching NotebookLM's dialog handlers
+        input.addEventListener('keydown', e => {
+            e.stopPropagation();
+            if (e.key === 'Enter') { e.preventDefault(); applyBtn.click(); }
+        });
+
+        row.appendChild(name);
+        row.appendChild(input);
+        grid.appendChild(row);
+        inputs.push(input);
+    });
+    panel.appendChild(grid);
+
+    const actions = document.createElement('div');
+    actions.className = 'pa-slots-actions';
+
+    const dismissBtn = document.createElement('button');
+    dismissBtn.type = 'button';
+    dismissBtn.className = 'pa-slots-btn';
+    dismissBtn.textContent = t.slotsDismiss;
+    dismissBtn.addEventListener('click', e => { e.preventDefault(); panel.remove(); });
+
+    const applyBtn = document.createElement('button');
+    applyBtn.type = 'button';
+    applyBtn.className = 'pa-slots-btn pa-slots-btn-primary';
+    applyBtn.textContent = t.slotsApply;
+    applyBtn.addEventListener('click', e => {
+        e.preventDefault();
+        let text = textarea.value;
+        let changed = false;
+        inputs.forEach(inp => {
+            const val = inp.value.trim();
+            if (!val) return;
+            text = text.split(inp.dataset.token).join(val);
+            changed = true;
+        });
+        if (!changed) return;
+        panel.dataset.touched = '1';
+        setNativeValue(textarea, text);
+        const remaining = collectSlots(text);
+        refreshSlotPanel(host, textarea);
+        if (remaining.length === 0) flashToast(t.slotsDone);
+    });
+
+    actions.appendChild(dismissBtn);
+    actions.appendChild(applyBtn);
+    panel.appendChild(actions);
+
+    host.appendChild(panel);
+    inputs[0]?.focus();
+}
+
+// Keep the panel in sync when the user edits the textarea by hand
+function watchSlots(host, textarea) {
+    if (textarea.dataset.paSlotWatch === '1') return;
+    textarea.dataset.paSlotWatch = '1';
+    textarea.addEventListener('input', () => {
+        if (host.querySelector(':scope > .pa-slots')) refreshSlotPanel(host, textarea);
+    });
+}
+
 // ===== Chat Button =====
 function injectChatButton() {
     if (!templatesLoaded) return;
@@ -424,8 +671,9 @@ function injectChatButton() {
     const chatTextarea = document.querySelector('textarea.query-box-input');
     if (!chatTextarea) return;
 
-    // DOM: ... → parent → div.query-box → div.input-group → form → div.message-container → textarea
-    const queryBox = chatTextarea.closest('.query-box');
+    // DOM: div.query-box-container → query-box → div.query-box → div.input-group
+    //      → form → div.message-container → div.query-box-input-wrapper → textarea
+    const queryBox = chatTextarea.closest('.query-box') || chatTextarea.closest('query-box');
 
     if (!queryBox || !queryBox.parentElement) return;
 
@@ -439,8 +687,12 @@ function injectChatButton() {
     const wrapper = document.createElement('div');
     wrapper.className = 'pa-chat-injected';
 
-    // Inject neatly at the top of the query box column without breaking internal flex layouts
-    wrapper.style.cssText = 'padding: 4px 16px 8px; display: flex; gap: 8px; align-items: center; width: 100%; box-sizing: border-box; background: transparent;';
+    // Inject neatly at the top of the query box column without breaking internal flex layouts.
+    // Column direction so the placeholder panel can stack under the controls row.
+    wrapper.style.cssText = 'padding: 4px 16px 8px; display: flex; flex-direction: column; gap: 6px; align-items: stretch; width: 100%; box-sizing: border-box; background: transparent;';
+
+    const controlsRow = document.createElement('div');
+    controlsRow.style.cssText = 'display: flex; gap: 8px; align-items: center;';
 
     const select = document.createElement('select');
     select.className = 'pa-select-compact';
@@ -501,10 +753,14 @@ function injectChatButton() {
         if (val.startsWith('u_')) template = userTmpl[parseInt(val.substring(2))];
         else if (val.startsWith('b_')) template = builtIn[parseInt(val.substring(2))];
         if (template) {
-            setNativeValue(chatTextarea, template.prompt);
-            chatTextarea.focus();
+            // Re-resolve: Angular may have swapped the textarea since injection
+            const live = document.querySelector('textarea.query-box-input') || chatTextarea;
+            setNativeValue(live, template.prompt);
+            live.focus();
             select.selectedIndex = 0;
             flashToast(I18N[language].applied);
+            refreshSlotPanel(wrapper, live);
+            watchSlots(wrapper, live);
         }
     });
 
@@ -524,11 +780,12 @@ function injectChatButton() {
     `;
     saveBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        saveCurrentInput(chatTextarea, 'text-chat');
+        saveCurrentInput(document.querySelector('textarea.query-box-input') || chatTextarea, 'text-chat');
     });
 
-    wrapper.appendChild(select);
-    wrapper.appendChild(saveBtn);
+    controlsRow.appendChild(select);
+    controlsRow.appendChild(saveBtn);
+    wrapper.appendChild(controlsRow);
 
     // Insert safely into the DIRECT parent of the gray query box, directly above it.
     // This removes the "not a child of this node" error.
@@ -536,6 +793,20 @@ function injectChatButton() {
 }
 
 // ===== Helpers =====
+// Union of the sync and local prompt lists, sync entries winning on id collisions.
+// Used only by the one-time local→sync migration so an upgrade can never drop prompts.
+function mergePrompts(syncPrompts, localPrompts) {
+    const merged = Array.isArray(syncPrompts) ? [...syncPrompts] : [];
+    const seen = new Set(merged.map(p => p && p.id));
+    (Array.isArray(localPrompts) ? localPrompts : []).forEach(p => {
+        if (p && !seen.has(p.id)) {
+            merged.push(p);
+            seen.add(p.id);
+        }
+    });
+    return merged;
+}
+
 async function saveCurrentInput(textarea, format) {
     const textVal = textarea.value.trim();
     if (!textVal) return;
@@ -749,9 +1020,23 @@ function waitForElement(selector, timeout = 10000) {
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'APPLY_PROMPT') {
-        const textarea = document.querySelector('textarea.query-box-input');
-        if (textarea) setNativeValue(textarea, msg.prompt);
-        sendResponse({ success: true });
+        // Prefer an open studio/configure dialog — that's where the user is
+        // looking when they apply a studio-format prompt from the popup.
+        const dialogTextarea = [...document.querySelectorAll(
+            'mat-dialog-container textarea, configurable-form-dialog textarea, report-customization-dialog textarea, configure-notebook-settings textarea'
+        )].find(t => !IGNORED_TEXTAREA_CLASSES.some(c => t.classList.contains(c)) && t.offsetParent !== null);
+
+        const textarea = dialogTextarea || document.querySelector('textarea.query-box-input');
+        if (textarea) {
+            setNativeValue(textarea, msg.prompt);
+            textarea.focus();
+            // Surface unfilled [SLOTS] here too — the popup path bypasses the dropdown
+            const host = dialogTextarea
+                ? textarea.closest('mat-dialog-container, configurable-form-dialog, report-customization-dialog, configure-notebook-settings')?.querySelector('.pa-injected')
+                : document.querySelector('.pa-chat-injected');
+            if (host) { refreshSlotPanel(host, textarea); watchSlots(host, textarea); }
+        }
+        sendResponse({ success: !!textarea });
     }
     return true;
 });

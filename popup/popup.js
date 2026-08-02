@@ -22,20 +22,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!stored.migrationDone) {
         const localData = await chrome.storage.local.get(['userPrompts', 'language']);
+        userPrompts = mergePrompts(stored.userPrompts, localData.userPrompts);
+        language = stored.language || localData.language || 'en';
+
         if (localData.userPrompts && localData.userPrompts.length > 0) {
-            console.log('[PA] Migrating prompts from local to sync (Popup)...');
-            userPrompts = localData.userPrompts;
-            language = localData.language || 'en';
-            await chrome.storage.sync.set({
-                userPrompts,
-                language,
-                migrationDone: true
-            });
+            console.log('[PA] Migrating', localData.userPrompts.length, 'prompt(s) from local to sync (Popup)...');
+            await chrome.storage.sync.set({ userPrompts, language, migrationDone: true });
             await chrome.storage.local.remove('userPrompts');
         } else {
+            // Only flip the flag — writing userPrompts here would wipe anything
+            // already synced from another device.
             await chrome.storage.sync.set({ migrationDone: true });
-            userPrompts = [];
-            language = stored.language || 'en';
         }
     } else {
         userPrompts = stored.userPrompts || [];
@@ -283,7 +280,7 @@ async function applyPrompt(prompt, btn, t) {
     // Send message to content script
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        if (tab && tab.url && tab.url.includes('notebooklm.google.com')) {
+        if (tab && tab.url && /:\/\/(notebooklm|notebook)\.google\.com\//.test(tab.url)) {
             await chrome.tabs.sendMessage(tab.id, {
                 type: 'APPLY_PROMPT',
                 prompt: prompt.prompt,
@@ -374,6 +371,20 @@ function savePrompt() {
 }
 
 // ===== Helpers =====
+// Union of the sync and local prompt lists, sync entries winning on id collisions.
+// Used only by the one-time local→sync migration so an upgrade can never drop prompts.
+function mergePrompts(syncPrompts, localPrompts) {
+    const merged = Array.isArray(syncPrompts) ? [...syncPrompts] : [];
+    const seen = new Set(merged.map(p => p && p.id));
+    (Array.isArray(localPrompts) ? localPrompts : []).forEach(p => {
+        if (p && !seen.has(p.id)) {
+            merged.push(p);
+            seen.add(p.id);
+        }
+    });
+    return merged;
+}
+
 function esc(str) {
     if (!str) return '';
     const div = document.createElement('div');

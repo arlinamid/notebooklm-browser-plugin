@@ -25,6 +25,119 @@
     transform: translateX(-50%) translateY(0);
 }
 
+/* ===== Placeholder filler panel ===== */
+/* Studio generates in one shot, so unfilled [SLOTS] would be sent verbatim.
+   Colours come from NLM's mat-sys vars so light/dark mode both work. */
+.pa-slots {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, .18));
+    border-left: 3px solid #e8a33d;
+    border-radius: 8px;
+    background: var(--mat-sys-surface-container-low, rgba(232, 163, 61, .06));
+    font-family: 'Google Sans Text', 'Google Sans', Roboto, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.pa-slots-head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.pa-slots-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mat-sys-on-surface, #202124);
+}
+
+.pa-slots-hint {
+    font-size: 11px;
+    line-height: 15px;
+    color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.pa-slots-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 210px;
+    overflow-y: auto;
+}
+
+.pa-slot-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pa-slot-name {
+    flex: 0 0 34%;
+    min-width: 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    color: var(--mat-sys-on-surface-variant, #5f6368);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pa-slot-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 6px 10px;
+    border: 1px solid var(--mat-sys-outline, rgba(0, 0, 0, .38));
+    border-radius: 6px;
+    background: var(--mat-sys-surface, transparent);
+    color: var(--mat-sys-on-surface, inherit);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.pa-slot-input:focus {
+    border-color: var(--mat-sys-primary, #1a73e8);
+}
+
+.pa-slots-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.pa-slots-btn {
+    height: 30px;
+    padding: 0 14px;
+    border: 1px solid var(--mat-sys-outline, rgba(0, 0, 0, .3));
+    border-radius: 15px;
+    background: transparent;
+    color: var(--mat-sys-on-surface, inherit);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pa-slots-btn:hover {
+    background: var(--mat-sys-surface-container-highest, rgba(0, 0, 0, .05));
+}
+
+.pa-slots-btn-primary {
+    border-color: transparent;
+    background: var(--mat-sys-primary, #1a73e8);
+    color: var(--mat-sys-on-primary, #fff);
+}
+
+.pa-slots-btn-primary:hover {
+    filter: brightness(1.08);
+    background: var(--mat-sys-primary, #1a73e8);
+}
+
 /* Subtle focus ring on select when hovered */
 .pa-native-select:hover {
     border-color: var(--mat-form-field-hover-outline-color, rgba(0, 0, 0, .87)) !important;

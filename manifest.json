@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Prompt Architect for NotebookLM",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A prompt library for Google NotebookLM — browse, create, and apply prompts to Studio cards.",
   "permissions": [
     "storage",
@@ -23,7 +23,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://notebooklm.google.com/*"
+        "*://notebooklm.google.com/*",
+        "*://notebook.google.com/*"
       ],
       "js": [
         "content/content.js"
@@ -40,7 +41,8 @@
         "data/templates.json"
       ],
       "matches": [
-        "*://notebooklm.google.com/*"
+        "*://notebooklm.google.com/*",
+        "*://notebook.google.com/*"
       ]
     }
   ]
