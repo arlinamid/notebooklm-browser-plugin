@@ -1020,26 +1020,93 @@ function waitForElement(selector, timeout = 10000) {
 // Listen for messages from popup
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === 'APPLY_PROMPT') {
-        // Prefer an open studio/configure dialog — that's where the user is
-        // looking when they apply a studio-format prompt from the popup.
-        const dialogTextarea = [...document.querySelectorAll(
-            'mat-dialog-container textarea, configurable-form-dialog textarea, report-customization-dialog textarea, configure-notebook-settings textarea'
-        )].find(t => !IGNORED_TEXTAREA_CLASSES.some(c => t.classList.contains(c)) && t.offsetParent !== null);
-
-        const textarea = dialogTextarea || document.querySelector('textarea.query-box-input');
-        if (textarea) {
-            setNativeValue(textarea, msg.prompt);
-            textarea.focus();
-            // Surface unfilled [SLOTS] here too — the popup path bypasses the dropdown
-            const host = dialogTextarea
-                ? textarea.closest('mat-dialog-container, configurable-form-dialog, report-customization-dialog, configure-notebook-settings')?.querySelector('.pa-injected')
-                : document.querySelector('.pa-chat-injected');
-            if (host) { refreshSlotPanel(host, textarea); watchSlots(host, textarea); }
-        }
-        sendResponse({ success: !!textarea });
+        applyFromPopup(msg).then(sendResponse);
+        return true;   // keep the channel open for the async reply
     }
     return true;
 });
+
+// ===== Popup → page apply =====
+// A studio-format prompt belongs in that format's dialog, not in the chat box.
+// If the dialog isn't open we open it first, rather than dumping an Audio
+// Overview brief into the chat composer.
+const FORMAT_TO_ICON = Object.entries(ICON_TO_FORMAT)
+    .reduce((acc, [icon, fmt]) => { if (!acc[fmt]) acc[fmt] = icon; return acc; }, {});
+
+function visibleDialogTextarea() {
+    return [...document.querySelectorAll(
+        'mat-dialog-container textarea, configurable-form-dialog textarea, report-customization-dialog textarea, configure-notebook-settings textarea'
+    )].find(t => !IGNORED_TEXTAREA_CLASSES.some(c => t.classList.contains(c)) && t.offsetParent !== null);
+}
+
+/** Studio create card for a format, found by its icon so it stays language-agnostic. */
+function findStudioCard(format) {
+    const icon = FORMAT_TO_ICON[format];
+    if (!icon) return null;
+    return [...document.querySelectorAll('.create-artifact-button-container')]
+        .find(c => {
+            const i = c.querySelector('mat-icon.artifact-icon') || c.querySelector('mat-icon');
+            return i && i.textContent.trim() === icon;
+        }) || null;
+}
+
+async function openConfigureChat() {
+    const btn = [...document.querySelectorAll('button')]
+        .find(b => b.querySelector('mat-icon')?.textContent.trim() === 'tune');
+    if (!btn) return false;
+    btn.click();
+    // The custom prompt field only exists once "Custom" is selected — it is the
+    // last toggle in the goal group.
+    const group = await waitForElement('mat-button-toggle-group[formcontrolname="customizeButtonSelected"]', 6000);
+    if (!group) return false;
+    const toggles = group.querySelectorAll('mat-button-toggle button');
+    if (toggles.length) toggles[toggles.length - 1].click();
+    return true;
+}
+
+async function applyFromPopup(msg) {
+    const format = msg.format || 'text-chat';
+
+    // 1. Something is already open — the user is looking at it, use it.
+    let textarea = visibleDialogTextarea();
+
+    // 2. Chat prompts go to the composer.
+    if (!textarea && format === 'text-chat') {
+        textarea = document.querySelector('textarea.query-box-input');
+    }
+
+    // 3. Studio / configure formats: open the right panel first.
+    if (!textarea) {
+        if (format === 'configure-chat') {
+            if (!await openConfigureChat()) {
+                return { success: false, reason: 'no-configure' };
+            }
+        } else {
+            const card = findStudioCard(format);
+            if (!card) return { success: false, reason: 'no-studio' };
+            // The pencil opens the Customize dialog directly; the card itself
+            // may start a generation, so prefer the pencil when present.
+            (card.querySelector('button.edit-button') || card).click();
+        }
+        await waitForElement('mat-dialog-container textarea, configurable-form-dialog textarea, configure-notebook-settings textarea', 8000);
+        textarea = visibleDialogTextarea();
+        if (!textarea) return { success: false, reason: 'dialog-timeout' };
+    }
+
+    setNativeValue(textarea, msg.prompt);
+    textarea.focus();
+    textarea.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
+    // Surface unfilled [SLOTS] here too — the popup path bypasses the dropdown
+    scanForModals();
+    const host = textarea.closest('mat-dialog-container, configurable-form-dialog, report-customization-dialog, configure-notebook-settings')
+        ?.querySelector('.pa-injected')
+        || document.querySelector('.pa-chat-injected');
+    if (host) { refreshSlotPanel(host, textarea); watchSlots(host, textarea); }
+
+    flashToast(I18N[language].applied);
+    return { success: true };
+}
 
 // ===== Storage Sync =====
 // Keep userPrompts and language in sync with the popup in real time.

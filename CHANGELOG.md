@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.1] — 2026-08-02
+
+### Fixed
+- 🎯 **Apply from the popup went to the chat box regardless of format.** An Audio Overview brief,
+  a slide-deck design spec or a Configure Chat persona would all be dumped into the chat composer,
+  because the handler only used an open dialog if one happened to be open already — and when
+  browsing the popup, none is. It now opens the right Studio panel for the prompt's format and
+  writes into that panel's field. Configure Chat additionally flips the goal toggle to *Custom*,
+  since the custom-prompt field does not exist until it is selected.
+
+  The studio card is located by its `mat-icon`, not by `aria-label`, so it works in any interface
+  language. Verified through the real popup→content-script message path for audio-overview,
+  slide-deck, infographic, data-table, configure-chat and text-chat.
+
+  When there is no valid target — a shared or featured notebook, which has no Studio panel — the
+  prompt is copied to the clipboard and the popup says why, instead of silently landing in chat.
+- 🔤 **The card preview showed boilerplate instead of the prompt.** Since v1.3.0 every template
+  opens with a grounding block, and templates with fill-in slots also carry a bracket-handling
+  rule, so the popup preview was showing identical scaffolding on every card. The preview now
+  skips those leading blocks; the prompt that gets applied is still the complete text.
+
 ## [1.3.0] — 2026-08-02
 
 Compatibility release for the **"Gemini Notebook"** rebuild of NotebookLM. The extension was

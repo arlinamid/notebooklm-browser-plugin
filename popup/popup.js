@@ -261,7 +261,7 @@ function renderCard(p, t) {
       </div>
     </div>
     <div class="pa-card-desc">${esc(p.description)}</div>
-    <div class="pa-card-prompt">${esc(p.prompt)}</div>
+    <div class="pa-card-prompt">${esc(previewOf(p.prompt))}</div>
     ${p.settings ? `<div class="pa-card-settings">${esc(p.settings)}</div>` : ''}
     <div class="pa-card-actions">
       <button class="pa-btn-apply" data-action="apply" data-id="${esc(p.id)}">
@@ -281,11 +281,21 @@ async function applyPrompt(prompt, btn, t) {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         if (tab && tab.url && /:\/\/(notebooklm|notebook)\.google\.com\//.test(tab.url)) {
-            await chrome.tabs.sendMessage(tab.id, {
+            const resp = await chrome.tabs.sendMessage(tab.id, {
                 type: 'APPLY_PROMPT',
                 prompt: prompt.prompt,
                 format: prompt.format
             });
+
+            // A studio-format prompt has nowhere to go unless the notebook is
+            // one the user owns. Say so and fall back to the clipboard rather
+            // than silently dropping it into the chat box.
+            if (!resp || !resp.success) {
+                copyPrompt(prompt, btn, t);
+                showApplyNote(resp && resp.reason === 'no-studio' ? t.card.noStudio : t.card.noTarget);
+                return;
+            }
+
             btn.classList.add('applied');
             btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> ${t.card.applied}`;
             setTimeout(() => {
@@ -300,6 +310,39 @@ async function applyPrompt(prompt, btn, t) {
         console.error('Apply failed:', err);
         copyPrompt(prompt, btn, t);
     }
+}
+
+// Every template now opens with a source-grounding block, and templates with
+// fill-in slots also carry a bracket-handling rule. That boilerplate is
+// identical everywhere, so showing it in the card preview hides the one thing
+// the user is actually scanning for. Strip it for display only — the prompt
+// that gets applied is always the complete text.
+const BOILERPLATE_BLOCK = /^(GROUNDING —|MEGALAPOZÁS —|Text in \[SQUARE BRACKETS\]|A \[SZÖGLETES ZÁRÓJELBEN\])/;
+
+function previewOf(promptText) {
+    const blocks = String(promptText || '').split(/\n\s*\n/);
+    let i = 0;
+    while (i < blocks.length && BOILERPLATE_BLOCK.test(blocks[i].trim())) i++;
+    // Never return nothing — if a prompt were only boilerplate, show it as-is
+    return i < blocks.length ? blocks.slice(i).join('\n\n') : promptText;
+}
+
+// Transient banner at the bottom of the popup — used when Apply could not
+// reach a sensible target and fell back to the clipboard.
+function showApplyNote(msg) {
+    document.getElementById('pa-apply-note')?.remove();
+    const note = document.createElement('div');
+    note.id = 'pa-apply-note';
+    note.textContent = msg;
+    note.style.cssText = `
+        position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 9999;
+        padding: 10px 12px; border-radius: 8px;
+        background: #4a3a10; color: #f6e7c1; border: 1px solid #6b5416;
+        font-size: 12px; line-height: 1.4;
+        box-shadow: 0 4px 14px rgba(0,0,0,.35);
+    `;
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 5000);
 }
 
 function copyPrompt(prompt, btn, t) {

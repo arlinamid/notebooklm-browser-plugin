@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)

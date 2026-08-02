@@ -58,6 +58,9 @@ const I18N = {
             copied: "Copied!",
             apply: "Apply to NLM",
             applied: "Applied!",
+            openedStudio: "Opened Studio panel",
+            noStudio: "Open one of your own notebooks first — Studio panels only exist there. Copied instead.",
+            noTarget: "Couldn't find a place to put this. Copied instead.",
             settings: "Settings",
             edit: "Edit",
             delete: "Delete"
@@ -122,6 +125,9 @@ const I18N = {
             copied: "Másolva!",
             apply: "Alkalmazás NLM-ben",
             applied: "Alkalmazva!",
+            openedStudio: "Studio panel megnyitva",
+            noStudio: "Nyiss meg egy saját jegyzetfüzetet — a Studio panelek csak ott léteznek. Vágólapra másolva.",
+            noTarget: "Nem találtam helyet ennek. Vágólapra másolva.",
             settings: "Beállítások",
             edit: "Szerkesztés",
             delete: "Törlés"
