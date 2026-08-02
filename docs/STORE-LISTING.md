@@ -123,10 +123,26 @@ Prompt Architect is an independent extension. It is not affiliated with, associa
   prompts in sequence" — so it belongs above the fold rather than in a feature list.
 - The section leads with the *reason* a chain exists (research is iterative) rather than the
   mechanism, because the mechanism only reads as valuable once the need is obvious.
-- **Screenshots retaken** for the 1.6.0 popup and stored in `docs/store-screenshots/` — 1280x800,
-  24-bit RGB, which is what the Store accepts. Upload order matches the filenames.
-  Regenerate the first five with `node scripts/build-screenshots.js` after any popup change;
-  `store-6-inpage.png` is captured from a signed-in NotebookLM session by hand.
+- **Screenshots retaken** for the 1.6.0 popup — , all 1280x800 24-bit RGB,
+  which is what the Store accepts. Eight exist; **the Store takes five**, so pick. Recommended set,
+  in upload order:
+
+  | # | File | Why it earns a slot |
+  |---|---|---|
+  | 1 |  | What the thing is, in one look |
+  | 2 |  | Proof it lives inside NotebookLM, plus the placeholder form |
+  | 3 |  | Chains — the one thing NotebookLM cannot do |
+  | 4 |  | Your own prompts, saved from the page |
+  | 5 |  | Twelve languages, prompts included |
+
+  Held back:  (format rail),  (chain library),
+   (deck styles) — each overlaps something already in the five.
+- Regenerate the popup shots with store-1-library.png   rail collapsed | lang en | tab audio-overview
+store-2-formats.png   rail pinned | lang en | tab slide-deck
+store-3-chains.png   rail collapsed | lang en | tab chains
+store-4-slides.png   rail collapsed | lang en | tab slide-deck
+store-5-languages.png   rail collapsed | lang ja | tab audio-overview after any popup change.
+  Shots 6-8 are composed from a signed-in NotebookLM session and are captured by hand.
 
 ### What changed for v1.4.0
 
