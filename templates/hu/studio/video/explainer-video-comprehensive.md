@@ -21,7 +21,7 @@ Az alábbi sorok KIZÁRÓLAG a kimenet vizuális stílusát és szerkezetét ír
 
 A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
 
-Készíts egy MAGYARÁZÓ videót a következő célközönségnek: [TARGET AUDIENCE: data engineers evaluating [TOOL]].
+Készíts egy MAGYARÁZÓ videót a következő célközönségnek: [CÉLKÖZÖNSÉG], akik a(z) [ESZKÖZ] eszközt értékelik.
 
 Struktúra:
 1. A probléma meghatározása (30 mp)

@@ -142,7 +142,14 @@ function hasAnyBracketToken(text) {
     });
 }
 
-function collectSlots(text) {
+/**
+ * @param {string[]} [known] Slot tokens from the locale file. When present they
+ * are used verbatim instead of the case-based classifier, which cannot work in
+ * scripts without letter case (ja, zh, ko, hi) — there every bracket token,
+ * including model-side scaffolding, would look user-fillable.
+ */
+function collectSlots(text, known) {
+    if (known && known.length) return known.filter(tok => text.includes(tok));
     const found = new Set();
     text.split('\n').forEach(line => {
         const matches = line.match(SLOT_TOKEN);
@@ -519,7 +526,7 @@ function createTemplateSection(templates, textarea, format) {
             textarea.focus();
             flashToast(I18N[language].applied);
             // Studio generates in one shot — surface any [SLOTS] before Generate
-            refreshSlotPanel(section, textarea);
+            refreshSlotPanel(section, textarea, template.paSlots);
             watchSlots(section, textarea);
         }
     });
@@ -552,10 +559,13 @@ function createTemplateSection(templates, textarea, format) {
 // ===== Placeholder Filler Panel =====
 // Rendered right under the template dropdown whenever the applied text still
 // has [SLOTS]. Filling one substitutes every occurrence in the textarea.
-function refreshSlotPanel(host, textarea) {
+function refreshSlotPanel(host, textarea, known) {
     const t = I18N[language];
     let panel = host.querySelector(':scope > .pa-slots');
-    const slots = collectSlots(textarea.value || '');
+    // Remember the list so later re-renders (manual edits) keep using it
+    if (known) host.dataset.paSlots = JSON.stringify(known);
+    const remembered = host.dataset.paSlots ? JSON.parse(host.dataset.paSlots) : null;
+    const slots = collectSlots(textarea.value || '', known || remembered);
 
     if (slots.length === 0) {
         if (panel) {
@@ -762,7 +772,7 @@ function injectChatButton() {
             live.focus();
             select.selectedIndex = 0;
             flashToast(I18N[language].applied);
-            refreshSlotPanel(wrapper, live);
+            refreshSlotPanel(wrapper, live, template.paSlots);
             watchSlots(wrapper, live);
         }
     });
@@ -990,6 +1000,7 @@ function getTemplatesForFormat(format) {
 // sources answers in English, so that line is what actually steers the output.
 const NATIVE_BODY_LANGS = new Set(['en', 'hu']);
 let locale = null;
+let boilerplate = null;
 
 async function loadLocale(lang) {
     locale = null;
@@ -997,17 +1008,44 @@ async function loadLocale(lang) {
     // and attempting the fetch would log a 404 on every page load.
     if (!lang || NATIVE_BODY_LANGS.has(lang)) return;
     try {
-        const res = await fetch(chrome.runtime.getURL(`data/locales/${lang}.json`));
-        if (res.ok) locale = await res.json();
+        const [locRes, bpRes] = await Promise.all([
+            fetch(chrome.runtime.getURL(`data/locales/${lang}.json`)),
+            boilerplate ? null : fetch(chrome.runtime.getURL('data/locales/_boilerplate.json'))
+        ]);
+        if (locRes && locRes.ok) locale = await locRes.json();
+        if (bpRes && bpRes.ok) boilerplate = await bpRes.json();
     } catch (e) {
         console.warn('[PA] locale load failed for', lang, e);
     }
 }
 
+/**
+ * Rebuilds a full prompt from the translated body plus the hand-translated
+ * grounding block. Bodies are stored without boilerplate so a machine never
+ * rewords the text that keeps answers source-grounded.
+ */
+function composeBody(entry, lang) {
+    const bp = boilerplate && boilerplate[lang];
+    if (!bp) return entry.body;
+    const parts = [];
+    if (entry.grounding && bp[entry.grounding]) parts.push(bp[entry.grounding]);
+    if (entry.slotRule && bp.slots) parts.push(bp.slots);
+    parts.push(entry.body);
+    return parts.join('\n\n');
+}
+
 function localizedTemplate(p) {
     const tr = locale && locale.templates && locale.templates[p.id];
     if (!tr) return p;
-    return { ...p, title: tr.title || p.title, description: tr.description || p.description };
+    const out = { ...p, title: tr.title || p.title, description: tr.description || p.description };
+    if (tr.body) {
+        out.prompt = composeBody(tr, locale.language);
+        // Slot labels come from the locale, not from a heuristic — letter case
+        // does not exist in Japanese, Chinese, Korean or Hindi, so the runtime
+        // classifier cannot tell a user slot from model-side scaffolding there.
+        if (tr.slots) out.paSlots = Object.values(tr.slots);
+    }
+    return out;
 }
 
 /**

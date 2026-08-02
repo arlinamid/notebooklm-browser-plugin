@@ -113,6 +113,46 @@ for (const file of files) {
     warns.push(`${identical}/${total} template strings identical to English`);
   }
 
+  // --- prompt bodies (only present once translate-bodies.js has run) ---
+  const withBody = Object.keys(locT).filter(id => locT[id] && locT[id].body);
+  if (withBody.length) {
+    let bodyErrs = 0;
+    for (const id of Object.keys(srcTmpl)) {
+      const srcBody = srcTmpl[id].body || '';
+      const locBody = (locT[id] || {}).body;
+      if (!locBody) { warns.push(`${id} body missing`); continue; }
+      const note = m => { if (bodyErrs < 40) errs.push(`${id}: ${m}`); bodyErrs++; };
+
+      // Hex colours are design data, not language
+      const hexA = (srcBody.match(/#[0-9A-Fa-f]{6}\b/g) || []).sort();
+      const hexB = (locBody.match(/#[0-9A-Fa-f]{6}\b/g) || []).sort();
+      if (hexA.join() !== hexB.join()) note(`hex colours changed (${hexA.length} -> ${hexB.length})`);
+
+      // Fenced code must survive untouched
+      const fenceA = (srcBody.match(/```/g) || []).length;
+      const fenceB = (locBody.match(/```/g) || []).length;
+      if (fenceA !== fenceB) note(`code fences changed (${fenceA} -> ${fenceB})`);
+
+      // A translation that is byte-identical almost certainly did not happen
+      if (srcBody.length > 200 && srcBody === locBody) note('body identical to English');
+
+      // Wildly different length usually means truncation or a runaway generation
+      const ratio = locBody.length / Math.max(1, srcBody.length);
+      if (ratio < 0.45) note(`body only ${(ratio * 100).toFixed(0)}% of English length — likely truncated`);
+      if (ratio > 2.5) note(`body ${(ratio * 100).toFixed(0)}% of English length — likely runaway`);
+
+      // Every user-fillable slot must be mapped and actually present in the body
+      const slots = srcTmpl[id].slots || [];
+      const map = (locT[id] || {}).slots || {};
+      for (const en of slots) {
+        const local = map[en];
+        if (!local) { note(`slot ${en} has no translation mapping`); continue; }
+        if (!locBody.includes(local)) note(`slot ${en} -> ${local} is missing from the translated body`);
+      }
+    }
+    if (bodyErrs > 40) errs.push(`… and ${bodyErrs - 40} more body errors`);
+  }
+
   // --- writing system ---
   checkScripts(code, JSON.stringify(loc)).forEach(e => errs.push(e));
 

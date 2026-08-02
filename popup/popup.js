@@ -27,17 +27,34 @@ const NATIVE_BODY_LANGS = new Set(['en', 'hu']);
 // Locale data for the current language, or null when English / not yet loaded
 let locale = null;
 
+let boilerplate = null;
+
 async function loadLocale(lang) {
     locale = null;
     // en and hu ship native prompt bodies and bundled UI strings — no locale file,
     // and attempting the fetch would log a 404 on every open.
     if (!lang || NATIVE_BODY_LANGS.has(lang)) return;
     try {
-        const res = await fetch(chrome.runtime.getURL(`data/locales/${lang}.json`));
-        if (res.ok) locale = await res.json();
+        const [locRes, bpRes] = await Promise.all([
+            fetch(chrome.runtime.getURL(`data/locales/${lang}.json`)),
+            boilerplate ? null : fetch(chrome.runtime.getURL('data/locales/_boilerplate.json'))
+        ]);
+        if (locRes && locRes.ok) locale = await locRes.json();
+        if (bpRes && bpRes.ok) boilerplate = await bpRes.json();
     } catch (e) {
         console.warn('[PA] locale load failed for', lang, e);
     }
+}
+
+/** Rebuilds a prompt from the translated body + the hand-translated grounding block. */
+function composeBody(entry, lang) {
+    const bp = boilerplate && boilerplate[lang];
+    if (!bp) return entry.body;
+    const parts = [];
+    if (entry.grounding && bp[entry.grounding]) parts.push(bp[entry.grounding]);
+    if (entry.slotRule && bp.slots) parts.push(bp.slots);
+    parts.push(entry.body);
+    return parts.join('\n\n');
 }
 
 /** UI strings: locale file → bundled i18n.js → English. */
@@ -49,11 +66,18 @@ function strings() {
 function localized(p) {
     const tr = locale && locale.templates && locale.templates[p.id];
     if (!tr) return p;
-    return {
+    const out = {
         ...p,
         title: tr.title || p.title,
         description: tr.description || p.description
     };
+    if (tr.body) {
+        out.prompt = composeBody(tr, locale.language);
+        // The card preview shows the body directly — no boilerplate to strip,
+        // because translated bodies are stored without it.
+        out.previewBody = tr.body;
+    }
+    return out;
 }
 
 let allTemplates = [];
@@ -329,7 +353,7 @@ function renderCard(p, t) {
       </div>
     </div>
     <div class="pa-card-desc">${esc(p.description)}</div>
-    <div class="pa-card-prompt">${esc(previewOf(p.prompt))}</div>
+    <div class="pa-card-prompt">${esc(p.previewBody || previewOf(p.prompt))}</div>
     ${p.settings ? `<div class="pa-card-settings">${esc(p.settings)}</div>` : ''}
     <div class="pa-card-actions">
       <button class="pa-btn-apply" data-action="apply" data-id="${esc(p.id)}">
