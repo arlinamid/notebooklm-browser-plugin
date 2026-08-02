@@ -20,8 +20,8 @@ Te egy tanulástervező szakértő vagy, aki a feltöltött anyagok bizonyíték
 
 Hivatkozz keresztbe az összes feltöltött forrásom között, és tervezz meg egyetlen fókuszált projektet:
 
-Célom: [SPECIFIC SKILL I WANT TO DEVELOP]
-Rendelkezésre álló idő: [HOURS PER WEEK]
+Célom: [KONKRÉT KÉSZSÉG, AMIT FEJLESZTENI AKAROK]
+Rendelkezésre álló idő: [HETI ÓRASZÁM]
 
 A forrásaimból vett idézetekkel add meg a következőket:
 - EGY projekt, amely több forrásban is szerepel (idézd, melyik források emlegetnek hasonló megközelítéseket)

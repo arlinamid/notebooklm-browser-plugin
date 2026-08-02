@@ -71,6 +71,17 @@
       "restore": "Mostrar este modelo de novo",
       "hidden": "Oculto",
       "syncFull": "Salvo neste dispositivo. O armazenamento de sincronização está cheio, então não aparecerá nos seus outros computadores."
+    },
+    "chains": {
+      "tab": "Sequências",
+      "newTitle": "Nova sequência",
+      "editTitle": "Editar sequência",
+      "stepsLabel": "etapas",
+      "addTemplate": "+ Prompt existente",
+      "addCustom": "+ Prompt personalizado",
+      "customPlaceholder": "Digite um prompt para esta etapa…",
+      "emptyHint": "Nenhuma sequência ainda. Uma sequência envia vários prompts ao mesmo chat em ordem, para cada etapa se basear nas respostas anteriores.",
+      "note": "As sequências rodam no chat do NotebookLM. O Studio gera uma vez a partir de um único resumo, então não há nada para uma etapa posterior aproveitar."
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "Preencher",
     "slotsDismiss": "Deixar como está",
     "slotsDone": "✓ Todos os campos preenchidos",
-    "slotsPlaceholder": "valor…"
+    "slotsPlaceholder": "valor…",
+    "chainLabel": "⛓ Sequências",
+    "chainVarsTitle": "Preencha antes de rodar a sequência",
+    "chainVarsHint": "São usados em todas as etapas. A sequência roda sem parar para perguntar.",
+    "chainRun": "Rodar sequência",
+    "chainCancelBtn": "Cancelar",
+    "chainStop": "Parar",
+    "chainStep": "Etapa {i} de {n}…",
+    "chainDone": "✓ Sequência concluída",
+    "chainCancelled": "Interrompido",
+    "chainTimeout": "Tempo esgotado aguardando resposta"
   }
 }

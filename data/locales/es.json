@@ -71,6 +71,17 @@
       "restore": "Mostrar de nuevo esta plantilla",
       "hidden": "Oculta",
       "syncFull": "Guardado en este dispositivo. El almacenamiento de sincronización está lleno, así que no llegará a tus otros ordenadores."
+    },
+    "chains": {
+      "tab": "Cadenas",
+      "newTitle": "Nueva cadena",
+      "editTitle": "Editar cadena",
+      "stepsLabel": "pasos",
+      "addTemplate": "+ Prompt existente",
+      "addCustom": "+ Prompt personalizado",
+      "customPlaceholder": "Escribe un prompt para este paso…",
+      "emptyHint": "Aún no hay cadenas. Una cadena envía varios prompts al mismo chat en orden, así cada paso se basa en las respuestas anteriores.",
+      "note": "Las cadenas se ejecutan en el chat de NotebookLM. Studio genera una vez a partir de una única instrucción, así que no hay nada en lo que basar un paso posterior."
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "Rellenar",
     "slotsDismiss": "Dejar tal cual",
     "slotsDone": "✓ Todos los campos rellenados",
-    "slotsPlaceholder": "valor…"
+    "slotsPlaceholder": "valor…",
+    "chainLabel": "⛓ Cadenas",
+    "chainVarsTitle": "Completa antes de ejecutar la cadena",
+    "chainVarsHint": "Se usan en cada paso. La cadena se ejecuta sin detenerse a preguntar.",
+    "chainRun": "Ejecutar cadena",
+    "chainCancelBtn": "Cancelar",
+    "chainStop": "Detener",
+    "chainStep": "Paso {i} de {n}…",
+    "chainDone": "✓ Cadena finalizada",
+    "chainCancelled": "Detenida",
+    "chainTimeout": "Se agotó la espera de una respuesta"
   }
 }

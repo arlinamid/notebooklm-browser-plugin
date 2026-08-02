@@ -19,7 +19,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 Melyek a legmeglepőbb vagy legérdekesebb információk, illetve narratívák ezekben a forrásokban?
 
 [Opcionális: adj meg finom iránymutatást]
-Kérjük, fókuszálj a [SPECIFIC ASPECT] szempontra, és ne foglalkozz [WHAT TO IGNORE] témával.
+Kérjük, fókuszálj a [KONKRÉT SZEMPONT] szempontra, és ne foglalkozz [MIT HAGYJ FIGYELMEN KÍVÜL] témával.
 ```
 
 ## Felhasználási eset (adatmérnökség)

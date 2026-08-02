@@ -74,7 +74,17 @@ const I18N = {
         slotsApply: 'Fill in',
         slotsDismiss: 'Leave as is',
         slotsDone: '✓ All placeholders filled',
-        slotsPlaceholder: 'value…'
+        slotsPlaceholder: 'value…',
+        chainLabel: '⛓ Chains',
+        chainVarsTitle: 'Fill in before the chain runs',
+        chainVarsHint: 'These are used by every step. The chain runs without stopping to ask.',
+        chainRun: 'Run chain',
+        chainCancelBtn: 'Cancel',
+        chainStop: 'Stop',
+        chainStep: 'Step {i} of {n}…',
+        chainDone: '✓ Chain finished',
+        chainCancelled: 'Stopped',
+        chainTimeout: 'Gave up waiting for an answer'
     },
     hu: {
         sectionLabel: 'Prompt Sablon',
@@ -91,7 +101,17 @@ const I18N = {
         slotsApply: 'Kitöltés',
         slotsDismiss: 'Maradjon így',
         slotsDone: '✓ Minden hely kitöltve',
-        slotsPlaceholder: 'érték…'
+        slotsPlaceholder: 'érték…',
+        chainLabel: '⛓ Láncok',
+        chainVarsTitle: 'Töltsd ki a lánc indítása előtt',
+        chainVarsHint: 'Ezeket minden lépés használja. A lánc futás közben nem kérdez vissza.',
+        chainRun: 'Lánc indítása',
+        chainCancelBtn: 'Mégse',
+        chainStop: 'Leállítás',
+        chainStep: '{i}. lépés a(z) {n}-ből…',
+        chainDone: '✓ A lánc lefutott',
+        chainCancelled: 'Leállítva',
+        chainTimeout: 'Nem érkezett válasz'
     }
 };
 
@@ -297,6 +317,7 @@ async function init() {
         // single-key layout and the older local-only one.
         hiddenTemplates = (await chrome.storage.sync.get('hiddenTemplates')).hiddenTemplates || [];
         userPrompts = await paLoadPrompts();
+        paChains = await paLoadChains();
         // Re-save whenever the data came from a pre-1.4 layout, regardless of
         // the migrationDone flag, which predates sharding.
         if (paUpgradePending() && userPrompts.length) await paSavePrompts(userPrompts);
@@ -817,6 +838,7 @@ function injectChatButton() {
 
     controlsRow.appendChild(select);
     controlsRow.appendChild(saveBtn);
+    injectChainControl(wrapper, controlsRow);
     wrapper.appendChild(controlsRow);
 
     // Insert safely into the DIRECT parent of the gray query box, directly above it.
@@ -1218,6 +1240,11 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
 
     // Prompts live across several sync keys now, plus a local mirror — any of
     // them changing means the list moved.
+    if (Object.keys(changes).some(k => k.startsWith('paChains'))) {
+        paChains = await paLoadChains();
+        needsRefresh = true;
+    }
+
     const touchedPrompts = Object.keys(changes).some(
         k => k.startsWith('paPrompts_') || k === 'paPromptsShards' || k === 'userPrompts'
     );
@@ -1260,3 +1287,297 @@ function refreshInjected() {
 
 // Start
 init();
+
+// ===== Chain runner =====
+//
+// Sends a chain's prompts into the NotebookLM chat one after another, waiting
+// for each answer to finish before sending the next, so every step answers with
+// the earlier exchanges still in context.
+//
+// Completion is detected by watching for a new <chat-message> whose text stops
+// growing. Measured on the live site: steps settled in 11–14 s, and step two's
+// answer built on step one's.
+
+let paChains = [];
+let chainRunning = false;
+let chainCancelled = false;
+
+/**
+ * Finds a template by id in the current language.
+ *
+ * allTemplates holds every language, and the same id appears once per language —
+ * so a plain find() always returned the English row. That is what showed English
+ * prompts and English variables inside a Hungarian interface.
+ */
+function findTemplate(id) {
+    const own = userPrompts.find(p => p.id === id);
+    if (own) return own;
+
+    const matches = allTemplates.filter(p => p.id === id);
+    if (!matches.length) return null;
+
+    // en and hu ship their own bodies; every other language uses the English row
+    // and gets its text from the locale file.
+    const wanted = NATIVE_BODY_LANGS.has(language) ? language : 'en';
+    const exact = matches.find(p => p.lang === wanted);
+    const found = exact || matches.find(p => p.lang === 'en') || matches[0];
+    return localizedTemplate(found);
+}
+
+/** Resolves a step to its final prompt text, translated and composed. */
+function resolveStep(step) {
+    if (step.type === 'custom') return step.text || '';
+    const found = findTemplate(step.id);
+    return found ? found.prompt : '';
+}
+
+/** Every fill-in slot across the whole chain, so the user answers each once. */
+function chainSlots(steps) {
+    const seen = new Set();
+    const out = [];
+    for (const step of steps) {
+        const text = resolveStep(step);
+        const known = step.type === 'template' ? (findTemplate(step.id) || {}).paSlots : null;
+        for (const slot of collectSlots(text, known)) {
+            if (!seen.has(slot)) { seen.add(slot); out.push(slot); }
+        }
+    }
+    return out;
+}
+
+function applyVars(text, vars) {
+    let out = text;
+    for (const [token, value] of Object.entries(vars || {})) {
+        if (value) out = out.split(token).join(value);
+    }
+    return out;
+}
+
+/**
+ * Resolves as soon as `probe()` returns something truthy, driven by DOM
+ * mutations rather than a fixed delay. Returns null if it never does.
+ */
+function waitFor(probe, timeoutMs = 10000) {
+    return new Promise(resolve => {
+        const immediate = probe();
+        if (immediate) return resolve(immediate);
+        const observer = new MutationObserver(() => {
+            const hit = probe();
+            if (hit) { observer.disconnect(); clearTimeout(timer); resolve(hit); }
+        });
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+        const timer = setTimeout(() => { observer.disconnect(); resolve(null); }, timeoutMs);
+    });
+}
+
+/**
+ * Resolves when NotebookLM has finished answering.
+ *
+ * State, not timing. Measured on the live site: while an answer streams the
+ * message carries no action buttons, and the Save / Copy / rate toolbar is
+ * rendered onto it the instant generation completes:
+ *
+ *   t+1.2s … t+7.2s   actions=[]                 text growing 24 → 319
+ *   t+8.4s            actions=[4 buttons]        text final at 344
+ *
+ * Buttons are counted rather than matched by label, because aria-labels are
+ * translated with the interface.
+ *
+ * A MutationObserver drives this, so it reacts to the DOM changing rather than
+ * sampling on a clock. The timeout is a failsafe for a request that never
+ * completes, not the completion mechanism.
+ */
+function waitForAnswer(before, timeoutMs = 300000) {
+    return new Promise(resolve => {
+        const root = document.querySelector('chat-panel') || document.body;
+        let done = false;
+
+        const finish = (result) => {
+            if (done) return;
+            done = true;
+            observer.disconnect();
+            clearInterval(cancelWatch);
+            clearTimeout(failsafe);
+            resolve(result);
+        };
+
+        const check = () => {
+            const messages = document.querySelectorAll('chat-message');
+            if (messages.length <= before) return;
+            const last = messages[messages.length - 1];
+            // The action toolbar exists only once the answer is complete
+            if (last.querySelectorAll('button[aria-label]').length === 0) return;
+            const el = last.querySelector('.message-text-content');
+            finish({ ok: true, text: el ? el.innerText.trim() : '' });
+        };
+
+        const observer = new MutationObserver(check);
+        observer.observe(root, { childList: true, subtree: true });
+
+        const cancelWatch = setInterval(() => {
+            if (chainCancelled) finish({ ok: false, reason: 'cancelled' });
+        }, 400);
+        const failsafe = setTimeout(() => finish({ ok: false, reason: 'timeout' }), timeoutMs);
+
+        check();   // the answer may already be complete
+    });
+}
+
+async function runChain(chain, vars) {
+    if (chainRunning) return;
+    chainRunning = true;
+    chainCancelled = false;
+    const t = uiStrings();
+    const panel = showChainProgress(chain, t);
+
+    try {
+        for (let i = 0; i < chain.steps.length; i++) {
+            if (chainCancelled) break;
+            updateChainProgress(panel, i, chain.steps.length, t);
+
+            const textarea = document.querySelector('textarea.query-box-input');
+            const submit = document.querySelector('button.submit-button');
+            if (!textarea || !submit) throw new Error('chat input not found');
+
+            const text = applyVars(resolveStep(chain.steps[i]), vars);
+            if (!text.trim()) continue;
+
+            const before = document.querySelectorAll('chat-message').length;
+            setNativeValue(textarea, text);
+            textarea.focus();
+            // Angular enables Submit once it has seen the input event; wait for
+            // that rather than guessing at a delay.
+            const ready = await waitFor(() => {
+                const b = document.querySelector('button.submit-button');
+                return b && !b.disabled ? b : null;
+            }, 10000);
+            if (!ready) throw new Error('submit never became enabled');
+            ready.click();
+
+            const res = await waitForAnswer(before);
+            if (!res.ok) {
+                updateChainProgress(panel, i, chain.steps.length, t,
+                    res.reason === 'cancelled' ? t.chainCancelled : t.chainTimeout);
+                break;
+            }
+        }
+        if (!chainCancelled) updateChainProgress(panel, chain.steps.length, chain.steps.length, t, t.chainDone);
+    } catch (e) {
+        console.error('[PA] chain failed', e);
+        updateChainProgress(panel, 0, chain.steps.length, t, e.message);
+    } finally {
+        chainRunning = false;
+        setTimeout(() => panel.remove(), 6000);
+    }
+}
+
+// ===== Chain UI =====
+
+/** Collects every variable in the chain up front, so the run is uninterrupted. */
+function promptChainVars(slots, t) {
+    return new Promise(resolve => {
+        if (!slots.length) return resolve({});
+        document.getElementById('pa-chain-vars')?.remove();
+
+        const dialog = document.createElement('dialog');
+        dialog.id = 'pa-chain-vars';
+        dialog.className = 'pa-chain-dialog';
+        dialog.innerHTML = `
+            <h2>${t.chainVarsTitle}</h2>
+            <p class="pa-chain-sub">${t.chainVarsHint}</p>
+            <div class="pa-chain-vars-grid"></div>
+            <div class="pa-chain-actions">
+                <button class="pa-chain-btn" data-act="cancel">${t.chainCancelBtn}</button>
+                <button class="pa-chain-btn pa-chain-btn-primary" data-act="run">${t.chainRun}</button>
+            </div>`;
+
+        const grid = dialog.querySelector('.pa-chain-vars-grid');
+        const inputs = slots.map(slot => {
+            const row = document.createElement('label');
+            row.className = 'pa-chain-var-row';
+            const name = document.createElement('span');
+            name.textContent = slot.slice(1, -1);
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = t.slotsPlaceholder;
+            input.dataset.token = slot;
+            input.addEventListener('keydown', e => e.stopPropagation());
+            row.append(name, input);
+            grid.appendChild(row);
+            return input;
+        });
+
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        inputs[0]?.focus();
+
+        const close = (vars) => { dialog.close(); dialog.remove(); resolve(vars); };
+        dialog.querySelector('[data-act="cancel"]').onclick = () => close(null);
+        dialog.querySelector('[data-act="run"]').onclick = () => {
+            const vars = {};
+            inputs.forEach(i => { if (i.value.trim()) vars[i.dataset.token] = i.value.trim(); });
+            close(vars);
+        };
+    });
+}
+
+function showChainProgress(chain, t) {
+    document.getElementById('pa-chain-progress')?.remove();
+    const panel = document.createElement('div');
+    panel.id = 'pa-chain-progress';
+    panel.innerHTML = `
+        <div class="pa-chain-head">
+            <strong>${chain.title}</strong>
+            <button class="pa-chain-stop">${t.chainStop}</button>
+        </div>
+        <div class="pa-chain-status"></div>
+        <div class="pa-chain-bar"><div class="pa-chain-bar-fill"></div></div>`;
+    panel.querySelector('.pa-chain-stop').onclick = () => { chainCancelled = true; };
+    document.body.appendChild(panel);
+    return panel;
+}
+
+function updateChainProgress(panel, index, total, t, message) {
+    if (!panel.isConnected) return;
+    const status = panel.querySelector('.pa-chain-status');
+    const fill = panel.querySelector('.pa-chain-bar-fill');
+    status.textContent = message || String(t.chainStep).replace('{i}', index + 1).replace('{n}', total);
+    fill.style.width = Math.round((index / Math.max(1, total)) * 100) + '%';
+    if (message) panel.querySelector('.pa-chain-stop')?.remove();
+}
+
+/** Adds a chain picker beside the chat template dropdown, when chains exist. */
+function injectChainControl(wrapper, controlsRow) {
+    if (!paChains.length) return;
+    const t = uiStrings();
+    const select = document.createElement('select');
+    select.className = 'pa-select-compact pa-chain-select';
+    select.style.cssText = `
+        padding: 5px 10px; border-radius: 20px; max-width: 200px; cursor: pointer;
+        border: 1px solid var(--mat-sys-outline, rgba(0,0,0,.38));
+        background: var(--mat-sys-surface-container, transparent);
+        color: var(--mat-sys-on-surface, inherit);
+        font-family: 'Google Sans Text', Roboto, Arial, sans-serif; font-size: 14px;`;
+
+    const head = document.createElement('option');
+    head.textContent = t.chainLabel;
+    head.disabled = true; head.selected = true;
+    select.appendChild(head);
+    paChains.forEach((c, i) => {
+        const opt = document.createElement('option');
+        opt.value = String(i);
+        opt.textContent = `${c.title} (${c.steps.length})`;
+        select.appendChild(opt);
+    });
+
+    select.addEventListener('change', async () => {
+        const chain = paChains[Number(select.value)];
+        select.selectedIndex = 0;
+        if (!chain || chainRunning) return;
+        const vars = await promptChainVars(chainSlots(chain.steps), t);
+        if (vars === null) return;           // cancelled at the variable step
+        runChain(chain, vars);
+    });
+
+    controlsRow.appendChild(select);
+}

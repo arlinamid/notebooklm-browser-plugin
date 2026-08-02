@@ -24,7 +24,7 @@ Vond ki a visszatérő témákat ebből a technológiai figyelőből:
 **Említett technológiák:**
 | Technológia | Gyakoriság | Érettség (források) | Jel |
 |------------|-----------|---------------------|-----|
-| [Név] | X forrás | [alpha/beta/prod] – hivatkolta [Forrás] | [Növekvő elfogadottság / Stabil / Visszaszoruló] |
+| [Név] | X forrás | [alfa/béta/éles] – hivatkolta [Forrás] | [Növekvő elfogadottság / Stabil / Visszaszoruló] |
 
 **Feltörekvő minták:**
 - 1. minta: [Leírás] – Források: [A, B]

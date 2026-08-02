@@ -19,7 +19,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 
 A feltöltött forrásaim alapján azonosítsd:
 1. Mely források tartalmaznak ellentmondó információkat? (konkrét konfliktusok idézésével)
-2. Mely források elavultak ([DATE] előttiek)?
+2. Mely források elavultak ([DÁTUM] előttiek)?
 3. Mely források fednek le azonos területet? (javasolj, melyeket érdemes megtartani)
 4. Milyen hiányosságok vannak az összes forrásban? (milyen témák NEM szerepelnek)
 

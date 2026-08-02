@@ -22,7 +22,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 Generálj egy VITAFORMÁTUMÚ hangos áttekintést.
 
 A házigazdáknak a következőket kell tenniük:
-1. Vegyenek fel egymással ellentétes álláspontokat a [TOPIC/DECISION] témában
+1. Vegyenek fel egymással ellentétes álláspontokat a [TÉMA/DÖNTÉS] témában
 2. Mindketten hivatkozzanak konkrét forrásokra álláspontjuk alátámasztásához
 3. Konstruktívan reagáljanak egymás érveire
 4. Ismerjék el a másik fél érvényes pontjait

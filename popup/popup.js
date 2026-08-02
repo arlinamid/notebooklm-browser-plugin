@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (paUpgradePending() && userPrompts.length) await paSavePrompts(userPrompts);
     if (!stored.migrationDone) await chrome.storage.sync.set({ migrationDone: true, language });
 
+    await loadChains();
     await loadLocale(language);
     initUI();
     render();
@@ -170,7 +171,8 @@ function initUI() {
         tab.classList.toggle('active', tab.dataset.format === activeFormat);
         // Update label
         const span = tab.querySelector('span');
-        if (span && t.formats[tab.dataset.format]) {
+        if (tab.dataset.format === 'chains' && span) span.textContent = t.chains.tab;
+        else if (span && t.formats[tab.dataset.format]) {
             span.textContent = t.formats[tab.dataset.format];
         }
         tab.addEventListener('click', () => {
@@ -226,8 +228,22 @@ function initUI() {
     searchInput.value = searchQuery;
     searchInput.oninput = () => { searchQuery = searchInput.value; render(); };
 
-    // New prompt button
-    document.getElementById('btnNewPrompt').onclick = () => openEditor(null);
+    // New prompt button — creates a chain while the Chains tab is active
+    document.getElementById('btnNewPrompt').onclick = () =>
+        activeFormat === 'chains' ? openChainEditor(null) : openEditor(null);
+
+    // Chain editor
+    document.getElementById('chainClose').onclick = closeChainEditor;
+    document.getElementById('chCancel').onclick = closeChainEditor;
+    document.getElementById('chSave').onclick = saveChain;
+    document.getElementById('chAddTemplate').onclick = () => {
+        editingChain.steps.push({ type: 'template', id: '' });
+        renderChainSteps();
+    };
+    document.getElementById('chAddCustom').onclick = () => {
+        editingChain.steps.push({ type: 'custom', text: '' });
+        renderChainSteps();
+    };
 
     // About panel version — read from the manifest so it can never drift again.
     // It had been hardcoded as "Version 1.0" since the first release.
@@ -301,20 +317,32 @@ function initUI() {
     document.getElementById('edSave').onclick = savePrompt;
 }
 
+/**
+ * The template rows for the current language, one per id.
+ *
+ * allTemplates carries every language and the same id appears once per language.
+ * Anything that looks a template up must go through here, or it silently gets
+ * the English row — which is what made chains show English prompts and English
+ * variable names on a Hungarian interface.
+ */
+function languageTemplates() {
+    const huIds = new Set(allTemplates.filter(p => p.lang === 'hu').map(p => p.id));
+    return allTemplates.filter(p => {
+        if (!p.lang) return true;                              // legacy entries without lang tag
+        if (!NATIVE_BODY_LANGS.has(language)) return p.lang === 'en';
+        if (p.lang === language) return true;
+        if (language === 'hu' && p.lang === 'en' && !huIds.has(p.id)) return true;
+        return false;
+    });
+}
+
 // ===== Render =====
 function render() {
     const t = strings();
+    // Chains are a mode of their own, not a template format
+    if (activeFormat === 'chains') { renderChains(); return; }
 
-    // Prompt bodies exist only for en and hu. Every other language uses the
-    // English bodies and gets its titles/descriptions from the locale file.
-    const huIds = new Set(allTemplates.filter(p => p.lang === 'hu').map(p => p.id));
-    const langTemplates = allTemplates.filter(p => {
-        if (!p.lang) return true;                              // legacy entries without lang tag
-        if (!NATIVE_BODY_LANGS.has(language)) return p.lang === 'en';
-        if (p.lang === language) return true;                  // exact match
-        if (language === 'hu' && p.lang === 'en' && !huIds.has(p.id)) return true; // EN fallback for missing HU
-        return false;
-    });
+    const langTemplates = languageTemplates();
     // Swap in translated titles/descriptions before filtering, so search matches
     // what the user actually sees
     const all = [...userPrompts, ...langTemplates.map(localized)]
@@ -598,4 +626,172 @@ function esc(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+}
+
+// ===== Chains =====
+//
+// A chain sends several prompts into the same NotebookLM chat in order, so each
+// step answers with the earlier exchanges still in context. Steps are either a
+// reference to an existing template (built-in or your own) or a one-off prompt
+// typed here. Chat only — Studio generates once from a single brief, so there is
+// nothing for a later step to build on.
+
+let chains = [];
+let editingChain = null;
+
+async function loadChains() {
+    chains = await paLoadChains();
+}
+
+function renderChains() {
+    const t = strings();
+    const container = document.getElementById('cardsContainer');
+    const empty = document.getElementById('emptyState');
+    container.innerHTML = '';
+
+    if (!chains.length) {
+        empty.style.display = 'block';
+        document.getElementById('emptyMsg').textContent = t.chains.emptyHint;
+        return;
+    }
+    empty.style.display = 'none';
+
+    chains.forEach((chain, i) => {
+        const card = document.createElement('div');
+        card.className = 'pa-card';
+        const steps = chain.steps.map((s, n) => {
+            const label = s.type === 'custom'
+                ? (s.text || '').slice(0, 60) + ((s.text || '').length > 60 ? '…' : '')
+                : (titleForTemplate(s.id) || s.id);
+            return `<div class="pa-chain-step-row"><span>${n + 1}</span>${esc(label)}</div>`;
+        }).join('');
+        card.innerHTML = `
+      <div class="pa-card-top">
+        <div class="pa-card-title">${esc(chain.title)}</div>
+        <div class="pa-card-badges"><span class="pa-badge pa-badge-category">${chain.steps.length} ${esc(t.chains.stepsLabel)}</span></div>
+      </div>
+      <div class="pa-chain-preview">${steps}</div>
+      <div class="pa-card-actions">
+        <button class="pa-btn-sm" data-chain-edit="${i}">${esc(t.card.edit)}</button>
+        <button class="pa-btn-sm delete" data-chain-del="${i}">${esc(t.card.delete)}</button>
+      </div>`;
+        container.appendChild(card);
+    });
+
+    container.querySelectorAll('[data-chain-edit]').forEach(b =>
+        b.onclick = () => openChainEditor(chains[Number(b.dataset.chainEdit)]));
+    container.querySelectorAll('[data-chain-del]').forEach(b =>
+        b.onclick = async () => {
+            chains.splice(Number(b.dataset.chainDel), 1);
+            await paSaveChains(chains);
+            renderChains();
+        });
+}
+
+function titleForTemplate(id) {
+    const own = userPrompts.find(p => p.id === id);
+    if (own) return own.title;
+    const found = languageTemplates().find(p => p.id === id);
+    return found ? localized(found).title : null;
+}
+
+function openChainEditor(chain) {
+    const t = strings();
+    editingChain = chain
+        ? JSON.parse(JSON.stringify(chain))
+        : { id: Date.now().toString(), title: '', steps: [] };
+
+    document.getElementById('chainEditorTitle').textContent =
+        chain ? t.chains.editTitle : t.chains.newTitle;
+    document.getElementById('chLabelTitle').textContent = t.editor.titleLabel;
+    document.getElementById('chLabelSteps').textContent = t.chains.stepsLabel;
+    document.getElementById('chAddTemplate').textContent = t.chains.addTemplate;
+    document.getElementById('chAddCustom').textContent = t.chains.addCustom;
+    document.getElementById('chCancel').textContent = t.editor.cancel;
+    document.getElementById('chSave').textContent = t.editor.save;
+    document.getElementById('chNote').textContent = t.chains.note;
+    document.getElementById('chTitle').value = editingChain.title;
+
+    renderChainSteps();
+    document.getElementById('chainOverlay').style.display = 'flex';
+}
+
+function renderChainSteps() {
+    const t = strings();
+    const host = document.getElementById('chSteps');
+    host.innerHTML = '';
+
+    editingChain.steps.forEach((step, i) => {
+        const row = document.createElement('div');
+        row.className = 'pa-chain-step';
+
+        const num = document.createElement('span');
+        num.className = 'pa-chain-num';
+        num.textContent = String(i + 1);
+        row.appendChild(num);
+
+        if (step.type === 'template') {
+            const select = document.createElement('select');
+            select.className = 'pa-chain-step-input';
+            const chat = [...userPrompts, ...languageTemplates().map(localized)]
+                .filter(p => (p.format || 'text-chat') === 'text-chat');
+            chat.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = p.title;
+                opt.selected = p.id === step.id;
+                select.appendChild(opt);
+            });
+            if (!step.id && chat[0]) step.id = chat[0].id;
+            select.onchange = () => { step.id = select.value; };
+            row.appendChild(select);
+        } else {
+            const area = document.createElement('textarea');
+            area.className = 'pa-chain-step-input';
+            area.rows = 2;
+            area.placeholder = t.chains.customPlaceholder;
+            area.value = step.text || '';
+            area.oninput = () => { step.text = area.value; };
+            row.appendChild(area);
+        }
+
+        const up = document.createElement('button');
+        up.className = 'pa-btn-sm';
+        up.textContent = '↑';
+        up.disabled = i === 0;
+        up.onclick = () => {
+            [editingChain.steps[i - 1], editingChain.steps[i]] = [editingChain.steps[i], editingChain.steps[i - 1]];
+            renderChainSteps();
+        };
+
+        const del = document.createElement('button');
+        del.className = 'pa-btn-sm delete';
+        del.textContent = '×';
+        del.onclick = () => { editingChain.steps.splice(i, 1); renderChainSteps(); };
+
+        row.append(up, del);
+        host.appendChild(row);
+    });
+}
+
+function closeChainEditor() {
+    document.getElementById('chainOverlay').style.display = 'none';
+    editingChain = null;
+}
+
+async function saveChain() {
+    const title = document.getElementById('chTitle').value.trim();
+    if (!title || !editingChain.steps.length) return;
+    editingChain.title = title;
+    editingChain.steps = editingChain.steps.filter(s =>
+        s.type === 'custom' ? (s.text || '').trim() : s.id);
+    if (!editingChain.steps.length) return;
+
+    const idx = chains.findIndex(c => c.id === editingChain.id);
+    if (idx > -1) chains[idx] = editingChain; else chains.unshift(editingChain);
+
+    const res = await paSaveChains(chains);
+    if (!res.synced) showApplyNote(strings().card.syncFull);
+    closeChainEditor();
+    renderChains();
 }

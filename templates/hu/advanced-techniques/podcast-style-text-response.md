@@ -27,9 +27,9 @@ Struktúra:
 - Használj analógiákat az összetett fogalmak magyarázatához
 - Helyenként szólítsd meg közvetlenül az olvasót
 
-Téma: [YOUR QUESTION]
+Téma: [A KÉRDÉSED]
 
-Kezdd így: „Sziasztok! Szóval ma a [TOPIC] témába merülünk bele, és ez tényleg lenyűgöző..."
+Kezdd így: „Sziasztok! Szóval ma a [TÉMA] témába merülünk bele, és ez tényleg lenyűgöző..."
 ```
 
 ## Felhasználási eset (adatmérnökség)

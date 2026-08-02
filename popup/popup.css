@@ -873,3 +873,79 @@ body::-webkit-scrollbar-thumb {
   margin: 0;
   opacity: 0.6;
 }
+/* === Chains === */
+.pa-chain-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+  padding: 8px 10px;
+  background: var(--bg-input);
+  border-radius: var(--radius-sm);
+}
+
+.pa-chain-step-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.pa-chain-step-row span {
+  flex: 0 0 16px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.pa-chain-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.pa-chain-step {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pa-chain-num {
+  flex: 0 0 18px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.pa-chain-step-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 7px 9px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  resize: vertical;
+}
+
+.pa-chain-step-input:focus {
+  border-color: var(--accent);
+}
+
+.pa-chain-add {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.pa-chain-note {
+  margin-top: 12px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-tertiary);
+}

@@ -127,7 +127,71 @@ async function paSavePrompts(prompts) {
     }
 }
 
+
+// ===== Prompt chains =====
+//
+// A chain is an ordered list of prompts sent into the same NotebookLM chat, so
+// each step answers with the previous exchanges still in context. Verified on
+// the live site: step two's answer built on step one's.
+//
+// Studio panels are deliberately not supported. They generate once from a single
+// brief with no conversation, so there is nothing for a later step to build on.
+//
+// Steps are either a reference to an existing template (built-in or user-made)
+// or a one-off prompt typed into the chain itself.
+
+const PA_CHAINS_PREFIX = 'paChains_';
+const PA_CHAINS_INDEX = 'paChainsShards';
+const PA_CHAINS_LOCAL = 'paChains';
+
+async function paLoadChains() {
+    try {
+        const index = await chrome.storage.sync.get(PA_CHAINS_INDEX);
+        const count = index[PA_CHAINS_INDEX];
+        if (typeof count === 'number' && count > 0) {
+            const keys = Array.from({ length: count }, (_, i) => PA_CHAINS_PREFIX + i);
+            const stored = await chrome.storage.sync.get(keys);
+            const chains = keys.flatMap(k => stored[k] || []);
+            const local = await chrome.storage.local.get(PA_CHAINS_LOCAL);
+            const mirrored = local[PA_CHAINS_LOCAL];
+            if (Array.isArray(mirrored) && mirrored.length > chains.length) return mirrored;
+            return chains;
+        }
+        const local = await chrome.storage.local.get(PA_CHAINS_LOCAL);
+        return Array.isArray(local[PA_CHAINS_LOCAL]) ? local[PA_CHAINS_LOCAL] : [];
+    } catch (e) {
+        console.warn('[PA] chain load failed', e);
+        return [];
+    }
+}
+
+/** Same local-first, sync-best-effort contract as paSavePrompts. */
+async function paSaveChains(chains) {
+    try {
+        await chrome.storage.local.set({ [PA_CHAINS_LOCAL]: chains });
+    } catch (e) {
+        return { ok: false, synced: false, error: e.message };
+    }
+    try {
+        const shards = paShard(chains);
+        const payload = { [PA_CHAINS_INDEX]: shards.length };
+        shards.forEach((shard, i) => { payload[PA_CHAINS_PREFIX + i] = shard; });
+
+        const existing = await chrome.storage.sync.get(PA_CHAINS_INDEX);
+        const previous = existing[PA_CHAINS_INDEX] || 0;
+        const stale = [];
+        for (let i = shards.length; i < previous; i++) stale.push(PA_CHAINS_PREFIX + i);
+
+        await chrome.storage.sync.set(payload);
+        if (stale.length) await chrome.storage.sync.remove(stale);
+        return { ok: true, synced: true };
+    } catch (e) {
+        return { ok: true, synced: false, error: e.message };
+    }
+}
+
 // Content scripts and the popup both load this file as a plain script.
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { paLoadPrompts, paSavePrompts, paShard, paByteLength, paUpgradePending };
+    module.exports = { paLoadPrompts, paSavePrompts, paShard, paByteLength, paUpgradePending,
+                       paLoadChains, paSaveChains };
 }

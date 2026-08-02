@@ -20,7 +20,7 @@ Az alábbi sorok arról szólnak, hogyan alakítsd a kimenetet. Ez nem a téma �
 
 A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
 
-Járj el elkötelezett tutorként. A [TOPIC] témában biztosított összes tanulmányi anyag alapján készíts egy „Teljes Tanulmányi Útmutató Csomagot", amely tartalmazza:
+Járj el elkötelezett tutorként. A [TÉMA] témában biztosított összes tanulmányi anyag alapján készíts egy „Teljes Tanulmányi Útmutató Csomagot", amely tartalmazza:
 
 **1. Az alapfogalmak összefoglalása:**
 - Magyarázd el a témakör 3-5 legfontosabb gondolatát

@@ -71,6 +71,17 @@
       "restore": "このテンプレートを再表示",
       "hidden": "非表示",
       "syncFull": "この端末に保存済み。同期ストレージがいっぱいのため、他のPCには反映されません。"
+    },
+    "chains": {
+      "tab": "チェーン",
+      "newTitle": "新規チェーン",
+      "editTitle": "チェーンを編集",
+      "stepsLabel": "ステップ",
+      "addTemplate": "+ 既存プロンプト",
+      "addCustom": "+ カスタムプロンプト",
+      "customPlaceholder": "このステップのプロンプトを入力…",
+      "emptyHint": "チェーンはまだありません。チェーンは複数のプロンプトを同じチャットに順番に送り、各ステップが前の回答をもとに進みます。",
+      "note": "チェーンはNotebookLMチャットで実行されます。Studioは1つのブリーフから一度だけ生成するため、後続ステップが積み上げる内容はありません。"
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "入力",
     "slotsDismiss": "そのまま",
     "slotsDone": "✓ すべてのプレースホルダーを入力済み",
-    "slotsPlaceholder": "値…"
+    "slotsPlaceholder": "値…",
+    "chainLabel": "⛓ チェーン",
+    "chainVarsTitle": "チェーン実行前に入力",
+    "chainVarsHint": "すべてのステップで使用されます。チェーンは確認で停止せず実行されます。",
+    "chainRun": "チェーンを実行",
+    "chainCancelBtn": "キャンセル",
+    "chainStop": "停止",
+    "chainStep": "ステップ {i}/{n}…",
+    "chainDone": "✓ チェーン完了",
+    "chainCancelled": "停止しました",
+    "chainTimeout": "回答待ちを中止"
   }
 }

@@ -71,6 +71,17 @@
       "restore": "이 템플릿 다시 표시",
       "hidden": "숨김",
       "syncFull": "이 기기에 저장됨. 동기화 저장소가 가득 차 다른 컴퓨터에는 동기화되지 않습니다."
+    },
+    "chains": {
+      "tab": "체인",
+      "newTitle": "새 체인",
+      "editTitle": "체인 편집",
+      "stepsLabel": "단계",
+      "addTemplate": "+ 기존 프롬프트",
+      "addCustom": "+ 맞춤 프롬프트",
+      "customPlaceholder": "이 단계의 프롬프트 입력…",
+      "emptyHint": "아직 체인이 없습니다. 체인은 같은 채팅에 여러 프롬프트를 순서대로 보내 각 단계가 이전 답변을 바탕으로 이어집니다.",
+      "note": "체인은 NotebookLM 채팅에서 실행됩니다. Studio는 하나의 브리프로 한 번만 생성하므로 이후 단계가 이어받을 내용이 없습니다."
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "입력",
     "slotsDismiss": "그대로 두기",
     "slotsDone": "✓ 모든 자리표시자 입력됨",
-    "slotsPlaceholder": "값…"
+    "slotsPlaceholder": "값…",
+    "chainLabel": "⛓ 체인",
+    "chainVarsTitle": "체인 실행 전 입력",
+    "chainVarsHint": "모든 단계에서 사용됩니다. 체인은 질문 없이 계속 실행됩니다.",
+    "chainRun": "체인 실행",
+    "chainCancelBtn": "취소",
+    "chainStop": "중지",
+    "chainStep": "{n}개 중 {i}단계…",
+    "chainDone": "✓ 체인 완료",
+    "chainCancelled": "중지됨",
+    "chainTimeout": "답변 대기 시간 초과"
   }
 }

@@ -29,8 +29,8 @@ A házigazdáknak a következőket kell tenniük:
 
 Legyetek konstruktívan kritikusak, ne lekicsinylők.
 
-Fókusz: [SOLUTION/TOOL being evaluated]
-Kontextus: Ezt a következő célra fontolgatjuk: [USE CASE]
+Fókusz: [ÉRTÉKELT MEGOLDÁS/ESZKÖZ]
+Kontextus: Ezt a következő célra fontolgatjuk: [FELHASZNÁLÁSI ESET]
 ```
 
 ## Felhasználási eset (adatmérnökség)

@@ -147,3 +147,160 @@
     border-color: var(--mat-form-field-focus-outline-color, #1a73e8) !important;
     border-width: 2px;
 }
+/* ===== Chain runner ===== */
+.pa-chain-dialog {
+    padding: 20px;
+    border: none;
+    border-radius: 14px;
+    width: 440px;
+    max-width: 92vw;
+    background: var(--mat-sys-surface-container-high, #fff);
+    color: var(--mat-sys-on-surface, #202124);
+    font-family: 'Google Sans Text', 'Google Sans', Roboto, sans-serif;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+}
+
+.pa-chain-dialog::backdrop {
+    background: rgba(0, 0, 0, .4);
+}
+
+.pa-chain-dialog h2 {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.pa-chain-sub {
+    margin: 0 0 14px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.pa-chain-vars-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.pa-chain-var-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pa-chain-var-row span {
+    flex: 0 0 38%;
+    min-width: 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    color: var(--mat-sys-on-surface-variant, #5f6368);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pa-chain-var-row input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid var(--mat-sys-outline, rgba(0, 0, 0, .38));
+    border-radius: 6px;
+    background: var(--mat-sys-surface, transparent);
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.pa-chain-var-row input:focus {
+    border-color: var(--mat-sys-primary, #1a73e8);
+}
+
+.pa-chain-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.pa-chain-btn {
+    height: 36px;
+    padding: 0 18px;
+    border: 1px solid var(--mat-sys-outline, rgba(0, 0, 0, .3));
+    border-radius: 18px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.pa-chain-btn-primary {
+    border-color: transparent;
+    background: var(--mat-sys-primary, #1a73e8);
+    color: var(--mat-sys-on-primary, #fff);
+}
+
+/* Progress card, bottom-left so it does not cover the composer */
+#pa-chain-progress {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 99998;
+    width: 300px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--mat-sys-surface-container-high, #fff);
+    color: var(--mat-sys-on-surface, #202124);
+    border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, .15));
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .22);
+    font-family: 'Google Sans Text', 'Google Sans', Roboto, sans-serif;
+    font-size: 13px;
+}
+
+.pa-chain-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.pa-chain-stop {
+    border: 1px solid var(--mat-sys-outline, rgba(0, 0, 0, .3));
+    background: transparent;
+    color: inherit;
+    border-radius: 14px;
+    height: 26px;
+    padding: 0 12px;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.pa-chain-status {
+    font-size: 12px;
+    color: var(--mat-sys-on-surface-variant, #5f6368);
+    margin-bottom: 8px;
+}
+
+.pa-chain-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--mat-sys-surface-container-highest, rgba(0, 0, 0, .1));
+    overflow: hidden;
+}
+
+.pa-chain-bar-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 2px;
+    background: var(--mat-sys-primary, #1a73e8);
+    transition: width .3s ease;
+}

@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated prompt templates in 12 languages directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.4.3-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![12 languages](https://img.shields.io/badge/Languages-12-orange.svg)](#-internationalization)
@@ -250,6 +250,11 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.5.0] — 2026-08-02
+- ⛓ **Prompt chains** — several prompts sent into the same chat in order, each building on the answers before it. Steps can be existing prompts or one-offs; variables are filled once before the run.
+- 🇭🇺 Chains showed English prompts and variable names on non-English interfaces
+- 🇭🇺 17 Hungarian templates still carried English placeholder tokens
 
 ### [v1.4.3] — 2026-08-02
 - 🌐 Switching language on the NotebookLM page reverted to English for every language except Hungarian

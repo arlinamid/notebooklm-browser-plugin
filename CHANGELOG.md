@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] — 2026-08-02
+
+### Added
+- ⛓ **Prompt chains.** Several prompts sent into the same NotebookLM chat in order, so each step
+  answers with the earlier exchanges still in context. Requested in a Web Store review.
+
+  Steps are either **an existing prompt** — built-in or one of your own — or **a one-off prompt**
+  typed into the chain itself. Build and reorder them under the new Chains tab in the popup, run them
+  from a picker beside the chat template dropdown.
+
+  **Variables are collected once, before the run starts.** Every `[SLOT]` across every step is
+  gathered into a single form, so the chain runs start to finish without stopping to ask. A progress
+  card shows which step is running and can stop it.
+
+  Chat only. Studio generates once from a single brief, so there is nothing for a later step to build
+  on — the chain picker does not appear there.
+
+### Changed
+- Step completion is detected from **page state, not a timer**. Measured on the live site: while an
+  answer streams the message carries no action buttons, and the Save / Copy / rate toolbar is
+  rendered onto it the moment generation finishes — at t+7.2 s the text was still growing with no
+  buttons, at t+8.4 s the buttons appeared and the text was final. A `MutationObserver` watches for
+  that, so the chain reacts to the DOM rather than sampling on a clock. Buttons are counted rather
+  than matched by label, because aria-labels are translated. The same applies to waiting for Submit
+  to become enabled.
+
+### Fixed
+- 🇭🇺 **Chains showed English prompts and English variable names on a non-English interface.**
+  `allTemplates` holds every language and the same template id appears once per language, so a plain
+  `find()` always returned the English row. Both the popup and the content script now resolve
+  templates through one language-aware lookup.
+- 🇭🇺 **17 Hungarian templates still carried English placeholder tokens** — `[TOPIC]`, `[SOURCE A]`,
+  `[GOAL]` and 25 others, 31 occurrences in all. Translated using the vocabulary the Hungarian set had
+  already established (`[TÉMA]`, `[CÉL]`, `[MEGKÖZELÍTÉS]`), so the same idea is not named two ways.
+  This predates chains; it was simply never visible until the chain dialog listed the variables
+  side by side.
+
 ## [1.4.3] — 2026-08-02
 
 ### Fixed

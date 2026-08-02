@@ -52,6 +52,17 @@ const I18N = {
             cancel: "Cancel",
             save: "Save Prompt"
         },
+        chains: {
+            tab: "Chains",
+            newTitle: "New chain",
+            editTitle: "Edit chain",
+            stepsLabel: "steps",
+            addTemplate: "+ Existing prompt",
+            addCustom: "+ Custom prompt",
+            customPlaceholder: "Type a prompt for this step…",
+            emptyHint: "No chains yet. A chain sends several prompts into the same chat in order, so each step builds on the answers before it.",
+            note: "Chains run in the NotebookLM chat. Studio generates once from a single brief, so there is nothing for a later step to build on."
+        },
         card: {
             custom: "Custom",
             copy: "Copy",
@@ -123,6 +134,17 @@ const I18N = {
             settingsPlaceholder: "pl.: Forrás: Egyéni | Tájolás: Fekvő",
             cancel: "Mégse",
             save: "Prompt Mentése"
+        },
+        chains: {
+            tab: "Láncok",
+            newTitle: "Új lánc",
+            editTitle: "Lánc szerkesztése",
+            stepsLabel: "lépés",
+            addTemplate: "+ Meglévő prompt",
+            addCustom: "+ Egyedi prompt",
+            customPlaceholder: "Írd ide ennek a lépésnek a promptját…",
+            emptyHint: "Még nincs lánc. A lánc több promptot küld egymás után ugyanabba a beszélgetésbe, így minden lépés az előzőek válaszaira épül.",
+            note: "A láncok a NotebookLM chatben futnak. A Studio egyetlen briefből generál egyszer, ott nincs mire építenie egy későbbi lépésnek."
         },
         card: {
             custom: "Egyéni",

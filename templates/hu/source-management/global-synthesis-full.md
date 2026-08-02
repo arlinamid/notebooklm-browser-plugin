@@ -46,7 +46,7 @@ Minden témához:
 - **Valószínű ok**: Miért áll fenn ez az eltérés? (módszer, kontextus, dátum)
 
 **4. fázis: Azonosított hiányosságok**
-Milyen [USER CONTEXT] szempontjából fontos témák:
+Milyen [FELHASZNÁLÓI KONTEXTUS] szempontjából fontos témák:
 - Hiányoznak a forrásokból?
 - Szerepelnek, de kidolgozatlanok?
 - Felszínesen vannak kezelve?
@@ -65,7 +65,7 @@ Melyik felismerés jelenik meg a leggyakrabban és legkövetkezetesebben? Idézd
 
 **Felhasználói kontextus:**
 - Célom: [mit szeretnék elérni]
-- Szintem: [beginner/intermediate/advanced]
+- Szintem: [kezdő/haladó/profi]
 - Tervezett felhasználás: [tanulás / döntéshozatal / dokumentáció / egyéb]
 ```
 

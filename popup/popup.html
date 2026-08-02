@@ -126,6 +126,13 @@
       </svg>
       <span>Chat</span>
     </button>
+    <button class="pa-format-tab" data-format="chains">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+      </svg>
+      <span>Chains</span>
+    </button>
   </div>
 
   <!-- Filters Bar -->
@@ -158,6 +165,35 @@
   <div class="pa-empty" id="emptyState" style="display:none;">
     <p id="emptyMsg">No prompts found.</p>
     <button class="pa-btn-link" id="btnClearFilters">Clear filters</button>
+  </div>
+
+  <!-- Chain Editor Modal -->
+  <div class="pa-modal-overlay" id="chainOverlay" style="display:none;">
+    <div class="pa-modal">
+      <div class="pa-modal-header">
+        <h2 id="chainEditorTitle">New chain</h2>
+        <button class="pa-modal-close" id="chainClose">&times;</button>
+      </div>
+      <div class="pa-modal-body">
+        <div class="pa-form-row">
+          <label id="chLabelTitle">Title</label>
+          <input type="text" id="chTitle" placeholder="Ex: Research then summarise">
+        </div>
+        <div class="pa-form-row">
+          <label id="chLabelSteps">Steps</label>
+          <div id="chSteps" class="pa-chain-steps"></div>
+          <div class="pa-chain-add">
+            <button class="pa-btn-secondary" id="chAddTemplate">+ Existing prompt</button>
+            <button class="pa-btn-secondary" id="chAddCustom">+ Custom prompt</button>
+          </div>
+        </div>
+        <p class="pa-chain-note" id="chNote"></p>
+      </div>
+      <div class="pa-modal-footer">
+        <button class="pa-btn-secondary" id="chCancel">Cancel</button>
+        <button class="pa-btn-primary" id="chSave">Save</button>
+      </div>
+    </div>
   </div>
 
   <!-- Editor Modal -->

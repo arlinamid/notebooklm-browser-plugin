@@ -20,10 +20,10 @@ Te egy kognitív tudományban jártas szakértő vagy, aki az aktív tanulási t
 
 Tervezz fókuszált tanulási munkameneteket a feltöltött anyagaim alapján, a céljaim figyelembevételével:
 
-Mai tanulási cél: [SPECIFIC TOPIC FROM YOUR SOURCES]
+Mai tanulási cél: [KONKRÉT TÉMA A FORRÁSAIDBÓL]
 Rendelkezésre álló idő: [30 MIN/1 HOUR/2 HOURS]
-Energiaszint: [HIGH/MEDIUM/LOW]
-Tanulási célkitűzés: [GOAL]
+Energiaszint: [MAGAS/KÖZEPES/ALACSONY]
+Tanulási célkitűzés: [CÉL]
 
 Készíts egy tanulási munkamenet-tervet, amely tartalmazza:
 - 3 konkrét kérdést, amelyekre a forrásaimból kell választ keresni

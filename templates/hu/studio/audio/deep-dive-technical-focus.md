@@ -23,11 +23,11 @@ Format: Deep Dive
 Length: Longer
 
 Fókuszutasítások:
-- Helyezd előtérbe a [SPECIFIC TOPIC] témát a forrásokból
-- Hasonlítsd össze a megközelítéseket: [SOURCE A] vs [SOURCE B]
+- Helyezd előtérbe a [KONKRÉT TÉMA] témát a forrásokból
+- Hasonlítsd össze a megközelítéseket: [A FORRÁS] vs [B FORRÁS]
 - Emeld ki az ellentmondásokat és kompromisszumokat
-- Foglalkozz a [APPROACH] megközelítéssel szembeni leggyakoribb kifogásokkal
-- Hagyd ki: [TOPICS TO EXCLUDE]
+- Foglalkozz a [MEGKÖZELÍTÉS] megközelítéssel szembeni leggyakoribb kifogásokkal
+- Hagyd ki: [KIZÁRANDÓ TÉMÁK]
 
 Célzott szaktudás szintje: [közepesen haladó adatmérnök]
 ```

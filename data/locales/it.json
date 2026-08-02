@@ -71,6 +71,17 @@
       "restore": "Mostra di nuovo questo modello",
       "hidden": "Nascosto",
       "syncFull": "Salvato su questo dispositivo. Lo spazio di sincronizzazione è pieno, quindi non sarà disponibile sugli altri computer."
+    },
+    "chains": {
+      "tab": "Catene",
+      "newTitle": "Nuova catena",
+      "editTitle": "Modifica catena",
+      "stepsLabel": "passaggi",
+      "addTemplate": "+ Prompt esistente",
+      "addCustom": "+ Prompt personalizzato",
+      "customPlaceholder": "Scrivi un prompt per questo passaggio…",
+      "emptyHint": "Nessuna catena. Una catena invia più prompt nella stessa chat in ordine, così ogni passaggio si basa sulle risposte precedenti.",
+      "note": "Le catene vengono eseguite nella chat di NotebookLM. Studio genera una sola volta da un unico brief, quindi non c'è nulla su cui un passaggio successivo possa basarsi."
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "Compila",
     "slotsDismiss": "Lascia così",
     "slotsDone": "✓ Tutti i segnaposto compilati",
-    "slotsPlaceholder": "valore…"
+    "slotsPlaceholder": "valore…",
+    "chainLabel": "⛓ Catene",
+    "chainVarsTitle": "Compila prima di avviare la catena",
+    "chainVarsHint": "Usati da ogni passaggio. La catena prosegue senza fermarsi a chiedere.",
+    "chainRun": "Esegui catena",
+    "chainCancelBtn": "Annulla",
+    "chainStop": "Interrompi",
+    "chainStep": "Passaggio {i} di {n}…",
+    "chainDone": "✓ Catena completata",
+    "chainCancelled": "Interrotta",
+    "chainTimeout": "Attesa risposta scaduta"
   }
 }

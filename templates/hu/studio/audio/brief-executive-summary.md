@@ -22,7 +22,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 Format: Brief
 Length: Shorter
 
-Készíts egy 5 perces vezetői összefoglalót a következő célközönségnek: [AUDIENCE: tech leads].
+Készíts egy 5 perces vezetői összefoglalót a következő célközönségnek: [KÖZÖNSÉG: technológiai vezetők].
 
 Fókuszpontok:
 - Meghozandó kulcsdöntések

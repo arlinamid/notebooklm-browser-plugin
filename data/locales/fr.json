@@ -71,6 +71,17 @@
       "restore": "Afficher à nouveau ce modèle",
       "hidden": "Masqué",
       "syncFull": "Enregistré sur cet appareil. Le stockage de synchronisation est plein ; il n’apparaîtra pas sur vos autres ordinateurs."
+    },
+    "chains": {
+      "tab": "Chaînes",
+      "newTitle": "Nouvelle chaîne",
+      "editTitle": "Modifier la chaîne",
+      "stepsLabel": "étapes",
+      "addTemplate": "+ Prompt existant",
+      "addCustom": "+ Prompt personnalisé",
+      "customPlaceholder": "Saisissez un prompt pour cette étape…",
+      "emptyHint": "Aucune chaîne pour l’instant. Une chaîne envoie plusieurs prompts dans le même chat, dans l’ordre, afin que chaque étape s’appuie sur les réponses précédentes.",
+      "note": "Les chaînes s’exécutent dans le chat NotebookLM. Studio génère une seule fois à partir d’un brief unique, donc aucune étape suivante ne peut s’appuyer dessus."
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "Remplir",
     "slotsDismiss": "Laisser tel quel",
     "slotsDone": "✓ Tous les champs sont remplis",
-    "slotsPlaceholder": "valeur…"
+    "slotsPlaceholder": "valeur…",
+    "chainLabel": "⛓ Chaînes",
+    "chainVarsTitle": "À remplir avant l’exécution",
+    "chainVarsHint": "Utilisé à chaque étape. La chaîne s’exécute sans s’arrêter pour demander.",
+    "chainRun": "Lancer la chaîne",
+    "chainCancelBtn": "Annuler",
+    "chainStop": "Arrêter",
+    "chainStep": "Étape {i} sur {n}…",
+    "chainDone": "✓ Chaîne terminée",
+    "chainCancelled": "Arrêté",
+    "chainTimeout": "Délai d’attente dépassé"
   }
 }

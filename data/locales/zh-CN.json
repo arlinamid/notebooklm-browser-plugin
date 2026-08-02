@@ -71,6 +71,17 @@
       "restore": "再次显示此模板",
       "hidden": "已隐藏",
       "syncFull": "已保存到此设备。同步存储已满，无法同步到其他电脑。"
+    },
+    "chains": {
+      "tab": "链",
+      "newTitle": "新建链",
+      "editTitle": "编辑链",
+      "stepsLabel": "步骤",
+      "addTemplate": "+ 现有提示词",
+      "addCustom": "+ 自定义提示词",
+      "customPlaceholder": "输入此步骤的提示词…",
+      "emptyHint": "还没有链。链会按顺序将多个提示发送到同一个聊天中，让每一步都基于之前的回答继续。",
+      "note": "链在 NotebookLM 聊天中运行。Studio 只会根据一份简报生成一次，因此没有后续步骤可继续构建。"
     }
   },
   "templates": {
@@ -1132,6 +1143,16 @@
     "slotsApply": "填写",
     "slotsDismiss": "保持原样",
     "slotsDone": "✓ 所有占位符已填写",
-    "slotsPlaceholder": "值…"
+    "slotsPlaceholder": "值…",
+    "chainLabel": "⛓ 链",
+    "chainVarsTitle": "运行链前填写",
+    "chainVarsHint": "每个步骤都会使用这些内容。链会连续运行，不会中途询问。",
+    "chainRun": "运行链",
+    "chainCancelBtn": "取消",
+    "chainStop": "停止",
+    "chainStep": "第 {i}/{n} 步…",
+    "chainDone": "✓ 链已完成",
+    "chainCancelled": "已停止",
+    "chainTimeout": "等待回答超时"
   }
 }

@@ -55,6 +55,17 @@
       "cancel": "Cancel",
       "save": "Save Prompt"
     },
+    "chains": {
+      "tab": "Chains",
+      "newTitle": "New chain",
+      "editTitle": "Edit chain",
+      "stepsLabel": "steps",
+      "addTemplate": "+ Existing prompt",
+      "addCustom": "+ Custom prompt",
+      "customPlaceholder": "Type a prompt for this step…",
+      "emptyHint": "No chains yet. A chain sends several prompts into the same chat in order, so each step builds on the answers before it.",
+      "note": "Chains run in the NotebookLM chat. Studio generates once from a single brief, so there is nothing for a later step to build on."
+    },
     "card": {
       "custom": "Custom",
       "copy": "Copy",
@@ -89,7 +100,17 @@
     "slotsApply": "Fill in",
     "slotsDismiss": "Leave as is",
     "slotsDone": "✓ All placeholders filled",
-    "slotsPlaceholder": "value…"
+    "slotsPlaceholder": "value…",
+    "chainLabel": "⛓ Chains",
+    "chainVarsTitle": "Fill in before the chain runs",
+    "chainVarsHint": "These are used by every step. The chain runs without stopping to ask.",
+    "chainRun": "Run chain",
+    "chainCancelBtn": "Cancel",
+    "chainStop": "Stop",
+    "chainStep": "Step {i} of {n}…",
+    "chainDone": "✓ Chain finished",
+    "chainCancelled": "Stopped",
+    "chainTimeout": "Gave up waiting for an answer"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

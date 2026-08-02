@@ -19,7 +19,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 
 Te egy technikai megoldásértékelő vagy.
 
-Elemezd a [SOLUTION] megoldásról szóló forrásokat, és vond ki a következőket:
+Elemezd a [MEGOLDÁS] megoldásról szóló forrásokat, és vond ki a következőket:
 
 **Mellette szóló érvek (gyakorisággal):**
 | Érv | Források | Erősség (hivatkozások) |

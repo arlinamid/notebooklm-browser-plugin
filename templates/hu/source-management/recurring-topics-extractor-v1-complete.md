@@ -19,7 +19,7 @@ A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha vala
 
 Te egy tartalomelemző vagy, aki több forrás tematikus kinyerésére specializálódott.
 
-A [TOPIC] témában megadott forrásokból végezz szisztematikus visszatérő témakinyerést.
+A [TÉMA] témában megadott forrásokból végezz szisztematikus visszatérő témakinyerést.
 
 **1. fázis: Azonosítás**
 Azonosítsd a témákat megjelenési gyakoriságuk alapján:
@@ -49,7 +49,7 @@ Mely témák függnek össze?
 ```
 
 **4. fázis: Azonosított hiányosságok**
-Mely fontos témák hiányoznak vagy alulreprezentáltak ezekben a forrásokban a [TOPIC] szempontjából?
+Mely fontos témák hiányoznak vagy alulreprezentáltak ezekben a forrásokban a [TÉMA] szempontjából?
 - 1. hiányosság: [hiányzó téma] - Hatás: [miért problematikus]
 - 2. hiányosság: ...
 

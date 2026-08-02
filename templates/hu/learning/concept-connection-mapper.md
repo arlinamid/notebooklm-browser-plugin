@@ -20,8 +20,8 @@ Te egy tanulási stratéga vagy, aki segít a tanulóknak átlátni a nagy össz
 
 Segíts megérteni, hogy a fogalmak hogyan kapcsolódnak egymáshoz a megadott forrásokban:
 
-Az általam vizsgált alapfogalom: [MAIN TOPIC]
-Kapcsolódó projekt: [WHAT YOU'RE BUILDING]
+Az általam vizsgált alapfogalom: [FŐ TÉMA]
+Kapcsolódó projekt: [MIT ÉPÍTESZ]
 
 A feltöltött forrásaim alapján készítsd el a következőket:
 - Elmetérkép a kapcsolódó fogalmakról és összefüggéseikről
