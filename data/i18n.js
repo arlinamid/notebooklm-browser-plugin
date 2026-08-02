@@ -6,6 +6,8 @@ const I18N = {
         newPrompt: "New Prompt",
         noPrompts: "No prompts found matching your criteria.",
         clearFilters: "Clear filters",
+        expandMenu: "Expand menu",
+        collapseMenu: "Collapse menu",
         formats: {
             'slide-deck': 'Slides',
             'audio-overview': 'Audio',
@@ -89,6 +91,8 @@ const I18N = {
         newPrompt: "Új Prompt",
         noPrompts: "Nem található a feltételeknek megfelelő prompt.",
         clearFilters: "Szűrők törlése",
+        expandMenu: "Menü kinyitása",
+        collapseMenu: "Menü összecsukása",
         formats: {
             'slide-deck': 'Diák',
             'audio-overview': 'Hang',

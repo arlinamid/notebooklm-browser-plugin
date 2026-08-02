@@ -82,7 +82,9 @@
       "customPlaceholder": "Prompt für diesen Schritt eingeben…",
       "emptyHint": "Noch keine Ketten. Eine Kette sendet mehrere Prompts nacheinander in denselben Chat, sodass jeder Schritt auf den vorherigen Antworten aufbaut.",
       "note": "Ketten laufen im NotebookLM-Chat. Studio generiert einmal aus einem einzigen Briefing, daher gibt es für spätere Schritte nichts, worauf sie aufbauen können."
-    }
+    },
+    "expandMenu": "Menü ausklappen",
+    "collapseMenu": "Menü einklappen"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

@@ -82,7 +82,9 @@
       "customPlaceholder": "Scrivi un prompt per questo passaggio…",
       "emptyHint": "Nessuna catena. Una catena invia più prompt nella stessa chat in ordine, così ogni passaggio si basa sulle risposte precedenti.",
       "note": "Le catene vengono eseguite nella chat di NotebookLM. Studio genera una sola volta da un unico brief, quindi non c'è nulla su cui un passaggio successivo possa basarsi."
-    }
+    },
+    "expandMenu": "Espandi menu",
+    "collapseMenu": "Comprimi menu"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

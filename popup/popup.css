@@ -68,9 +68,12 @@
 
 body {
   width: 720px;   /* Chrome allows up to 800; reviewers asked for a larger panel */
-  min-height: 500px;
-  max-height: 600px;
-  overflow-y: auto;
+  /* Fixed height with the page itself locked: the format rail and the filter bar
+     are navigation, so they must stay put while the results scroll under them. */
+  height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -78,15 +81,41 @@ body {
   line-height: 1.4;
 }
 
-body::-webkit-scrollbar {
+/* Rail + main column. min-height:0 lets the children own the overflow instead
+   of the flex item stretching to fit its content. */
+.pa-body {
+  position: relative;   /* positioning context for the overlaying rail */
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Only the collapsed rail width is reserved. The expanded rail floats over the
+   cards, so opening the menu never reflows the grid underneath it. */
+.pa-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  margin-left: 56px;
+}
+
+.pa-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.pa-scroll::-webkit-scrollbar {
   width: 6px;
 }
 
-body::-webkit-scrollbar-track {
+.pa-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
+.pa-scroll::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 3px;
 }
@@ -135,22 +164,42 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Language picker — a two-button toggle no longer fits 12 languages */
-.pa-lang-select {
-  padding: 4px 8px;
+.pa-lang-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px 4px 8px;
   border-radius: var(--radius-xs);
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
+  max-width: 130px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pa-lang-wrap:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pa-lang-icon {
+  flex-shrink: 0;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.pa-lang-select {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
   font-size: 11px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   outline: none;
-  max-width: 110px;
-}
-
-.pa-lang-select:hover {
-  background: rgba(255, 255, 255, 0.2);
+  min-width: 0;
+  max-width: 100px;
 }
 
 /* The native dropdown list renders on the OS surface, so it needs readable
@@ -185,30 +234,129 @@ body::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* === Format Tabs === */
+/* === Format rail (collapsible icon column) === */
+/* Eleven formats never fit across 720px, so the horizontal strip needed arrows
+   and hid half the list. Collapsed it is an icon column; hover, keyboard focus
+   or the toggle opens it over the cards.
+   The 174px open width is measured, not guessed: it leaves 87px for the label,
+   and the widest one-line label across the 12 UI languages is Russian
+   "Инфографика" at 80px. Japanese "インフォグラフィック" (119px) is the only one that
+   still wraps, and CJK wraps cleanly without hyphenation. */
 .pa-format-tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 30;
+  width: 56px;
   display: flex;
-  padding: 8px 12px;
-  gap: 4px;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 8px 12px;
   background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  transition: width 0.18s ease, box-shadow 0.18s ease;
+  scrollbar-width: none;
 }
 
-.pa-format-tab {
+/* :focus-within keeps the labels reachable by keyboard, where :hover never fires */
+.pa-format-tabs:hover,
+.pa-format-tabs:focus-within,
+.pa-format-tabs.expanded {
+  width: 174px;
+  overflow-y: auto;
+  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.3);
+}
+
+.pa-format-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Toggle pins the rail open for users who want the labels permanently */
+.pa-rail-toggle {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 7px 14px;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pa-rail-toggle:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.pa-rail-ico-close {
+  display: none;
+}
+
+.pa-format-tabs.expanded .pa-rail-ico-open {
+  display: none;
+}
+
+.pa-format-tabs.expanded .pa-rail-ico-close {
+  display: block;
+}
+
+/* Collapsed: icon centred, no gap to offset it. Opened: icon, label, count. */
+.pa-format-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  padding: 9px 8px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 500;
+  font-family: inherit;
+  text-align: left;
   cursor: pointer;
   border-radius: var(--radius-sm);
-  white-space: nowrap;
-  transition: all 0.15s;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pa-format-tabs:hover .pa-format-tab,
+.pa-format-tabs:focus-within .pa-format-tab,
+.pa-format-tabs.expanded .pa-format-tab {
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 8px 10px;
+}
+
+.pa-format-tab svg {
+  flex-shrink: 0;
+}
+
+/* Hidden while collapsed so the icon can centre in 56px. Wrap rather than clip
+   when shown — a truncated navigation label is unrecoverable without a tooltip,
+   and the rail has the vertical room for the rare second line. */
+.pa-tab-label {
+  display: none;
+  min-width: 0;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+.pa-format-tabs:hover .pa-tab-label,
+.pa-format-tabs:focus-within .pa-tab-label,
+.pa-format-tabs.expanded .pa-tab-label,
+.pa-format-tabs:hover .pa-tab-count,
+.pa-format-tabs:focus-within .pa-tab-count,
+.pa-format-tabs.expanded .pa-tab-count {
+  display: block;
 }
 
 .pa-format-tab:hover {
@@ -222,23 +370,65 @@ body::-webkit-scrollbar-thumb {
   font-weight: 600;
 }
 
+/* Active marker on the rail edge, so the selection reads at a glance */
+.pa-format-tab.active::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+}
+
+.pa-format-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Live result count — shows where the current search/filter actually hits,
+   so an empty tab is obvious before you click it. */
+.pa-tab-count {
+  display: none;
+  margin-left: auto;
+  flex-shrink: 0;
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: 9px;
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 14px;
+}
+
+.pa-format-tab.active .pa-tab-count {
+  background: rgba(168, 199, 250, 0.22);
+  color: var(--accent);
+}
+
+.pa-format-tab.is-empty {
+  opacity: 0.45;
+}
+
 /* === Filters === */
 .pa-filters {
+  flex: 0 0 auto;   /* stays above the scroll region, never squashed by it */
   padding: 8px 12px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
 }
 
+/* Wrapped, not scrolled. The row previously scrolled sideways with the
+   scrollbar hidden, so categories past the fold were effectively invisible. */
 .pa-filter-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
-  overflow-x: auto;
   padding-bottom: 6px;
-  scrollbar-width: none;
-}
-
-.pa-filter-row::-webkit-scrollbar {
-  display: none;
 }
 
 .pa-filter-chip {
@@ -322,20 +512,24 @@ body::-webkit-scrollbar-thumb {
   background: var(--bg-secondary);
 }
 
-/* === Cards === */
+/* === Cards (bento grid) === */
+/* Two columns turn the reclaimed rail width into a second card per row, which
+   roughly doubles how many prompts you can compare without scrolling. */
 .pa-cards {
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  padding: 10px 12px 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .pa-card {
+  display: flex;
+  flex-direction: column;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 12px;
-  transition: all 0.2s;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
   cursor: default;
 }
 
@@ -344,10 +538,13 @@ body::-webkit-scrollbar-thumb {
   background: var(--bg-hover);
 }
 
+/* Title above badges: side by side there is not enough room in a half-width
+   tile, and the title is what you actually scan for. */
 .pa-card-top {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 6px;
   margin-bottom: 6px;
 }
 
@@ -356,14 +553,12 @@ body::-webkit-scrollbar-thumb {
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.3;
-  flex: 1;
-  margin-right: 8px;
 }
 
 .pa-card-badges {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
-  flex-shrink: 0;
 }
 
 .pa-badge {
@@ -450,13 +645,19 @@ body::-webkit-scrollbar-thumb {
   font-style: italic;
 }
 
+/* margin-top:auto keeps the buttons on the bottom edge whatever the description
+   length, so the action row lines up across a whole row of tiles. */
 .pa-card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
+  margin-top: auto;
+  padding-top: 2px;
 }
 
 .pa-btn-apply {
   flex: 1;
+  min-width: 88px;
   padding: 7px 12px;
   background: var(--accent-dim);
   border: 1px solid rgba(168, 199, 250, 0.3);

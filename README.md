@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated prompt templates in 12 languages directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![12 languages](https://img.shields.io/badge/Languages-12-orange.svg)](#-internationalization)
@@ -36,7 +36,7 @@
   <tr>
     <td align="center" width="50%">
       <img src="docs/screenshots/popup-initial.png" alt="Popup UI" width="100%">
-      <em>Clean popup UI with format tabs, search, and filters</em>
+      <em>Clean popup UI with format rail, search, and filters</em>
     </td>
     <td align="center" width="50%">
       <img src="docs/screenshots/notebook-studio.png" alt="NotebookLM Studio" width="100%">
@@ -102,7 +102,7 @@ Navigate to [notebooklm.google.com](https://notebooklm.google.com) — the exten
 ### Using the Popup
 
 1. **Open the popup** by clicking the extension icon in the Chrome toolbar
-2. **Select a format tab** (Audio · Video · Slides · Configure · Cards · Quiz · Report · Table · Chat)
+2. **Pick a format** from the left-hand rail (Audio · Video · Slides · Configure · Cards · Quiz · Report · Table · Chat · Chains). Hover or pin it open to see labels and live result counts
 3. **Filter by category** using the chip buttons (Studio, Professional, Learning, etc.)
 4. **Search** by typing in the search bar
 5. Click **Apply** to paste the prompt directly into the active NotebookLM panel
@@ -119,7 +119,7 @@ When you open a Studio panel in NotebookLM (e.g., "Customize Audio Overview"):
 
 ### Switching Languages
 
-Click **EN** or **HU** in the popup header to switch between English and Hungarian. All UI labels and template content update instantly.
+Use the language picker (globe icon) in the popup header. All UI labels and template content update instantly across the 12 supported languages.
 
 ### Creating Custom Prompts
 
@@ -250,6 +250,12 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.6.0] — 2026-08-02
+- 📐 **Collapsible format rail** — icon column that opens on hover/focus or pins open; replaces the cramped horizontal tab strip
+- **Two-column card grid** and sticky filters — only the results scroll
+- Live **per-format result counts** on the rail
+- 🌐 Globe icon beside the language picker
 
 ### [v1.5.0] — 2026-08-02
 - ⛓ **Prompt chains** — several prompts sent into the same chat in order, each building on the answers before it. Steps can be existing prompts or one-offs; variables are filled once before the run.

@@ -82,7 +82,9 @@
       "customPlaceholder": "이 단계의 프롬프트 입력…",
       "emptyHint": "아직 체인이 없습니다. 체인은 같은 채팅에 여러 프롬프트를 순서대로 보내 각 단계가 이전 답변을 바탕으로 이어집니다.",
       "note": "체인은 NotebookLM 채팅에서 실행됩니다. Studio는 하나의 브리프로 한 번만 생성하므로 이후 단계가 이어받을 내용이 없습니다."
-    }
+    },
+    "expandMenu": "메뉴 펼치기",
+    "collapseMenu": "메뉴 접기"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

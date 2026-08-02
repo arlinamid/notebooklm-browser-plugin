@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] — 2026-08-02
+
+### Changed
+- 📐 **Popup layout rebuilt around a collapsible format rail.** Eleven formats never fit across
+  720 px as a horizontal strip — half the list hid behind arrows. Formats are now a left-hand icon
+  column that opens on hover, keyboard focus, or a pin toggle (preference saved). Opening the menu
+  floats over the cards instead of reflowing them.
+- **Two-column card grid.** The width reclaimed from the rail becomes a second card per row, so more
+  prompts are comparable without scrolling. Titles sit above badges so half-width tiles stay readable.
+- **Only the results scroll.** The format rail and the filter bar stay put; the card list scrolls
+  underneath. Category chips wrap instead of scrolling sideways with a hidden scrollbar.
+- 🌐 **Globe icon beside the language picker**, so the control reads as language at a glance rather
+  than a bare code dropdown.
+
+### Added
+- Live **per-format result counts** on the rail. Every filter except format is applied, so the numbers
+  answer "where else does my search hit?" — empty tabs dim before you click them.
+
 ## [1.5.0] — 2026-08-02
 
 ### Added

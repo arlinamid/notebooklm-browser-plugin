@@ -82,7 +82,9 @@
       "customPlaceholder": "このステップのプロンプトを入力…",
       "emptyHint": "チェーンはまだありません。チェーンは複数のプロンプトを同じチャットに順番に送り、各ステップが前の回答をもとに進みます。",
       "note": "チェーンはNotebookLMチャットで実行されます。Studioは1つのブリーフから一度だけ生成するため、後続ステップが積み上げる内容はありません。"
-    }
+    },
+    "expandMenu": "メニューを展開",
+    "collapseMenu": "メニューを折りたたむ"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

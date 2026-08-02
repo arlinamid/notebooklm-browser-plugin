@@ -82,7 +82,9 @@
       "customPlaceholder": "输入此步骤的提示词…",
       "emptyHint": "还没有链。链会按顺序将多个提示发送到同一个聊天中，让每一步都基于之前的回答继续。",
       "note": "链在 NotebookLM 聊天中运行。Studio 只会根据一份简报生成一次，因此没有后续步骤可继续构建。"
-    }
+    },
+    "expandMenu": "展开菜单",
+    "collapseMenu": "收起菜单"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

@@ -83,7 +83,9 @@
       "settings": "Settings",
       "edit": "Edit",
       "delete": "Delete"
-    }
+    },
+    "expandMenu": "Expand menu",
+    "collapseMenu": "Collapse menu"
   },
   "content": {
     "sectionLabel": "Prompt Template",

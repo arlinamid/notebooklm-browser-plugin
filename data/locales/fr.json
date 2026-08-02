@@ -82,7 +82,9 @@
       "customPlaceholder": "Saisissez un prompt pour cette étape…",
       "emptyHint": "Aucune chaîne pour l’instant. Une chaîne envoie plusieurs prompts dans le même chat, dans l’ordre, afin que chaque étape s’appuie sur les réponses précédentes.",
       "note": "Les chaînes s’exécutent dans le chat NotebookLM. Studio génère une seule fois à partir d’un brief unique, donc aucune étape suivante ne peut s’appuyer dessus."
-    }
+    },
+    "expandMenu": "Développer le menu",
+    "collapseMenu": "Réduire le menu"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

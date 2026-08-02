@@ -109,6 +109,9 @@ let editingPrompt = null;
 // copying a built-in, editing it, and being left with both in the list.
 let hiddenTemplates = [];
 let showHidden = false;
+// Rail pinned open by the toggle. Unpinned it is an icon column that opens on
+// hover or keyboard focus.
+let railPinned = false;
 
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', async () => {
@@ -118,9 +121,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Prompts come from the sharded store, which also migrates the pre-1.4
     // single-key layout and the even older local-only one.
-    const stored = await chrome.storage.sync.get(['language', 'migrationDone']);
+    const stored = await chrome.storage.sync.get(['language', 'migrationDone', 'railPinned']);
     const localData = await chrome.storage.local.get(['language']);
     language = stored.language || localData.language || 'en';
+    railPinned = stored.railPinned === true;
 
     hiddenTemplates = (await chrome.storage.sync.get('hiddenTemplates')).hiddenTemplates || [];
     userPrompts = await paLoadPrompts();
@@ -170,17 +174,44 @@ function initUI() {
     tabsContainer.querySelectorAll('.pa-format-tab').forEach(tab => {
         tab.classList.toggle('active', tab.dataset.format === activeFormat);
         // Update label
-        const span = tab.querySelector('span');
+        const span = tab.querySelector('.pa-tab-label');
         if (tab.dataset.format === 'chains' && span) span.textContent = t.chains.tab;
         else if (span && t.formats[tab.dataset.format]) {
             span.textContent = t.formats[tab.dataset.format];
         }
-        tab.addEventListener('click', () => {
+        // Collapsed, the icon is all there is — the tooltip has to name it
+        if (span) tab.title = span.textContent;
+        // onclick, not addEventListener: initUI() runs again on language change and
+        // on "clear filters", and listeners would otherwise stack up per call.
+        tab.onclick = (e) => {
             activeFormat = tab.dataset.format;
             tabsContainer.querySelectorAll('.pa-format-tab').forEach(t2 => t2.classList.toggle('active', t2.dataset.format === activeFormat));
+            // Same reason as the rail toggle: a clicked tab keeps focus, which
+            // would leave an unpinned rail covering the results it just filtered.
+            if (e.detail > 0) tab.blur();
             render();
-        });
+        };
     });
+
+    // Rail toggle. Hover and focus already open the rail; this pins it so the
+    // labels stay up for users who do not want to hover every time.
+    const rail = document.getElementById('formatTabs');
+    const railBtn = document.getElementById('railToggle');
+    const paintRail = () => {
+        rail.classList.toggle('expanded', railPinned);
+        railBtn.setAttribute('aria-expanded', String(railPinned));
+        railBtn.title = railPinned ? t.collapseMenu : t.expandMenu;
+    };
+    railBtn.onclick = (e) => {
+        railPinned = !railPinned;
+        chrome.storage.sync.set({ railPinned });
+        paintRail();
+        // A mouse click leaves focus on the button, and :focus-within would hold
+        // the rail open — so collapsing would appear to do nothing. Keyboard
+        // activation reports detail 0 and keeps focus, which is what we want there.
+        if (e.detail > 0 && !railPinned) railBtn.blur();
+    };
+    paintRail();
 
     // Category chips
     const catContainer = document.getElementById('categoryFilters');
@@ -261,17 +292,13 @@ function initUI() {
         if (e.key === 'Escape') aboutOverlay.classList.remove('open');
     });
 
-    // Clear filters
-    document.getElementById('btnClearFilters').onclick = () => {
-        activeCategory = 'all';
-        activeLevel = 'all';
-        searchQuery = '';
-        initUI();
-        render();
-    };
+    // Clear filters. The button doubles as the chains empty-state action, so the
+    // handler lives in a named function that render() can restore.
+    document.getElementById('btnClearFilters').onclick = clearFilters;
 
     // Empty state text
     document.getElementById('emptyMsg').textContent = t.noPrompts;
+    document.getElementById('btnClearFilters').textContent = t.clearFilters;
 
     // Editor labels
     document.getElementById('editorTitle').textContent = t.editor.createTitle;
@@ -337,10 +364,51 @@ function languageTemplates() {
 }
 
 // ===== Render =====
+function clearFilters() {
+    activeCategory = 'all';
+    activeLevel = 'all';
+    searchQuery = '';
+    initUI();
+    render();
+}
+
+// Live per-format counts on the rail. Every filter except the format itself is
+// applied, so the numbers answer "where else does my search hit?" — you can see
+// a tab is empty instead of clicking it to find out.
+function updateFormatCounts() {
+    const pool = [...userPrompts, ...languageTemplates().map(localized)]
+        .filter(p => showHidden || p.isUserDefined || !hiddenTemplates.includes(p.id));
+
+    const q = searchQuery.toLowerCase();
+    const counts = {};
+    pool.forEach(p => {
+        if (activeCategory !== 'all' && p.category !== activeCategory) return;
+        if (activeLevel !== 'all' && p.level !== activeLevel) return;
+        if (q && !p.title.toLowerCase().includes(q) && !p.description.toLowerCase().includes(q)) return;
+        const fmt = p.format || 'text-chat';
+        counts[fmt] = (counts[fmt] || 0) + 1;
+    });
+    counts.chains = chains.length;   // chains carry no category/level of their own
+
+    document.querySelectorAll('#formatTabs .pa-format-tab').forEach(tab => {
+        const n = counts[tab.dataset.format] || 0;
+        let badge = tab.querySelector('.pa-tab-count');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'pa-tab-count';
+            tab.appendChild(badge);
+        }
+        badge.textContent = n;
+        // Never dim the tab you are looking at — that would read as disabled
+        tab.classList.toggle('is-empty', n === 0 && tab.dataset.format !== activeFormat);
+    });
+}
+
 function render() {
     const t = strings();
     // Chains are a mode of their own, not a template format
     if (activeFormat === 'chains') { renderChains(); return; }
+    updateFormatCounts();
 
     const langTemplates = languageTemplates();
     // Swap in translated titles/descriptions before filtering, so search matches
@@ -365,6 +433,10 @@ function render() {
 
     if (filtered.length === 0) {
         container.innerHTML = '';
+        document.getElementById('emptyMsg').textContent = t.noPrompts;
+        const btn = document.getElementById('btnClearFilters');
+        btn.textContent = t.clearFilters;
+        btn.onclick = clearFilters;
         empty.style.display = 'block';
         return;
     }
@@ -645,6 +717,9 @@ async function loadChains() {
 
 function renderChains() {
     const t = strings();
+    // Called directly after save/delete as well as through render(), so the rail
+    // count is refreshed here rather than only on the render() path.
+    updateFormatCounts();
     const container = document.getElementById('cardsContainer');
     const empty = document.getElementById('emptyState');
     container.innerHTML = '';
@@ -652,6 +727,10 @@ function renderChains() {
     if (!chains.length) {
         empty.style.display = 'block';
         document.getElementById('emptyMsg').textContent = t.chains.emptyHint;
+        // Nothing is filtered here — the useful action is to build the first chain
+        const btn = document.getElementById('btnClearFilters');
+        btn.textContent = t.chains.newTitle;
+        btn.onclick = () => openChainEditor(null);
         return;
     }
     empty.style.display = 'none';

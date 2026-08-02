@@ -82,7 +82,9 @@
       "customPlaceholder": "Digite um prompt para esta etapa…",
       "emptyHint": "Nenhuma sequência ainda. Uma sequência envia vários prompts ao mesmo chat em ordem, para cada etapa se basear nas respostas anteriores.",
       "note": "As sequências rodam no chat do NotebookLM. O Studio gera uma vez a partir de um único resumo, então não há nada para uma etapa posterior aproveitar."
-    }
+    },
+    "expandMenu": "Expandir menu",
+    "collapseMenu": "Recolher menu"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {
