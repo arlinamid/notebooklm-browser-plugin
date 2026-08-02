@@ -525,5 +525,22 @@
       "title": "Editorial Amarelo x Preto",
       "description": "Design editorial de moda, pop e chique"
     }
+  },
+  "content": {
+    "sectionLabel": "Modelo de prompt",
+    "placeholder": "Selecione um modelo de prompt...",
+    "customGroup": "── Prompts personalizados ──",
+    "builtinGroup": "── Modelos integrados ──",
+    "applied": "✓ Aplicado!",
+    "chatLabel": "📚 Modelos",
+    "savePrompt": "Salvar texto atual como modelo",
+    "saved": "✓ Salvo!",
+    "namePrompt": "Digite um nome para este modelo de prompt:",
+    "slotsTitle": "Campos a preencher: {n}",
+    "slotsHint": "O Studio gera de uma só vez — não pode perguntar por eles.",
+    "slotsApply": "Preencher",
+    "slotsDismiss": "Deixar como está",
+    "slotsDone": "✓ Todos os campos preenchidos",
+    "slotsPlaceholder": "valor…"
   }
 }

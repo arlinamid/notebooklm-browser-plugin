@@ -69,6 +69,23 @@
       "delete": "Delete"
     }
   },
+  "content": {
+    "sectionLabel": "Prompt Template",
+    "placeholder": "Select a prompt template...",
+    "customGroup": "── Custom Prompts ──",
+    "builtinGroup": "── Built-in Templates ──",
+    "applied": "✓ Applied!",
+    "chatLabel": "📚 Templates",
+    "savePrompt": "Save current text as Template",
+    "saved": "✓ Saved!",
+    "namePrompt": "Enter a name for this prompt template:",
+    "slotsTitle": "Placeholders still to fill: {n}",
+    "slotsHint": "Studio generates in one shot — it cannot ask you for these.",
+    "slotsApply": "Fill in",
+    "slotsDismiss": "Leave as is",
+    "slotsDone": "✓ All placeholders filled",
+    "slotsPlaceholder": "value…"
+  },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {
       "title": "Custom Audio Overview with Debate",

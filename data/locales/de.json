@@ -1334,5 +1334,22 @@
       "grounding": "style",
       "slotRule": false
     }
+  },
+  "content": {
+    "sectionLabel": "Prompt-Vorlage",
+    "placeholder": "Prompt-Vorlage auswählen...",
+    "customGroup": "── Eigene Prompts ──",
+    "builtinGroup": "── Integrierte Vorlagen ──",
+    "applied": "✓ Angewendet!",
+    "chatLabel": "📚 Vorlagen",
+    "savePrompt": "Aktuellen Text als Vorlage speichern",
+    "saved": "✓ Gespeichert!",
+    "namePrompt": "Name für diese Prompt-Vorlage:",
+    "slotsTitle": "Offene Platzhalter: {n}",
+    "slotsHint": "Studio generiert in einem Durchgang – es kann diese nicht abfragen.",
+    "slotsApply": "Ausfüllen",
+    "slotsDismiss": "So lassen",
+    "slotsDone": "✓ Alle Platzhalter ausgefüllt",
+    "slotsPlaceholder": "Wert…"
   }
 }

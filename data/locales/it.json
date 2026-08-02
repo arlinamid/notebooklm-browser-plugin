@@ -525,5 +525,22 @@
       "title": "Editoriale giallo x nero",
       "description": "Design editoriale fashion, pop e chic"
     }
+  },
+  "content": {
+    "sectionLabel": "Template prompt",
+    "placeholder": "Seleziona un template prompt...",
+    "customGroup": "── Prompt personalizzati ──",
+    "builtinGroup": "── Template integrati ──",
+    "applied": "✓ Applicato!",
+    "chatLabel": "📚 Template",
+    "savePrompt": "Salva testo attuale come template",
+    "saved": "✓ Salvato!",
+    "namePrompt": "Inserisci un nome per questo template prompt:",
+    "slotsTitle": "Segnaposto ancora da compilare: {n}",
+    "slotsHint": "Studio genera in un solo passaggio — non può chiederteli.",
+    "slotsApply": "Compila",
+    "slotsDismiss": "Lascia così",
+    "slotsDone": "✓ Tutti i segnaposto compilati",
+    "slotsPlaceholder": "valore…"
   }
 }

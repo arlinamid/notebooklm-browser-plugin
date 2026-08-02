@@ -66,7 +66,7 @@ const I18N = {
         savePrompt: 'Save current text as Template',
         saved: '✓ Saved!',
         namePrompt: 'Enter a name for this prompt template:',
-        slotsTitle: n => `${n} placeholder${n > 1 ? 's' : ''} still to fill`,
+        slotsTitle: 'Placeholders still to fill: {n}',
         slotsHint: 'Studio generates in one shot — it cannot ask you for these.',
         slotsApply: 'Fill in',
         slotsDismiss: 'Leave as is',
@@ -83,7 +83,7 @@ const I18N = {
         savePrompt: 'Jelenlegi szöveg mentése sablonként',
         saved: '✓ Mentve!',
         namePrompt: 'Add meg a prompt sablon nevét:',
-        slotsTitle: n => `${n} kitöltendő hely maradt`,
+        slotsTitle: 'Kitöltendő helyek: {n}',
         slotsHint: 'A Studio egy lépésben generál — ezeket nem fogja megkérdezni.',
         slotsApply: 'Kitöltés',
         slotsDismiss: 'Maradjon így',
@@ -91,6 +91,15 @@ const I18N = {
         slotsPlaceholder: 'érték…'
     }
 };
+
+/**
+ * Injected-UI strings. I18N only carries en and hu; any other language falls
+ * back to English rather than throwing — reading I18N['de'].chatLabel used to
+ * kill the whole injection with "Cannot read properties of undefined".
+ */
+function uiStrings() {
+    return (locale && locale.content) || I18N[language] || I18N.en;
+}
 
 // ===== Placeholder slots =====
 // Studio panels generate in a single shot: there is no conversation, so an
@@ -435,7 +444,7 @@ function detectDialogFormat(textarea) {
 
 // ===== Create Template Section (using NLM classes) =====
 function createTemplateSection(templates, textarea, format) {
-    const t = I18N[language];
+    const t = uiStrings();
 
     const section = document.createElement('div');
     section.className = 'pa-injected';
@@ -524,7 +533,7 @@ function createTemplateSection(templates, textarea, format) {
             }
             setNativeValue(textarea, withOutputLanguage(text, format));
             textarea.focus();
-            flashToast(I18N[language].applied);
+            flashToast(uiStrings().applied);
             // Studio generates in one shot — surface any [SLOTS] before Generate
             refreshSlotPanel(section, textarea, template.paSlots);
             watchSlots(section, textarea);
@@ -560,7 +569,7 @@ function createTemplateSection(templates, textarea, format) {
 // Rendered right under the template dropdown whenever the applied text still
 // has [SLOTS]. Filling one substitutes every occurrence in the textarea.
 function refreshSlotPanel(host, textarea, known) {
-    const t = I18N[language];
+    const t = uiStrings();
     let panel = host.querySelector(':scope > .pa-slots');
     // Remember the list so later re-renders (manual edits) keep using it
     if (known) host.dataset.paSlots = JSON.stringify(known);
@@ -593,7 +602,7 @@ function refreshSlotPanel(host, textarea, known) {
 
     const head = document.createElement('div');
     head.className = 'pa-slots-head';
-    head.innerHTML = `<span class="pa-slots-title">⚠ ${t.slotsTitle(slots.length)}</span>
+    head.innerHTML = `<span class="pa-slots-title">⚠ ${String(t.slotsTitle).replace('{n}', slots.length)}</span>
         <span class="pa-slots-hint">${t.slotsHint}</span>`;
     panel.appendChild(head);
 
@@ -696,7 +705,7 @@ function injectChatButton() {
     const templates = getTemplatesForFormat('text-chat');
     if (templates.length === 0) return;
 
-    const t = I18N[language];
+    const t = uiStrings();
     const wrapper = document.createElement('div');
     wrapper.className = 'pa-chat-injected';
 
@@ -771,7 +780,7 @@ function injectChatButton() {
             setNativeValue(live, withOutputLanguage(template.prompt, 'text-chat'));
             live.focus();
             select.selectedIndex = 0;
-            flashToast(I18N[language].applied);
+            flashToast(uiStrings().applied);
             refreshSlotPanel(wrapper, live, template.paSlots);
             watchSlots(wrapper, live);
         }
@@ -824,7 +833,7 @@ async function saveCurrentInput(textarea, format) {
     const textVal = textarea.value.trim();
     if (!textVal) return;
 
-    const t = I18N[language];
+    const t = uiStrings();
     const title = await showSaveModal("My Custom Prompt");
     if (!title) return; // Cancelled
 
@@ -854,7 +863,7 @@ async function saveCurrentInput(textarea, format) {
 
 function showSaveModal(defaultTitle) {
     return new Promise((resolve) => {
-        const t = I18N[language];
+        const t = uiStrings();
 
         let existing = document.getElementById('pa-save-modal');
         if (existing) existing.remove();
@@ -1185,7 +1194,7 @@ async function applyFromPopup(msg) {
         || document.querySelector('.pa-chat-injected');
     if (host) { refreshSlotPanel(host, textarea); watchSlots(host, textarea); }
 
-    flashToast(I18N[language].applied);
+    flashToast(uiStrings().applied);
     return { success: true };
 }
 

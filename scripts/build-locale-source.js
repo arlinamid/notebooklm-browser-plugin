@@ -124,11 +124,24 @@ for (const t of en) {
   };
 }
 
+// The content script has its own small set of injected-UI strings, separate
+// from the popup's. They live in content/content.js; pull the English set out
+// so it gets translated with everything else.
+function readContentStrings() {
+  const src = fs.readFileSync(path.join(ROOT, 'content', 'content.js'), 'utf8');
+  const start = src.indexOf('const I18N = {');
+  if (start === -1) throw new Error('could not locate I18N in content/content.js');
+  const end = src.indexOf('\n};', start);
+  const literal = src.slice(start + 'const I18N = '.length, end + 2);
+  return eval('(' + literal + ')').en;
+}
+
 const out = {
   _comment: 'Source of truth for translation. body excludes the grounding boilerplate (see _boilerplate.json) — it is composed back at apply time. slots lists the user-fillable tokens, extracted from English so no heuristic ever runs over translated text.',
   language: 'en',
   languageName: 'English',
   ui: i18n.en,
+  content: readContentStrings(),
   templates: tmpl
 };
 

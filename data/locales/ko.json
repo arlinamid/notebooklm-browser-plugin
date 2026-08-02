@@ -525,5 +525,22 @@
       "title": "옐로 x 블랙 에디토리얼",
       "description": "패션, 팝, 시크한 에디토리얼 디자인"
     }
+  },
+  "content": {
+    "sectionLabel": "프롬프트 템플릿",
+    "placeholder": "프롬프트 템플릿 선택...",
+    "customGroup": "── 사용자 프롬프트 ──",
+    "builtinGroup": "── 내장 템플릿 ──",
+    "applied": "✓ 적용됨!",
+    "chatLabel": "📚 템플릿",
+    "savePrompt": "현재 텍스트를 템플릿으로 저장",
+    "saved": "✓ 저장됨!",
+    "namePrompt": "이 프롬프트 템플릿 이름 입력:",
+    "slotsTitle": "남은 자리표시자: {n}",
+    "slotsHint": "Studio는 한 번에 생성하므로 입력값을 다시 물을 수 없습니다.",
+    "slotsApply": "입력",
+    "slotsDismiss": "그대로 두기",
+    "slotsDone": "✓ 모든 자리표시자 입력됨",
+    "slotsPlaceholder": "값…"
   }
 }

@@ -525,5 +525,22 @@
       "title": "Editorial amarillo x negro",
       "description": "Diseño editorial de moda, pop y chic"
     }
+  },
+  "content": {
+    "sectionLabel": "Plantilla de prompt",
+    "placeholder": "Selecciona una plantilla de prompt...",
+    "customGroup": "── Prompts personalizados ──",
+    "builtinGroup": "── Plantillas integradas ──",
+    "applied": "✓ Aplicado",
+    "chatLabel": "📚 Plantillas",
+    "savePrompt": "Guardar texto actual como plantilla",
+    "saved": "✓ Guardado",
+    "namePrompt": "Introduce un nombre para esta plantilla de prompt:",
+    "slotsTitle": "Campos por rellenar: {n}",
+    "slotsHint": "Studio genera de una vez; no puede preguntarte por ellos.",
+    "slotsApply": "Rellenar",
+    "slotsDismiss": "Dejar tal cual",
+    "slotsDone": "✓ Todos los campos rellenados",
+    "slotsPlaceholder": "valor…"
   }
 }

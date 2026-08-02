@@ -525,5 +525,22 @@
       "title": "Éditorial jaune x noir",
       "description": "Design éditorial mode, pop et chic"
     }
+  },
+  "content": {
+    "sectionLabel": "Modèle de prompt",
+    "placeholder": "Choisir un modèle de prompt...",
+    "customGroup": "── Prompts personnalisés ──",
+    "builtinGroup": "── Modèles intégrés ──",
+    "applied": "✓ Appliqué !",
+    "chatLabel": "📚 Modèles",
+    "savePrompt": "Enregistrer le texte comme modèle",
+    "saved": "✓ Enregistré !",
+    "namePrompt": "Nom du modèle de prompt :",
+    "slotsTitle": "Champs à remplir : {n}",
+    "slotsHint": "Studio génère en une fois — il ne peut pas vous les demander.",
+    "slotsApply": "Remplir",
+    "slotsDismiss": "Laisser tel quel",
+    "slotsDone": "✓ Tous les champs sont remplis",
+    "slotsPlaceholder": "valeur…"
   }
 }

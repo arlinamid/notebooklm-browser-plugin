@@ -525,5 +525,22 @@
       "title": "イエロー x ブラック エディトリアル",
       "description": "ファッション、ポップ、シックなエディトリアルデザイン"
     }
+  },
+  "content": {
+    "sectionLabel": "プロンプトテンプレート",
+    "placeholder": "プロンプトテンプレートを選択...",
+    "customGroup": "── カスタムプロンプト ──",
+    "builtinGroup": "── 組み込みテンプレート ──",
+    "applied": "✓ 適用済み!",
+    "chatLabel": "📚 テンプレート",
+    "savePrompt": "現在のテキストをテンプレートとして保存",
+    "saved": "✓ 保存済み!",
+    "namePrompt": "このプロンプトテンプレートの名前を入力:",
+    "slotsTitle": "未入力のプレースホルダー: {n}",
+    "slotsHint": "Studio は一度で生成します。これらを質問できません。",
+    "slotsApply": "入力",
+    "slotsDismiss": "そのまま",
+    "slotsDone": "✓ すべてのプレースホルダーを入力済み",
+    "slotsPlaceholder": "値…"
   }
 }
