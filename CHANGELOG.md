@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.1] — 2026-08-02
+
+Addresses feedback from Chrome Web Store reviews.
+
+### Fixed
+- 💾 **Custom prompts beyond the fourth were silently lost.** `chrome.storage.sync` caps a single
+  key at 8 KB and the whole prompt list lived under one key, so with realistic 1.8 KB prompts the
+  **fifth** save threw `kQuotaBytesPerItem`. The write was never awaited and `lastError` never
+  checked, so the popup happily showed the new prompt while nothing persisted — it vanished on
+  reopen. Measured: 4 saved, the 5th dropped.
+
+  The list is now split across several sync keys, each under the per-item cap, and every write also
+  lands in `chrome.storage.local` (10 MB, no per-item cap). Measured after the fix: 40 prompts sync
+  cleanly, and at 60 the sync *total* fills up — but all 60 survive, because the local mirror never
+  rejects a write. When sync is full the popup says so instead of staying quiet.
+
+  Existing installs are upgraded on first load, whatever layout they are on — the pre-1.4 single key,
+  the even older local-only one, or already sharded. Verified for all three.
+
+### Added
+- 🙈 **Hide built-in templates.** Copy a built-in, edit it, save your version — and you were left
+  looking at both. Built-in cards now have a hide button, hidden ones drop out of the popup *and* the
+  dropdowns injected into NotebookLM, and a "Hidden (n)" chip brings them back.
+- 📐 **Wider popup** — 520 px to 720 px, which is what the extra room was asked for.
+
 ## [1.4.0] — 2026-08-02
 
 ### Added

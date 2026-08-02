@@ -67,7 +67,7 @@
 }
 
 body {
-  width: 520px;
+  width: 720px;   /* Chrome allows up to 800; reviewers asked for a larger panel */
   min-height: 500px;
   max-height: 600px;
   overflow-y: auto;

@@ -6,6 +6,9 @@ let allTemplates = [];
 let userPrompts = [];
 let language = 'en';
 let templatesLoaded = false;
+// Built-in templates the user hid from the popup — the injected dropdowns must
+// respect that too, or hiding one would only work in half the extension.
+let hiddenTemplates = [];
 
 // We still need to find configure-chat directly as it's not a standard studio card.
 // 2026 UI renamed the dialog host to <configure-notebook-settings>, the inner
@@ -269,28 +272,18 @@ async function init() {
     // Load user settings with migration from local to sync
     try {
         // 1. Try to load from sync
-        let stored = await chrome.storage.sync.get(['userPrompts', 'language', 'migrationDone']);
+        const stored = await chrome.storage.sync.get(['language', 'migrationDone']);
+        const localData = await chrome.storage.local.get(['language']);
+        language = stored.language || localData.language || 'en';
 
-        // 2. If not migrated yet, check local
-        if (!stored.migrationDone) {
-            const localData = await chrome.storage.local.get(['userPrompts', 'language']);
-            userPrompts = mergePrompts(stored.userPrompts, localData.userPrompts);
-            language = stored.language || localData.language || 'en';
-
-            if (localData.userPrompts && localData.userPrompts.length > 0) {
-                console.log('[PA] Migrating', localData.userPrompts.length, 'prompt(s) from local to sync...');
-                await chrome.storage.sync.set({ userPrompts, language, migrationDone: true });
-                // Clear local prompts to avoid confusion, but keep language as fallback
-                await chrome.storage.local.remove('userPrompts');
-            } else {
-                // No local data, just mark as migrated to avoid future checks.
-                // Never write userPrompts here — anything already in sync must survive.
-                await chrome.storage.sync.set({ migrationDone: true });
-            }
-        } else {
-            userPrompts = stored.userPrompts || [];
-            language = stored.language || 'en';
-        }
+        // Prompts come from the sharded store, which also migrates the pre-1.4
+        // single-key layout and the older local-only one.
+        hiddenTemplates = (await chrome.storage.sync.get('hiddenTemplates')).hiddenTemplates || [];
+        userPrompts = await paLoadPrompts();
+        // Re-save whenever the data came from a pre-1.4 layout, regardless of
+        // the migrationDone flag, which predates sharding.
+        if (paUpgradePending() && userPrompts.length) await paSavePrompts(userPrompts);
+        if (!stored.migrationDone) await chrome.storage.sync.set({ migrationDone: true, language });
     } catch (e) {
         console.error('[PA] Storage init error:', e);
     }
@@ -850,9 +843,9 @@ async function saveCurrentInput(textarea, format) {
     };
 
     userPrompts.unshift(newPrompt);
-    await chrome.storage.sync.set({ userPrompts });
+    const res = await paSavePrompts(userPrompts);
 
-    flashToast(t.saved);
+    flashToast(res.synced === false ? (t.savedLocalOnly || t.saved) : t.saved);
 
     // Refresh modal UI to show the new option in the select dropdowns
     const injected = document.querySelectorAll('.pa-injected, .pa-chat-injected');
@@ -991,6 +984,7 @@ function getTemplatesForFormat(format) {
     const huIds = new Set(allTemplates.filter(p => p.lang === 'hu').map(p => p.id));
     const langTemplates = allTemplates.filter(p => {
         if (p.format !== format) return false;
+        if (hiddenTemplates.includes(p.id)) return false;
         if (!p.lang) return true;                              // legacy entries without lang tag
         // Prompt bodies exist only for en and hu; other languages use English
         // bodies with titles translated from the locale file.
@@ -1202,15 +1196,28 @@ async function applyFromPopup(msg) {
 // Keep userPrompts and language in sync with the popup in real time.
 // Whenever the popup deletes/edits a prompt or switches language, we
 // update in-memory state and re-render all injected UI elements.
-chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'sync') return;
-
+chrome.storage.onChanged.addListener(async (changes, area) => {
     let needsRefresh = false;
 
-    if (changes.userPrompts) {
-        userPrompts = changes.userPrompts.newValue || [];
+    // Prompts live across several sync keys now, plus a local mirror — any of
+    // them changing means the list moved.
+    const touchedPrompts = Object.keys(changes).some(
+        k => k.startsWith('paPrompts_') || k === 'paPromptsShards' || k === 'userPrompts'
+    );
+    if (touchedPrompts) {
+        userPrompts = await paLoadPrompts();
         needsRefresh = true;
-        console.log('[PA] userPrompts synced from storage:', userPrompts.length, 'entries');
+        console.log('[PA] userPrompts reloaded:', userPrompts.length, 'entries');
+    }
+
+    if (area !== 'sync') {
+        if (needsRefresh) refreshInjected();
+        return;
+    }
+
+    if (changes.hiddenTemplates) {
+        hiddenTemplates = changes.hiddenTemplates.newValue || [];
+        needsRefresh = true;
     }
 
     if (changes.language) {
@@ -1220,13 +1227,15 @@ chrome.storage.onChanged.addListener((changes, area) => {
         console.log('[PA] language synced from storage:', language);
     }
 
-    if (needsRefresh) {
-        // Remove all injected elements so they rebuild with fresh data
-        document.querySelectorAll('.pa-injected, .pa-chat-injected').forEach(el => el.remove());
-        scanForModals();
-        injectChatButton();
-    }
+    if (needsRefresh) refreshInjected();
 });
+
+/** Drops the injected UI so it rebuilds against the current data. */
+function refreshInjected() {
+    document.querySelectorAll('.pa-injected, .pa-chat-injected').forEach(el => el.remove());
+    scanForModals();
+    injectChatButton();
+}
 
 // Start
 init();

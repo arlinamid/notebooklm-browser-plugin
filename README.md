@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated prompt templates in 12 languages directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.4.1-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![12 languages](https://img.shields.io/badge/Languages-12-orange.svg)](#-internationalization)
@@ -250,6 +250,11 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.4.1] — 2026-08-02
+- 💾 **Custom prompts beyond the fourth were silently lost** — the sync quota was hit and the failure swallowed. Now ~40 sync cleanly, and nothing is ever lost even when sync fills up.
+- 🙈 **Hide built-in templates** you have replaced with your own version
+- 📐 Wider popup, 520 → 720 px
 
 ### [v1.4.0] — 2026-08-02
 - 🌍 **Ten new languages** — Spanish, Brazilian Portuguese, French, German, Italian, Japanese, Korean, Simplified Chinese, Hindi and Russian, alongside English and Hungarian

@@ -61,6 +61,11 @@ const I18N = {
             openedStudio: "Opened Studio panel",
             noStudio: "Open one of your own notebooks first — Studio panels only exist there. Copied instead.",
             noTarget: "Couldn't find a place to put this. Copied instead.",
+            saveFailed: "Could not save the prompt.",
+            hide: "Hide this template",
+            restore: "Show this template again",
+            hidden: "Hidden",
+            syncFull: "Saved on this device. Sync storage is full, so it won't reach your other computers.",
             settings: "Settings",
             edit: "Edit",
             delete: "Delete"
@@ -128,6 +133,11 @@ const I18N = {
             openedStudio: "Studio panel megnyitva",
             noStudio: "Nyiss meg egy saját jegyzetfüzetet — a Studio panelek csak ott léteznek. Vágólapra másolva.",
             noTarget: "Nem találtam helyet ennek. Vágólapra másolva.",
+            saveFailed: "Nem sikerült menteni a promptot.",
+            hide: "Sablon elrejtése",
+            restore: "Sablon visszaállítása",
+            hidden: "Elrejtett",
+            syncFull: "Ezen a gépen mentve. A szinkron tár betelt, így a többi gépedre nem jut el.",
             settings: "Beállítások",
             edit: "Szerkesztés",
             delete: "Törlés"

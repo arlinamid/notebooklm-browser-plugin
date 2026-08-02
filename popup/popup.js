@@ -88,6 +88,10 @@ let activeCategory = 'all';
 let activeLevel = 'all';
 let searchQuery = '';
 let editingPrompt = null;
+// Built-in templates the user has hidden. Reviewers asked for this after
+// copying a built-in, editing it, and being left with both in the list.
+let hiddenTemplates = [];
+let showHidden = false;
 
 // ===== Init =====
 document.addEventListener('DOMContentLoaded', async () => {
@@ -95,27 +99,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const resp = await fetch(chrome.runtime.getURL('data/templates.json'));
     allTemplates = await resp.json();
 
-    // Load data from sync with migration from local
-    let stored = await chrome.storage.sync.get(['userPrompts', 'language', 'migrationDone']);
+    // Prompts come from the sharded store, which also migrates the pre-1.4
+    // single-key layout and the even older local-only one.
+    const stored = await chrome.storage.sync.get(['language', 'migrationDone']);
+    const localData = await chrome.storage.local.get(['language']);
+    language = stored.language || localData.language || 'en';
 
-    if (!stored.migrationDone) {
-        const localData = await chrome.storage.local.get(['userPrompts', 'language']);
-        userPrompts = mergePrompts(stored.userPrompts, localData.userPrompts);
-        language = stored.language || localData.language || 'en';
-
-        if (localData.userPrompts && localData.userPrompts.length > 0) {
-            console.log('[PA] Migrating', localData.userPrompts.length, 'prompt(s) from local to sync (Popup)...');
-            await chrome.storage.sync.set({ userPrompts, language, migrationDone: true });
-            await chrome.storage.local.remove('userPrompts');
-        } else {
-            // Only flip the flag — writing userPrompts here would wipe anything
-            // already synced from another device.
-            await chrome.storage.sync.set({ migrationDone: true });
-        }
-    } else {
-        userPrompts = stored.userPrompts || [];
-        language = stored.language || 'en';
-    }
+    hiddenTemplates = (await chrome.storage.sync.get('hiddenTemplates')).hiddenTemplates || [];
+    userPrompts = await paLoadPrompts();
+    // Re-save whenever the data came from a pre-1.4 layout, regardless of the
+    // migrationDone flag — that flag predates sharding and would strand
+    // existing users on the old single key.
+    if (paUpgradePending() && userPrompts.length) await paSavePrompts(userPrompts);
+    if (!stored.migrationDone) await chrome.storage.sync.set({ migrationDone: true, language });
 
     await loadLocale(language);
     initUI();
@@ -182,6 +178,18 @@ function initUI() {
         });
         catContainer.appendChild(chip);
     });
+
+    // "Show hidden" chip — only worth showing once something is actually hidden
+    const existingToggle = document.getElementById('paHiddenToggle');
+    if (existingToggle) existingToggle.remove();
+    if (hiddenTemplates.length) {
+        const chip = document.createElement('button');
+        chip.id = 'paHiddenToggle';
+        chip.className = `pa-filter-chip${showHidden ? ' active' : ''}`;
+        chip.textContent = `${t.card.hidden} (${hiddenTemplates.length})`;
+        chip.onclick = () => { showHidden = !showHidden; initUI(); render(); };
+        catContainer.appendChild(chip);
+    }
 
     // Level select
     const levelSel = document.getElementById('levelSelect');
@@ -292,7 +300,8 @@ function render() {
     });
     // Swap in translated titles/descriptions before filtering, so search matches
     // what the user actually sees
-    const all = [...userPrompts, ...langTemplates.map(localized)];
+    const all = [...userPrompts, ...langTemplates.map(localized)]
+        .filter(p => showHidden || p.isUserDefined || !hiddenTemplates.includes(p.id));
 
     const filtered = all.filter(p => {
         const fmt = p.format || 'text-chat';
@@ -330,6 +339,8 @@ function render() {
             else if (action === 'copy') copyPrompt(prompt, btn, t);
             else if (action === 'edit') openEditor(prompt);
             else if (action === 'delete') deletePrompt(prompt.id);
+            else if (action === 'hide') hideTemplate(prompt.id);
+            else if (action === 'unhide') unhideTemplate(prompt.id);
         });
     });
 }
@@ -343,6 +354,15 @@ function renderCard(p, t) {
     const editBtn = `<button class="pa-btn-sm" data-action="edit" data-id="${esc(p.id)}" title="${t.card.edit}">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
   </button>`;
+
+    const hideBtn = p.isUserDefined ? '' : (
+        hiddenTemplates.includes(p.id)
+            ? `<button class="pa-btn-sm" data-action="unhide" data-id="${esc(p.id)}" title="${t.card.restore}">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+  </button>`
+            : `<button class="pa-btn-sm" data-action="hide" data-id="${esc(p.id)}" title="${t.card.hide}">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+  </button>`);
 
     const deleteBtn = p.isUserDefined ? `<button class="pa-btn-sm delete" data-action="delete" data-id="${esc(p.id)}" title="${t.card.delete}">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
@@ -366,6 +386,7 @@ function renderCard(p, t) {
         ${t.card.apply}
       </button>
       <button class="pa-btn-copy" data-action="copy" data-id="${esc(p.id)}">${t.card.copy}</button>
+      ${hideBtn}
       ${editBtn}
       ${deleteBtn}
     </div>
@@ -424,6 +445,36 @@ function previewOf(promptText) {
     return i < blocks.length ? blocks.slice(i).join('\n\n') : promptText;
 }
 
+/**
+ * Writes the prompt list and tells the user when it could not be synced.
+ * Silence used to be the bug: the fifth saved prompt exceeded the per-item
+ * quota, the write was never awaited, and the prompt vanished on reopen.
+ */
+async function persistPrompts() {
+    const t = strings();
+    const res = await paSavePrompts(userPrompts);
+    if (!res.ok) {
+        showApplyNote(t.card.saveFailed || 'Could not save the prompt.');
+    } else if (!res.synced) {
+        showApplyNote(t.card.syncFull || 'Saved on this device, but sync storage is full.');
+    }
+}
+
+/** Hides a built-in template from the list without touching the library itself. */
+function hideTemplate(id) {
+    if (!hiddenTemplates.includes(id)) hiddenTemplates.push(id);
+    chrome.storage.sync.set({ hiddenTemplates });
+    initUI();
+    render();
+}
+
+function unhideTemplate(id) {
+    hiddenTemplates = hiddenTemplates.filter(x => x !== id);
+    chrome.storage.sync.set({ hiddenTemplates });
+    initUI();
+    render();
+}
+
 // Transient banner at the bottom of the popup — used when Apply could not
 // reach a sensible target and fell back to the clipboard.
 function showApplyNote(msg) {
@@ -455,7 +506,7 @@ function copyPrompt(prompt, btn, t) {
 
 function deletePrompt(id) {
     userPrompts = userPrompts.filter(p => p.id !== id);
-    chrome.storage.sync.set({ userPrompts });
+    persistPrompts();
     render();
 }
 
@@ -505,7 +556,7 @@ function savePrompt() {
         userPrompts.unshift(newPrompt);
     }
 
-    chrome.storage.sync.set({ userPrompts });
+    persistPrompts();
     closeEditor();
     render();
 }
