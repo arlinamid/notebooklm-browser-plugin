@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)
@@ -58,6 +58,7 @@
 | 🌙 | **Auto Dark/Light Mode** | Completely adapts to OS theme — no manual toggle needed |
 | ✏️ | **Custom Prompts** | Create, edit, and delete your own prompt templates |
 | 📋 | **Copy to Clipboard** | One-click copy of any prompt |
+| ✍️ | **Placeholder Filler** | Templates with `[SLOTS]` show a fill-in form — Studio generates in one shot and can't ask you |
 | ℹ️ | **About Panel** | Developer info, GitHub, and Buy Me a Coffee links |
 
 ---
@@ -176,6 +177,27 @@ Structure your prompt clearly with numbered steps or sections.
 ```
 ````
 
+### ⚠️ Ground Your Prompt in the Sources
+
+Every prompt **must** tell NotebookLM to take its content from the sources. Without it — especially
+in a pure visual-style template — the model reads your prompt body as the brief and produces
+something *about the prompt* instead of about your material.
+
+Open the prompt with a short grounding block:
+
+```text
+GROUNDING — read this first:
+Use my selected sources as the only subject matter. Every claim, figure, name and example must
+come from them; add nothing from outside knowledge and invent nothing.
+Everything below this line describes ONLY the visual style and structure of the output. It is not
+the topic — never present, explain or refer to the style guide itself.
+```
+
+If your prompt has `[FILL IN]` slots, also state what should happen when one is left unfilled —
+otherwise the model asks you to fill it in, or copies the bracket text into the output.
+
+`node scripts/lint-templates.js` enforces both rules.
+
 ### Adding a Hungarian Translation
 
 Create the same file under `templates/hu/` with the same filename but translated `name:` and prompt text. The build script will automatically pick it up.
@@ -229,6 +251,18 @@ notebooklm-browser-plugin/
 
 ## 📦 Releases
 
+### [v1.3.0] — 2026-08-02
+- 🚨 **Fixes the "Gemini Notebook" migration** — NotebookLM moved to `notebook.google.com`, which left the extension completely inactive. Both domains are now supported.
+- 🛠️ **Rewritten Studio detection** for the rebuilt dialogs: `configurable-form-dialog`, `report-customization-dialog`, and `configure-notebook-settings`
+- 🎬 Video Overview, Reports (both paths), and Configure Chat inject correctly again
+- ⚡ Mutation observer throttled to one scan per frame — no more constant re-scanning on the new UI
+- 📝 Popup **Apply** now targets an open Studio dialog when one is present
+- ✍️ **Placeholder filler panel** — Studio generates in one shot and never asks, so unfilled `[SLOTS]` used to be sent to the model as-is. Templates with slots now show a small fill-in form before you hit Generate.
+- 🎯 **All 229 templates are now source-grounded** — 48% of them previously never mentioned the sources, so NotebookLM answered *the prompt* instead of your material. The visual-style templates (slides, infographics, video) were the worst offenders.
+- 💾 **Your saved prompts carry over untouched.** They live in extension storage, not in the website, so the domain move does not affect them. A migration bug that could discard synced prompts was also fixed.
+
+> ℹ️ Studio panels only exist in notebooks you own — shared and featured notebooks have no Studio, so no dropdown is injected there.
+
 ### [v1.2.0] — 2026-02-28
 - 🎨 **6 new Infographic visual style templates** (EN + HU): Expressive Cubist Abstract, Geometric Mosaic, Mixed-Media Expressionist, Hybrid Conceptual Collage, Dark Neo-Noir, Brutalist Editorial
 - 📖 **HU: Manga Comic infographic** — 4 variants (classic B&W, shōnen action, editorial, chibi)
@@ -263,6 +297,9 @@ notebooklm-browser-plugin/
 ```bash
 # Rebuild templates after adding/editing .md files
 node scripts/build-templates.js
+
+# Check every template is source-grounded (exits non-zero on problems)
+node scripts/lint-templates.js
 
 # Reload extension
 # chrome://extensions/ → click 🔄 on the Prompt Architect card

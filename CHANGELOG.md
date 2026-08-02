@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] — 2026-08-02
+
+Compatibility release for the **"Gemini Notebook"** rebuild of NotebookLM. The extension was
+completely inert after the migration; every item below was verified against the live site
+with Playwright.
+
+### Fixed
+- 🚨 **Domain migration** — NotebookLM moved from `notebooklm.google.com` to `notebook.google.com`.
+  The content script never loaded on the new host, so *nothing* was injected. Both domains are now
+  matched in `manifest.json` (content script + `web_accessible_resources`) and in the popup's
+  Apply handler.
+- **Studio dialog format detection** — the header icon class was renamed
+  `.dialog-icon` → `.dialog-title-icon` in `<configurable-form-dialog>`, and the Reports dialog
+  header now starts with a back-arrow icon. Detection scans every header icon and takes the first
+  recognised one instead of trusting a single `querySelector`.
+- **Video Overview** — its focus field is a bare `<textarea class="mat-body-medium">` with no
+  `mat-mdc-input-element` class, so it was skipped entirely. Textarea matching no longer depends
+  on Material input classes.
+- **Reports** — the flow is now a two-stage `<report-customization-dialog>`; both the
+  *Create Your Own* and the per-template *Customize Report* paths are handled.
+- **Configure Chat** — the dialog host is now `<configure-notebook-settings>` and has no
+  `.mat-mdc-dialog-title`, which made format detection fall through to whatever studio card was
+  clicked last. It is now identified explicitly.
+- **Studio card click tracking** — reads `mat-icon.artifact-icon` inside
+  `.create-artifact-button-container` instead of the first `mat-icon`, which resolved to the
+  chevron/edit glyph on the new cards. Added an English `aria-label` fallback map.
+- **Duplicate / stale injection** — the dropdown is anchored to the dialog's own layout containers
+  (`.text-form-field-container`, `.custom-topic-card`, `.prompt-section-custom-input`) with a
+  `:scope >` duplicate guard, so it renders above the prompt field instead of inside the form field.
+- **Chat composer** — the template dropdown re-resolves `textarea.query-box-input` at apply time,
+  so it keeps working after Angular swaps the composer out.
+- The "Discover sources" web-search box (`textarea.query-box-textarea`) is explicitly excluded —
+  it is a new sibling that the old selectors would have matched.
+- 💾 **Saved prompts could be discarded by the local→sync migration.** When `migrationDone` was
+  unset but `chrome.storage.local` held no prompts, both the popup and the content script flipped
+  the flag while ignoring `chrome.storage.sync.userPrompts` — the popup went further and reset its
+  in-memory list to `[]`, so the next save or delete persisted that empty list over the user's real
+  prompts. Migration now merges the sync and local lists by `id` (sync wins on collision) and never
+  writes `userPrompts` when there is nothing to migrate.
+
+  Verified end-to-end against the live site for four upgrade paths: local-only (v1.0.x), synced
+  (v1.1+), sync-without-flag, and local + sync both populated. All prompts survive in every case.
+
+### Changed
+- 🎯 **Every template is now source-grounded.** 109 of the 229 templates (48%) never referred to
+  the sources at all, so NotebookLM read the prompt body as the brief and answered *about the
+  prompt* instead of the material. The worst affected were the pure style specs — slide-deck
+  (54/62), infographic (22/25) and video-overview (16/18) — which are 100% visual direction and
+  contained no instruction about where the content should come from. Every prompt now opens with a
+  short grounding block in its own language, in one of three variants:
+  - **style formats** — states that the spec below describes *only* the visual style and is never
+    the topic, so the deck stops being a presentation about the design system
+  - **content formats** — restricts claims, figures and quotes to the sources and requires gaps to
+    be stated rather than filled
+  - **configure-chat** — phrased as a persistent system instruction covering every answer
+- 🔖 **Unfilled `[PLACEHOLDER]` slots no longer leak into output.** 94 templates carry fill-in
+  slots; they now instruct the model to infer the value from the sources and continue, rather than
+  asking back or echoing the bracket text. Structural section markers (`[ROLE]`, `[STEPS]`, …) are
+  deliberately left alone.
+- *The Devil's Advocate* no longer invites counter-arguments from "general knowledge".
+- The `MutationObserver` now coalesces mutation bursts into one scan per animation frame. The new
+  UI mutates the DOM continuously and the previous per-mutation scan was re-querying the whole
+  document hundreds of times per second.
+- Popup **Apply** writes into an open Studio/Configure dialog when there is one, and falls back to
+  the chat composer otherwise.
+
+### Added
+- ✍️ **Placeholder filler panel.** Studio generates in a single shot — there is no conversation, so
+  an unfilled `[SLOT]` is sent to the model verbatim and the user never gets asked. Selecting a
+  template that still has slots now opens a small panel under the dropdown listing each one with an
+  input; filling them substitutes every occurrence in the prompt field. It appears in the Studio
+  dialogs, in the chat composer, and on the popup's Apply path, tracks manual edits to the textarea,
+  and can be dismissed with *Leave as is*.
+
+  The panel only asks about slots meant for **you**. The template corpus splits cleanly on case:
+  `[TOPIC]`, `[SOURCE A]`, `[SZAKTERÜLET]` are parameters, while `[quote]`, `[Source, p.X]`,
+  `[answer]`, `[thesis verbatim]` describe what the *model* should produce — prompting for those
+  would be noise. Classification is deliberately conservative; anything it skips is still covered by
+  the prompt's own rule telling the model to infer unfilled slots from the sources. In practice this
+  cut *The Devil's Advocate* from 7 confusing tokens to the 2 that are genuinely yours.
+- `scripts/lint-templates.js` — fails the build on a template that has no source grounding, has
+  fill-in slots without a rule for unfilled ones, or invites off-source knowledge. Run it after
+  `build-templates.js` so new templates cannot regress.
+
+### Notes
+- **Shared and Featured notebooks have no Studio panel** — this is a NotebookLM restriction, not an
+  extension bug. Studio injection only applies to notebooks you own.
+- Mind Map is recognised but intentionally has no templates, so no dropdown is injected there.
+
+---
+
 ## [1.2.0] — 2026-02-28
 
 ### Added

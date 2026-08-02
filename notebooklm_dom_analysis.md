@@ -1,154 +1,243 @@
-# NotebookLM DOM Analysis
+# NotebookLM / Gemini Notebook — DOM Analysis
 
-URL: https://notebooklm.google.com/
+**URL: `https://notebook.google.com/`** (page title: *Gemini Notebook*)
 
-This document contains the DOM analysis of the NotebookLM homepage and individual notebook pages, which will be useful for developing a browser extension.
+> ⚠️ **Domain migration.** NotebookLM moved from `notebooklm.google.com` to `notebook.google.com`.
+> The old host now redirects to the Google sign-in flow. The extension matches both.
 
-## --- Home Page (/)
+Last verified: **2026-08-02**, against a live logged-in session using Playwright.
+Sections marked *legacy* describe the pre-2026 DOM and are kept for reference only.
 
-### 1. 'New notebook' (Új jegyzetfüzet) buttons
-There are two ways to create a new notebook on the page:
-*   **Top navigation button:**
-    *   **Selector:** `button.create-new-button` or `button[aria-label="Create new notebook"]`
-    *   **Description:** The black button in the top right corner with the text "Create new".
-*   **Grid card:**
-    *   **Selector:** `mat-card.create-new-action-button`
-    *   **Description:** The first element in the notebook list, which is a card-formatted button.
+---
 
-### 2. Notebook list container
-*   **Selector:** `.project-grid-container`
-*   **Description:** This div element wraps all the notebook cards (including the "New notebook" card) in a grid layout. This is located inside the `.welcome-page-container` element.
+## Home page (`/`)
 
-### 3. Individual notebook cards (Notebook Cards)
-*   **Main card element:** `mat-card.project-button-card` (or more specifically: `mat-card:not(.create-new-action-button)`)
-*   **Inner element selectors:**
-    *   **Clickable area (Open):** `button.primary-action-button`
-    *   **Title:** `.project-button-title` (a `span` element inside the card)
-    *   **Subtitle/Date/Source count:** `.project-button-subtitle`
-    *   **Action menu (three dots):** `project-action-button button[aria-label="Project Actions Menu"]`
-    *   **Icon/Emoji:** `.project-button-box-icon`
+| What | Selector | Notes |
+|---|---|---|
+| Notebook cards | `mat-card.project-button-card` | unchanged |
+| Grid container | `.project-grid-container` | unchanged |
+| Notebook link | `a[href^="/notebook/<uuid>"]` | most reliable way to enumerate notebooks |
+| Card title | `.project-button-title` | unchanged |
+| Filter tabs | `mat-button-toggle` | *All · My notebooks · Featured notebooks · Shared with me · **Collections*** (Collections is new) |
+| Create notebook | `button[aria-label="Create notebook"]` | label changed from "Create new notebook" |
 
-### 4. Top navigation tabs (Tabs)
-These are part of a `mat-button-toggle-group`.
-*   **General selector:** `mat-button-toggle-button`
-*   **Specific tabs (by order):**
-    1.  **All:** `mat-button-toggle-button:nth-of-type(1)`
-    2.  **My notebooks:** `mat-button-toggle-button:nth-of-type(2)`
-    3.  **Featured notebooks:** `mat-button-toggle-button:nth-of-type(3)`
-    4.  **Shared with me:** `mat-button-toggle-button:nth-of-type(4)`
-*   **View toggles (Grid/List):** `button[aria-label="Grid view"]` and `button[aria-label="List view"]`.
+Custom elements on the home page:
+`welcome-page`, `project-grid`, `project-button`, `project-action-button`,
+`notebook-search-input`, `page-header`, `title-bar-settings`, `pro-badge`, `get-app-button`.
 
-### 5. Profile and Settings buttons
-*   **Settings:** `button[aria-label="Settings"]` (class: `.extendable-button`)
-*   **Profile (Google account):** `a[aria-label*="Google Account"]` (classes: `.gb_B`, `.gb_0a`)
-*   **PRO version button:** `button.extendable-button` (which contains the `span` with the "PRO" text)
+---
 
+## Notebook page (`/notebook/<uuid>`)
 
-## --- Notebook Page (/notebook/...)
+Top-level custom elements:
+`notebook-header`, `source-picker`, `chat-panel`, `chat-panel-header`, `query-box`,
+`studio-panel`, `artifact-library`, `artifact-library-item`, `artifact-library-note`,
+`follow-up`, `remix-button`, `popup-panel`.
 
-### 1. Chat Input Area
-*   **Textarea:** `textarea.query-box-input` or `textarea[aria-label="Query box"]`
-*   **Submit button:** `button.actions-enter-button` (Contains the `arrow_forward` icon. Note: disabled when textarea is empty.)
+### Chat composer
 
-### 2. Chat History (Messages)
-*   **Main container:** `div.chat-panel-content`
-*   **Save answer to note:** `button.pin-button` (or `button[aria-label="Save message to a note"]`)
-*   **Copy answer:** `button.xap-copy-to-clipboard`
+```
+div.query-box-container
+  query-box
+    div.query-box
+      div.input-group
+        form.form
+          div.message-container
+            div.query-box-input-wrapper
+              textarea.query-box-input[aria-label="Query box"][placeholder="Start typing..."]
+            div.bottom-right-container
+              button.submit-button[aria-label="Submit"]
+```
 
-### 3. Sources Panel
-*   **Add source button:** `button.add-source-button`
-*   **Individual source item:** `div.single-source-container`
-*   **Source title:** `.single-source-container span` (e.g., the PDF filename)
-*   **Select all sources checkbox:** `input#mat-mdc-checkbox-0-input`
+`textarea.query-box-input` and `.query-box` both survived the rebuild. The extension inserts its
+compact dropdown as a sibling **before** `div.query-box`, i.e. inside the `<query-box>` element.
 
-### 4. Main Content Area (Studio Panel)
-In NotebookLM, generated documents and notes appear in the right "Studio" panel.
-*   **Generated artifact cards:** `button.artifact-button-content`
-*   **Add new note button:** `button.add-note-button`
+⚠️ Do not confuse it with `textarea.query-box-textarea`
+(`aria-label="Discover sources based on the inputted query"`) — that is the new *"Search the web
+for new sources"* box in the Sources panel. It must be excluded explicitly.
 
-### 5. Other prominent features
-*   **Audio Overview:** `div[aria-label="Audio Overview"]`
-*   **Slide Deck:** `div[aria-label="Slide Deck"]`
-*   **Mind Map:** `div[aria-label="Mind Map"]`
-*   **Quiz:** `div[aria-label="Quiz"]`
-*   **Collapse/Expand Studio panel:** `button.toggle-studio-panel-button`
+### Studio panel — create buttons
 
-## Development Notes
-*   The page uses the **Angular Material** framework, so the `mat-` prefixed classes and tags are likely stable.
-*   There are no dedicated `data-testid` attributes, so using `aria-label` and specific class names (like `.project-button-title` or `.query-box-input`) is recommended for the most reliable interaction.
-*   DOM elements often contain `mat-icon` elements with `google-symbols` or `material-symbols-outlined` classes that can be identified by their text content (e.g. "copy_all", "keep_pin").
-*   The document/notebook content loads dynamically, so the extension should probably use a `MutationObserver` to watch for changes in the container.
+```
+studio-panel
+  div.panel-content-scrollable
+    div.create-artifact-buttons-container
+      basic-create-artifact-button
+        div.create-artifact-button-container[role="button"][aria-label="Audio Overview"]
+          span.default-container
+            span.icon-container > span.icon-container-row
+              mat-icon.artifact-icon            ← the format icon
+            span.create-label-container
+          div.option-icon
+            button.edit-button[aria-label="Customize Audio Overview"]
+              mat-icon.edit-button-icon          ← "chevron_forward", NOT the format icon
+    div.artifact-library-container
+      artifact-library
+        artifact-library-item / artifact-library-note
+          div.artifact-item-button > div.artifact-button-content
+            button.artifact-stretched-button[aria-description="Infographic"]
+            mat-icon.artifact-icon
+      div.add-note-button-container > button.add-note-button
+```
 
-## --- Hidden Panels / Modals
+**Breaking change:** `button.artifact-button-content` is now `div.artifact-button-content`.
+When resolving the format from a click, query `mat-icon.artifact-icon` — a plain `mat-icon`
+lookup returns the chevron/edit glyph.
 
-### 1. Audio Overview (Deep Dive) Configuration
-This panel opens when clicking the Edit (pencil) icon on the 'Audio Overview' card in the Studio.
-*   **Panel container:** `mat-dialog-container`
-*   **Format selector (Radio):** `mat-radio-button` elements. Important values:
-    *   `value="DEEP_DIVE"`
-    *   `value="BRIEF"`
-    *   `value="CRITIQUE"`
-    *   `value="DEBATE"`
-*   **Language selector:** `mat-select.language-override-select`
-*   **Length toggle:** `mat-button-toggle-group`
-*   **Focus / Prompt input:** `textarea[aria-label="What should the AI hosts focus on in this episode?"]`
-*   **Generate button:** `button` containing the text "Generate" (often has class `mdc-button`).
+Available cards and their icons:
 
-### 2. Reports / Briefing Doc Customization
-Clicking the Edit (pencil) icon next to a report type like "Briefing Doc" inside the Reports modal.
-*   **Open Customize button:** `button[aria-label="Customize Report"]` or pencil icon next to the report type.
-*   **Prompt/Description input:** `textarea[aria-label="Input to describe the kind of report to create"]`
-*   **Language selector:** `mat-select.language-override-select`
-*   **Back button:** `button[aria-label="Back"]`
-*   **Generate button:** `button.generate-button` (text: "Generate")
+| Card (`aria-label`) | `mat-icon` | Extension format |
+|---|---|---|
+| Audio Overview | `audio_magic_eraser` | `audio-overview` |
+| Slide Deck | `tablet` | `slide-deck` |
+| Video Overview | `subscriptions` | `video-overview` |
+| Mind Map | `flowchart` | `mindmap` (no templates) |
+| Reports | `auto_tab_group` | `report` |
+| Flashcards | `cards_star` | `flashcards` |
+| Quiz | `quiz` | `quiz` |
+| Infographic | `stacked_bar_chart` | `infographic` |
+| Data Table | `table_view` | `data-table` |
 
-### 3. Add Sources Modal
-Opened by clicking the "Add sources" button.
-*   **Search/URL input:** `textarea[aria-label="Discover sources based on the inputted query"]`
-*   **Upload files button:** `button` containing `mat-icon` with text `upload`
-*   **Websites/Links button:** `button` containing `mat-icon` with text `link`
-*   **Google Drive button:** `button` containing `mat-icon` with text `drive`
-*   **Copied text button:** `button` containing `mat-icon` with text `content_paste`
-*   **Close button:** `button[aria-label="Close"]`
+> **Shared / featured notebooks have no `studio-panel` create buttons.** Studio only renders for
+> notebooks you own. This is a NotebookLM restriction, not an extension failure.
 
-### 4. Other Studio Panels (Flashcards, Quiz, Infographic, Data Table, Video)
-These panels are accessed either by their pencil icon (`button.edit-button`) or by clicking the card itself (like Video Overview).
-*   **Flashcards**
-    *   **Edit trigger:** Edit Button (`aria-label='Customize Flashcards'`)
-    *   **Number of Cards:** Select via specific text: `button:has-text("Fewer")`, `"Standard"`, `"More"` (or XPath: `//button[.//*[text()="Fewer"]]`)
-    *   **Difficulty:** Select via specific text: `button:has-text("Easy")`, `"Medium"`, `"Hard"`
-    *   **Topic Input:** `textarea[aria-label='Text area for custom topic']`
-    *   **Action:** `button.generate-button`
-*   **Quiz**
-    *   **Edit trigger:** Edit Button (`aria-label='Customize Quiz'`)
-    *   **Number of Questions:** `button:has-text("Fewer")`, `"Standard"`, `"More"`
-    *   **Difficulty:** `button:has-text("Easy")`, `"Medium"`, `"Hard"`
-    *   **Topic Input:** `textarea[aria-label='Text area for custom topic']`
-    *   **Action:** `button.generate-button`
-*   **Infographic**
-    *   **Edit trigger:** Edit Button (`aria-label='Customize Infographic'`)
-    *   **Orientation:** `mat-button-toggle:has-text("Landscape")`, `"Portrait"`, `"Square"`
-    *   **Level of Detail:** `mat-button-toggle:has-text("Concise")`, `"Standard"`, `"Detailed"`
-    *   **Language dropdown:** Open with `mat-select[role="combobox"]`, then click `mat-option:has-text("Language Name")` (e.g. "English")
-    *   **Steering Prompt:** `textarea[aria-label='Describe the infographic you want to create']`
-*   **Data Table**
-    *   **Edit trigger:** Edit Button (`aria-label='Customize Data Table'`)
-    *   **Description Input:** `textarea[aria-label='Describe the data table you want to create']`
-*   **Video Overview**
-    *   **Edit trigger:** Click Card (`aria-label='Video Overview'`)
-    *   **Format:** `mat-radio-button:has-text("Explainer")`, `"Brief"`
-    *   **Visual Style (Carousel):** `mat-radio-button:has-text("Style Name")` (Options: `Auto-select`, `Custom`, `Classic`, `Whiteboard`, `Kawaii`, `Anime`, `Watercolor`, `Retro print`, `Heritage`)
-    *   **Language dropdown:** Open with `mat-select[role="combobox"]`, then select `mat-option`.
-    *   **Focus Input:** `textarea` following label `id='videoFocus-label'`
-    *   **Action:** `button.mdc-button--unelevated` (Text: "Generate")
+---
 
-### 5. Notebook Configuration & General Settings
-*   **Configure Notebook (System Instructions):**
-    *   **Trigger:** `button[aria-label='Configure notebook']` (Icon: `tune`)
-    *   **Goal:** `button[aria-label="Default button"]`, `button[aria-label="Learning Guide prompt button"]`, `button[aria-label="Custom button"]`
-    *   **Response Length:** `button[aria-label="Verbose style guide button"]` (Longer), `button[aria-label="Concise style guide button"]` (Shorter), or the second `Default button`.
-    *   **Custom Instruction Input:** `textarea[aria-label='Custom prompt to control the chat response']`
-    *   **Action:** `button.submit-button` (Text: "Save")
-*   **General Settings:**
-    *   **Trigger:** `button[aria-label='Settings']` (Icon: `settings`) in the header
-    *   **Notebook Name Input:** `input.title-input`
+## Customization dialogs
+
+All dialogs live in `.cdk-overlay-pane > mat-dialog-container`. Three different hosts exist:
+
+| Host element | Used by |
+|---|---|
+| `configurable-form-dialog` | Audio, Slides, Video, Mind Map, Flashcards, Quiz, Infographic, Data Table |
+| `report-customization-dialog` | Reports (two-stage) |
+| `configure-notebook-settings` | Configure Chat |
+
+### `configurable-form-dialog`
+
+```
+div.dialog-container
+  div.mat-mdc-dialog-title.dialog-title
+    mat-icon.dialog-title-icon        ← format icon (was .dialog-icon)
+    h2.dialog-title-text              "Customize Audio Overview"
+    button[aria-label="Close dialog"]
+  mat-dialog-content
+    div.dialog-section > div.controls-grid > div.control-wrapper
+      label.control-label
+      div.text-form-field-container   ← extension inserts the dropdown before this
+        suggestion-builder
+          mat-form-field.text-form-field
+            textarea[aria-label="…"]
+  mat-dialog-actions
+    button                            "Generate"
+```
+
+Prompt textarea `aria-label` per format:
+
+| Format | `aria-label` |
+|---|---|
+| Audio Overview | `What should the AI hosts focus on in this episode?` |
+| Slide Deck | `Describe the slide deck you want to create` |
+| Video Overview | `What should the video focus on?` |
+| Mind Map | `What should the topic be?` |
+| Flashcards / Quiz | `What should the topic be?` |
+| Infographic | `Describe the infographic you want to create` |
+| Data Table | `Describe the data table you want to create` |
+
+⚠️ **Video Overview is the odd one out.** Its field is a plain
+`textarea.mat-body-medium` inside `div.custom-topic-input > div.custom-topic-card > suggestion-builder`
+— no `mat-form-field`, no `mat-mdc-input-element`. Selectors that require Material input classes
+silently skip it.
+
+### `report-customization-dialog` (two-stage)
+
+**Stage 1 — format gallery:**
+
+```
+h1.mat-mdc-dialog-title.dialog-title-container
+  span.dialog-title
+    mat-icon.dialog-icon              "auto_tab_group"
+    span.mat-title-medium             "Create report"
+mat-dialog-content.dialog-content
+  div.options-container
+    report-customization-tile
+      div.option-card
+        button.primary-action-button[aria-label="Create Your Own" | "Briefing Doc" | "Study Guide" | "Blog Post"]
+        button.edit-button[aria-label="Customize Report"][aria-description="Briefing Doc"]
+```
+
+There is **no textarea in stage 1.** The user must pick *Create Your Own* or a tile's
+*Customize Report* pencil.
+
+**Stage 2 — custom report form:**
+
+```
+h1.mat-mdc-dialog-title
+  span.dialog-title
+    button.title-back-button[aria-label="Back"] > mat-icon "arrow_back"   ← first icon in the header!
+    mat-icon.dialog-icon "auto_tab_group"
+mat-dialog-content
+  div.custom-report-container > div.custom-report-content > div.custom-report-input-container
+    mat-select.language-override-select
+    mat-form-field.custom-report-input
+      textarea[aria-label="Input to describe the kind of report to create"]
+```
+
+⚠️ Because the back-arrow precedes the format icon, format detection must iterate **all** header
+icons rather than taking the first one.
+
+### `configure-notebook-settings` (Configure Chat)
+
+Opened by `button[aria-label="Configure notebook"]` (also reachable via
+*Chat options → Customize notebook*).
+
+```
+configure-notebook-settings
+  div.configure-settings-container > div.content
+    div.header > div.header-title           "Configure Chat"
+    form.form
+      div.prompt-section
+        mat-button-toggle-group[formcontrolname="customizeButtonSelected"]
+          button[aria-label="Default button" | "Learning Guide prompt button" | "Custom button"]
+        div.prompt-section-custom-input       ← only rendered when "Custom" is selected
+          mat-form-field.custom-input
+            textarea.custom-input-textarea[aria-label="Custom prompt to control the chat response"]
+                    [formcontrolname="customizeCustomPrompt"]
+      div.style-section
+        mat-button-toggle-group[formcontrolname="styleGuideButtonSelected"]
+          button[aria-label="Default button" | "Verbose style guide button" | "Concise style guide button"]
+    div.save-container > button.submit-button "Save"
+```
+
+⚠️ This dialog has **no `.mat-mdc-dialog-title`**, so icon-based format detection finds nothing and
+would fall through to "whatever studio card was clicked last". It must be matched explicitly on
+`configure-notebook-settings` / `.custom-input-textarea` / `.prompt-section-custom-input`.
+
+---
+
+## Sources panel
+
+| What | Selector |
+|---|---|
+| Add source | `button[aria-label="Add source"]` |
+| Source item | `div.single-source-container` |
+| Web search box | `textarea.query-box-textarea[aria-label="Discover sources based on the inputted query"]` |
+| Collapse panel | `button[aria-label="Collapse source panel"]` |
+| Sort | `button[aria-label="Sort sources"]` |
+
+---
+
+## Development notes
+
+- Still Angular Material — `mat-*` tags and classes remain the most stable anchors, but
+  **component-specific classes get renamed between releases** (`.dialog-icon` → `.dialog-title-icon`,
+  `button.artifact-button-content` → `div.artifact-button-content`).
+- `aria-label` values are localized. Use `mat-icon` text content as the primary signal and treat
+  English `aria-label` matching as a fallback only.
+- Angular re-renders continuously. A `MutationObserver` on `document.body` must coalesce bursts
+  (e.g. one scan per `requestAnimationFrame`) or it will re-query the document hundreds of times
+  per second.
+- Angular can replace the chat `<textarea>` node, so cached element references go stale — re-resolve
+  `textarea.query-box-input` at the moment you write to it.
+- Write values via the native `HTMLTextAreaElement.prototype.value` setter plus `input`/`change`
+  events, otherwise Angular's form control never sees the change.
