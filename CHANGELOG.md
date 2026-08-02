@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] — 2026-08-02
+
+### Added
+- 🌍 **Ten new languages.** The interface and the full template library are now available in
+  English, Hungarian, Spanish, Brazilian Portuguese, French, German, Italian, Japanese, Korean, Simplified Chinese, Hindi and Russian.
+
+  Everything is translated: 55 popup strings, 15 strings injected into NotebookLM itself, and for
+  each of the 114 templates a title, a description and the prompt body — 4 120 items per language,
+  zero missing keys.
+
+  Prompt bodies are translated too, not just the labels. A prompt you cannot read is one you cannot
+  adapt, which defeats the point of a prompt library.
+- 🈁 **Language picker** in the popup header, replacing the EN/HU toggle. Languages appear under
+  their own names (Deutsch, 日本語, हिन्दी).
+
+### Changed
+- The grounding blocks and the bracket-handling rule are 15% of the prompt text and identical
+  across all 114 templates. They are hand-translated once per language in
+  `data/locales/_boilerplate.json` and composed onto the body at apply time, so no machine ever
+  rewords the text that keeps NotebookLM answering from the sources. Strip and compose is verified
+  byte-exact on all 114 templates.
+- **Slot detection is data, not heuristics, outside English and Hungarian.** The runtime classifier
+  matches Latin script only, so it finds no bracket token at all in Japanese, Chinese, Korean, Hindi
+  or Russian — the filler panel would simply never appear. Slots are now extracted once from the
+  English source, where the classifier is verified, and each locale carries the mapping
+  (`[SPECIFIC TOPIC]` → `[SPEZIFISCHES THEMA]`). The same template asks the same questions in every
+  language.
+- Chat and Configure Chat prompts get an `Answer in <language>.` line appended. Measured: an English
+  prompt against Hungarian sources answers in English, so body language does not follow the sources.
+  Studio dialogs have their own language selector and are left alone.
+
+### Fixed
+- **The injected UI crashed outside English and Hungarian.** `I18N[language]` was read directly, so
+  any other language threw on the first property access and took the whole injection down — no
+  dropdown, no filler panel, nothing on the page.
+- Two Russian slots were mapped in the nominative while the sentence required the dative, so exact
+  match substitution would never have replaced them. The translation rules now require the mapped
+  token and the token in the body to match byte for byte.
+- A nested bracket in the English source, `[TARGET AUDIENCE: data engineers evaluating [TOOL]]`,
+  produced an unbalanced token that rendered a broken label and substituted wrongly. Present in
+  v1.3.1 and earlier. Fixed in both languages; the Hungarian file also carried English tokens where
+  its other 32 are Hungarian.
+
+### Tooling
+- `scripts/build-locale-source.js` — emits the translation source of truth
+- `scripts/translate-locales.js` / `translate-bodies.js` / `translate-content-strings.js` — delegate
+  to the local codex CLI, with checkpointing and resume
+- `scripts/validate-locales.js` — checks every locale for missing or empty keys, lost product names,
+  altered `[BRACKET]` tokens, hex colours, code fences, length outliers relative to each language's
+  own median, slot presence in the body, and characters from the wrong writing system
+
 ## [1.3.1] — 2026-08-02
 
 ### Fixed

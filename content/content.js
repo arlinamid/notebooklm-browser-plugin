@@ -66,7 +66,7 @@ const I18N = {
         savePrompt: 'Save current text as Template',
         saved: '✓ Saved!',
         namePrompt: 'Enter a name for this prompt template:',
-        slotsTitle: n => `${n} placeholder${n > 1 ? 's' : ''} still to fill`,
+        slotsTitle: 'Placeholders still to fill: {n}',
         slotsHint: 'Studio generates in one shot — it cannot ask you for these.',
         slotsApply: 'Fill in',
         slotsDismiss: 'Leave as is',
@@ -83,7 +83,7 @@ const I18N = {
         savePrompt: 'Jelenlegi szöveg mentése sablonként',
         saved: '✓ Mentve!',
         namePrompt: 'Add meg a prompt sablon nevét:',
-        slotsTitle: n => `${n} kitöltendő hely maradt`,
+        slotsTitle: 'Kitöltendő helyek: {n}',
         slotsHint: 'A Studio egy lépésben generál — ezeket nem fogja megkérdezni.',
         slotsApply: 'Kitöltés',
         slotsDismiss: 'Maradjon így',
@@ -91,6 +91,15 @@ const I18N = {
         slotsPlaceholder: 'érték…'
     }
 };
+
+/**
+ * Injected-UI strings. I18N only carries en and hu; any other language falls
+ * back to English rather than throwing — reading I18N['de'].chatLabel used to
+ * kill the whole injection with "Cannot read properties of undefined".
+ */
+function uiStrings() {
+    return (locale && locale.content) || I18N[language] || I18N.en;
+}
 
 // ===== Placeholder slots =====
 // Studio panels generate in a single shot: there is no conversation, so an
@@ -142,7 +151,14 @@ function hasAnyBracketToken(text) {
     });
 }
 
-function collectSlots(text) {
+/**
+ * @param {string[]} [known] Slot tokens from the locale file. When present they
+ * are used verbatim instead of the case-based classifier, which cannot work in
+ * scripts without letter case (ja, zh, ko, hi) — there every bracket token,
+ * including model-side scaffolding, would look user-fillable.
+ */
+function collectSlots(text, known) {
+    if (known && known.length) return known.filter(tok => text.includes(tok));
     const found = new Set();
     text.split('\n').forEach(line => {
         const matches = line.match(SLOT_TOKEN);
@@ -278,6 +294,9 @@ async function init() {
     } catch (e) {
         console.error('[PA] Storage init error:', e);
     }
+
+    // Locale data for the selected language (no-op for en / hu)
+    await loadLocale(language);
 
     // Inject plugin stylesheet once
     injectGlobalStyles();
@@ -425,7 +444,7 @@ function detectDialogFormat(textarea) {
 
 // ===== Create Template Section (using NLM classes) =====
 function createTemplateSection(templates, textarea, format) {
-    const t = I18N[language];
+    const t = uiStrings();
 
     const section = document.createElement('div');
     section.className = 'pa-injected';
@@ -512,11 +531,11 @@ function createTemplateSection(templates, textarea, format) {
                 const match = text.match(/\[AI FOCUS\]\n([\s\S]*?)$/i);
                 if (match) text = match[1].trim();
             }
-            setNativeValue(textarea, text);
+            setNativeValue(textarea, withOutputLanguage(text, format));
             textarea.focus();
-            flashToast(I18N[language].applied);
+            flashToast(uiStrings().applied);
             // Studio generates in one shot — surface any [SLOTS] before Generate
-            refreshSlotPanel(section, textarea);
+            refreshSlotPanel(section, textarea, template.paSlots);
             watchSlots(section, textarea);
         }
     });
@@ -549,10 +568,13 @@ function createTemplateSection(templates, textarea, format) {
 // ===== Placeholder Filler Panel =====
 // Rendered right under the template dropdown whenever the applied text still
 // has [SLOTS]. Filling one substitutes every occurrence in the textarea.
-function refreshSlotPanel(host, textarea) {
-    const t = I18N[language];
+function refreshSlotPanel(host, textarea, known) {
+    const t = uiStrings();
     let panel = host.querySelector(':scope > .pa-slots');
-    const slots = collectSlots(textarea.value || '');
+    // Remember the list so later re-renders (manual edits) keep using it
+    if (known) host.dataset.paSlots = JSON.stringify(known);
+    const remembered = host.dataset.paSlots ? JSON.parse(host.dataset.paSlots) : null;
+    const slots = collectSlots(textarea.value || '', known || remembered);
 
     if (slots.length === 0) {
         if (panel) {
@@ -580,7 +602,7 @@ function refreshSlotPanel(host, textarea) {
 
     const head = document.createElement('div');
     head.className = 'pa-slots-head';
-    head.innerHTML = `<span class="pa-slots-title">⚠ ${t.slotsTitle(slots.length)}</span>
+    head.innerHTML = `<span class="pa-slots-title">⚠ ${String(t.slotsTitle).replace('{n}', slots.length)}</span>
         <span class="pa-slots-hint">${t.slotsHint}</span>`;
     panel.appendChild(head);
 
@@ -683,7 +705,7 @@ function injectChatButton() {
     const templates = getTemplatesForFormat('text-chat');
     if (templates.length === 0) return;
 
-    const t = I18N[language];
+    const t = uiStrings();
     const wrapper = document.createElement('div');
     wrapper.className = 'pa-chat-injected';
 
@@ -755,11 +777,11 @@ function injectChatButton() {
         if (template) {
             // Re-resolve: Angular may have swapped the textarea since injection
             const live = document.querySelector('textarea.query-box-input') || chatTextarea;
-            setNativeValue(live, template.prompt);
+            setNativeValue(live, withOutputLanguage(template.prompt, 'text-chat'));
             live.focus();
             select.selectedIndex = 0;
-            flashToast(I18N[language].applied);
-            refreshSlotPanel(wrapper, live);
+            flashToast(uiStrings().applied);
+            refreshSlotPanel(wrapper, live, template.paSlots);
             watchSlots(wrapper, live);
         }
     });
@@ -811,7 +833,7 @@ async function saveCurrentInput(textarea, format) {
     const textVal = textarea.value.trim();
     if (!textVal) return;
 
-    const t = I18N[language];
+    const t = uiStrings();
     const title = await showSaveModal("My Custom Prompt");
     if (!title) return; // Cancelled
 
@@ -841,7 +863,7 @@ async function saveCurrentInput(textarea, format) {
 
 function showSaveModal(defaultTitle) {
     return new Promise((resolve) => {
-        const t = I18N[language];
+        const t = uiStrings();
 
         let existing = document.getElementById('pa-save-modal');
         if (existing) existing.remove();
@@ -970,11 +992,79 @@ function getTemplatesForFormat(format) {
     const langTemplates = allTemplates.filter(p => {
         if (p.format !== format) return false;
         if (!p.lang) return true;                              // legacy entries without lang tag
+        // Prompt bodies exist only for en and hu; other languages use English
+        // bodies with titles translated from the locale file.
+        if (!NATIVE_BODY_LANGS.has(language)) return p.lang === 'en';
         if (p.lang === language) return true;                  // exact match
         if (language === 'hu' && p.lang === 'en' && !huIds.has(p.id)) return true; // EN fallback
         return false;
     });
-    return [...userPrompts.filter(p => p.format === format), ...langTemplates];
+    return [...userPrompts.filter(p => p.format === format), ...langTemplates.map(localizedTemplate)];
+}
+
+// ===== Locale =====
+// Only English and Hungarian ship translated prompt bodies. Every other language
+// gets English bodies with a translated title/description, plus a generated
+// output-language line. Measured 2026-08-02: an English prompt against Hungarian
+// sources answers in English, so that line is what actually steers the output.
+const NATIVE_BODY_LANGS = new Set(['en', 'hu']);
+let locale = null;
+let boilerplate = null;
+
+async function loadLocale(lang) {
+    locale = null;
+    // en and hu ship native prompt bodies and bundled UI strings — no locale file,
+    // and attempting the fetch would log a 404 on every page load.
+    if (!lang || NATIVE_BODY_LANGS.has(lang)) return;
+    try {
+        const [locRes, bpRes] = await Promise.all([
+            fetch(chrome.runtime.getURL(`data/locales/${lang}.json`)),
+            boilerplate ? null : fetch(chrome.runtime.getURL('data/locales/_boilerplate.json'))
+        ]);
+        if (locRes && locRes.ok) locale = await locRes.json();
+        if (bpRes && bpRes.ok) boilerplate = await bpRes.json();
+    } catch (e) {
+        console.warn('[PA] locale load failed for', lang, e);
+    }
+}
+
+/**
+ * Rebuilds a full prompt from the translated body plus the hand-translated
+ * grounding block. Bodies are stored without boilerplate so a machine never
+ * rewords the text that keeps answers source-grounded.
+ */
+function composeBody(entry, lang) {
+    const bp = boilerplate && boilerplate[lang];
+    if (!bp) return entry.body;
+    const parts = [];
+    if (entry.grounding && bp[entry.grounding]) parts.push(bp[entry.grounding]);
+    if (entry.slotRule && bp.slots) parts.push(bp.slots);
+    parts.push(entry.body);
+    return parts.join('\n\n');
+}
+
+function localizedTemplate(p) {
+    const tr = locale && locale.templates && locale.templates[p.id];
+    if (!tr) return p;
+    const out = { ...p, title: tr.title || p.title, description: tr.description || p.description };
+    if (tr.body) {
+        out.prompt = composeBody(tr, locale.language);
+        // Slot labels come from the locale, not from a heuristic — letter case
+        // does not exist in Japanese, Chinese, Korean or Hindi, so the runtime
+        // classifier cannot tell a user slot from model-side scaffolding there.
+        if (tr.slots) out.paSlots = Object.values(tr.slots);
+    }
+    return out;
+}
+
+/**
+ * Chat has no output-language control, so an English body would answer in
+ * English. Studio dialogs have their own language selector and are left alone.
+ */
+function withOutputLanguage(text, format) {
+    if (format !== 'text-chat' && format !== 'configure-chat') return text;
+    if (!locale || !locale.languageName) return text;          // en / hu keep native bodies
+    return `${text}\n\nAnswer in ${locale.languageName}.`;
 }
 
 function setNativeValue(element, value) {
@@ -1093,7 +1183,7 @@ async function applyFromPopup(msg) {
         if (!textarea) return { success: false, reason: 'dialog-timeout' };
     }
 
-    setNativeValue(textarea, msg.prompt);
+    setNativeValue(textarea, withOutputLanguage(msg.prompt, format));
     textarea.focus();
     textarea.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
@@ -1104,7 +1194,7 @@ async function applyFromPopup(msg) {
         || document.querySelector('.pa-chat-injected');
     if (host) { refreshSlotPanel(host, textarea); watchSlots(host, textarea); }
 
-    flashToast(I18N[language].applied);
+    flashToast(uiStrings().applied);
     return { success: true };
 }
 
@@ -1125,6 +1215,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
     if (changes.language) {
         language = changes.language.newValue || 'en';
+        loadLocale(language);
         needsRefresh = true;
         console.log('[PA] language synced from storage:', language);
     }

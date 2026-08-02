@@ -134,29 +134,37 @@ body::-webkit-scrollbar-thumb {
   gap: 6px;
 }
 
-.pa-lang-toggle {
-  display: flex;
-  background: rgba(255, 255, 255, 0.1);
+/* Language picker — a two-button toggle no longer fits 12 languages */
+.pa-lang-select {
+  padding: 4px 8px;
   border-radius: var(--radius-xs);
-  padding: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.pa-lang-btn {
-  padding: 3px 10px;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 10px;
-  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.15s;
+  outline: none;
+  max-width: 110px;
 }
 
-.pa-lang-btn.active {
-  background: rgba(255, 255, 255, 0.95);
+.pa-lang-select:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* The native dropdown list renders on the OS surface, so it needs readable
+   colours of its own rather than inheriting the header's white-on-blue. */
+.pa-lang-select option {
+  background: #fff;
   color: #1a237e;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pa-lang-select option {
+    background: #26282c;
+    color: #e8eaed;
+  }
 }
 
 .pa-btn-icon {

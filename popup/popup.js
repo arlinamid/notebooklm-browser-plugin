@@ -2,6 +2,84 @@
 
 const CATEGORIES = ['all', 'studio', 'data-engineering', 'critical-analysis', 'learning', 'productivity', 'troubleshooting', 'professional', 'viral'];
 
+// Languages with a shipped data/locales/<code>.json. English and Hungarian also
+// have fully translated prompt bodies under templates/; the rest get English
+// bodies with translated titles and descriptions — measured as 5% of the text
+// for ~90% of the benefit. See docs/I18N-PLAN.md.
+const AVAILABLE_LANGUAGES = {
+    en: 'English',
+    hu: 'Magyar',
+    es: 'Español',
+    'pt-BR': 'Português',
+    fr: 'Français',
+    de: 'Deutsch',
+    it: 'Italiano',
+    ja: '日本語',
+    ko: '한국어',
+    'zh-CN': '中文',
+    hi: 'हिन्दी',
+    ru: 'Русский'
+};
+
+// Languages that ship fully translated prompt bodies under templates/
+const NATIVE_BODY_LANGS = new Set(['en', 'hu']);
+
+// Locale data for the current language, or null when English / not yet loaded
+let locale = null;
+
+let boilerplate = null;
+
+async function loadLocale(lang) {
+    locale = null;
+    // en and hu ship native prompt bodies and bundled UI strings — no locale file,
+    // and attempting the fetch would log a 404 on every open.
+    if (!lang || NATIVE_BODY_LANGS.has(lang)) return;
+    try {
+        const [locRes, bpRes] = await Promise.all([
+            fetch(chrome.runtime.getURL(`data/locales/${lang}.json`)),
+            boilerplate ? null : fetch(chrome.runtime.getURL('data/locales/_boilerplate.json'))
+        ]);
+        if (locRes && locRes.ok) locale = await locRes.json();
+        if (bpRes && bpRes.ok) boilerplate = await bpRes.json();
+    } catch (e) {
+        console.warn('[PA] locale load failed for', lang, e);
+    }
+}
+
+/** Rebuilds a prompt from the translated body + the hand-translated grounding block. */
+function composeBody(entry, lang) {
+    const bp = boilerplate && boilerplate[lang];
+    if (!bp) return entry.body;
+    const parts = [];
+    if (entry.grounding && bp[entry.grounding]) parts.push(bp[entry.grounding]);
+    if (entry.slotRule && bp.slots) parts.push(bp.slots);
+    parts.push(entry.body);
+    return parts.join('\n\n');
+}
+
+/** UI strings: locale file → bundled i18n.js → English. */
+function strings() {
+    return (locale && locale.ui) || I18N[language] || I18N.en;
+}
+
+/** Title/description for a template, translated when the locale provides it. */
+function localized(p) {
+    const tr = locale && locale.templates && locale.templates[p.id];
+    if (!tr) return p;
+    const out = {
+        ...p,
+        title: tr.title || p.title,
+        description: tr.description || p.description
+    };
+    if (tr.body) {
+        out.prompt = composeBody(tr, locale.language);
+        // The card preview shows the body directly — no boilerplate to strip,
+        // because translated bodies are stored without it.
+        out.previewBody = tr.body;
+    }
+    return out;
+}
+
 let allTemplates = [];
 let userPrompts = [];
 let language = 'en';
@@ -39,29 +117,39 @@ document.addEventListener('DOMContentLoaded', async () => {
         language = stored.language || 'en';
     }
 
+    await loadLocale(language);
     initUI();
     render();
 });
 
 // ===== UI Init =====
 function initUI() {
-    const t = I18N[language];
+    const t = strings();
 
     // Header
     document.getElementById('appTitle').textContent = t.appTitle;
     document.getElementById('appSubtitle').textContent = t.subtitle;
 
-    // Lang toggle
-    document.querySelectorAll('.pa-lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === language);
-        btn.addEventListener('click', () => {
-            language = btn.dataset.lang;
+    // Language picker — populated from the locales that actually shipped
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect && !langSelect.dataset.built) {
+        langSelect.dataset.built = '1';
+        langSelect.innerHTML = '';
+        for (const [code, label] of Object.entries(AVAILABLE_LANGUAGES)) {
+            const opt = document.createElement('option');
+            opt.value = code;
+            opt.textContent = label;
+            langSelect.appendChild(opt);
+        }
+        langSelect.addEventListener('change', async () => {
+            language = langSelect.value;
             chrome.storage.sync.set({ language });
-            document.querySelectorAll('.pa-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === language));
+            await loadLocale(language);
             initUI();
             render();
         });
-    });
+    }
+    if (langSelect) langSelect.value = language;
 
     // Format tabs
     const tabsContainer = document.getElementById('formatTabs');
@@ -190,17 +278,21 @@ function initUI() {
 
 // ===== Render =====
 function render() {
-    const t = I18N[language];
+    const t = strings();
 
-    // Pick language-specific templates (prefer `language`, fall back to `en` if no HU variant exists)
+    // Prompt bodies exist only for en and hu. Every other language uses the
+    // English bodies and gets its titles/descriptions from the locale file.
     const huIds = new Set(allTemplates.filter(p => p.lang === 'hu').map(p => p.id));
     const langTemplates = allTemplates.filter(p => {
         if (!p.lang) return true;                              // legacy entries without lang tag
+        if (!NATIVE_BODY_LANGS.has(language)) return p.lang === 'en';
         if (p.lang === language) return true;                  // exact match
         if (language === 'hu' && p.lang === 'en' && !huIds.has(p.id)) return true; // EN fallback for missing HU
         return false;
     });
-    const all = [...userPrompts, ...langTemplates];
+    // Swap in translated titles/descriptions before filtering, so search matches
+    // what the user actually sees
+    const all = [...userPrompts, ...langTemplates.map(localized)];
 
     const filtered = all.filter(p => {
         const fmt = p.format || 'text-chat';
@@ -266,7 +358,7 @@ function renderCard(p, t) {
       </div>
     </div>
     <div class="pa-card-desc">${esc(p.description)}</div>
-    <div class="pa-card-prompt">${esc(previewOf(p.prompt))}</div>
+    <div class="pa-card-prompt">${esc(p.previewBody || previewOf(p.prompt))}</div>
     ${p.settings ? `<div class="pa-card-settings">${esc(p.settings)}</div>` : ''}
     <div class="pa-card-actions">
       <button class="pa-btn-apply" data-action="apply" data-id="${esc(p.id)}">
@@ -370,7 +462,7 @@ function deletePrompt(id) {
 // ===== Editor =====
 function openEditor(prompt) {
     editingPrompt = prompt;
-    const t = I18N[language];
+    const t = strings();
 
     document.getElementById('editorTitle').textContent = prompt ? t.editor.editTitle : t.editor.createTitle;
     document.getElementById('edTitle').value = prompt ? prompt.title : '';
