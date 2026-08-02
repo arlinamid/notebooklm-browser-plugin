@@ -4,7 +4,7 @@ category: studio
 subcategory: slide-deck
 type: "Detailed Deck"
 source: "vibeproductmarketing"
-use_case: "Présentation technique pour architecture review ou RFC"
+use_case: "Technical deck for an architecture review or RFC"
 ---
 
 # Detailed Deck - Standalone Document

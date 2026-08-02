@@ -5,7 +5,7 @@ subcategory: infographic
 orientation: "Square"
 detail_level: "Concise"
 source: "Custom - Validated"
-use_case: "Contenu condensé pour réseaux sociaux avec stat marquante"
+use_case: "Condensed content for social media, built around one striking statistic"
 ---
 
 # Infographic — Social Media

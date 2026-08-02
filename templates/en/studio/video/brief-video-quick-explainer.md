@@ -4,7 +4,7 @@ category: studio
 subcategory: video
 length: "1-2 minutes"
 source: "Wonder Tools"
-use_case: "Quick intro à un concept pour onboarding nouveau dev"
+use_case: "Quick intro to a concept for onboarding a new developer"
 ---
 
 # Brief Video - Quick Explainer

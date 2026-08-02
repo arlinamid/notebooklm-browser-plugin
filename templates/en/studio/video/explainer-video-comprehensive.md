@@ -4,7 +4,7 @@ category: studio
 subcategory: video
 length: "6-10 minutes"
 source: "Wonder Tools"
-use_case: "Vidéo explicative complète pour évaluation d'un outil avant POC"
+use_case: "Full explainer video for evaluating a tool before a POC"
 ---
 
 # Explainer Video - Comprehensive

@@ -5,7 +5,7 @@ subcategory: audio
 format: "Debate"
 length: "Default"
 source: "Custom"
-use_case: "Explorer trade-offs d'une décision architecturale avec sources contradictoires"
+use_case: "Explore the trade-offs of an architectural decision using contradictory sources"
 ---
 
 # Debate - Opposing Views

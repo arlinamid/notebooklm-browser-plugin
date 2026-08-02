@@ -5,7 +5,7 @@ subcategory: audio
 format: "Brief"
 length: "Shorter"
 source: "Wonder Tools"
-use_case: "Résumé rapide pour partager findings avec équipe management"
+use_case: "Quick summary to share findings with the management team"
 ---
 
 # Brief - Executive Summary

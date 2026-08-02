@@ -4,7 +4,7 @@ category: studio
 subcategory: slide-deck
 type: "Presenter Slides"
 source: "vibeproductmarketing"
-use_case: "Présentation rapide pour partage de connaissances en équipe"
+use_case: "Quick deck for sharing knowledge across the team"
 ---
 
 # Presenter Slides - Speaking Support

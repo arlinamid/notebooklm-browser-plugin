@@ -5,7 +5,7 @@ subcategory: infographic
 orientation: "Landscape"
 detail_level: "Standard"
 source: "Custom - Validated"
-use_case: "Visualiser architecture data platform avec composants et flux"
+use_case: "Visualise a data platform architecture with its components and flows"
 ---
 
 # Infographic — Architecture/Data

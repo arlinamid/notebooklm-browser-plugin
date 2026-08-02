@@ -4,7 +4,7 @@ category: studio
 subcategory: slide-deck
 type: "Detailed Deck"
 source: "Custom"
-use_case: "Préparer RFC pour nouvelle architecture de pipeline data"
+use_case: "Prepare an RFC for a new data pipeline architecture"
 ---
 
 # Technical RFC Deck

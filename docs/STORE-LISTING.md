@@ -123,9 +123,10 @@ Prompt Architect is an independent extension. It is not affiliated with, associa
   prompts in sequence" — so it belongs above the fold rather than in a feature list.
 - The section leads with the *reason* a chain exists (research is iterative) rather than the
   mechanism, because the mechanism only reads as valuable once the need is obvious.
-- No screenshot copy is included here. The popup was rebuilt in 1.6.0 — collapsible format rail,
-  two-column cards — so **every existing store screenshot is now out of date** and needs retaking
-  before this listing goes up.
+- **Screenshots retaken** for the 1.6.0 popup and stored in `docs/store-screenshots/` — 1280x800,
+  24-bit RGB, which is what the Store accepts. Upload order matches the filenames.
+  Regenerate the first five with `node scripts/build-screenshots.js` after any popup change;
+  `store-6-inpage.png` is captured from a signed-in NotebookLM session by hand.
 
 ### What changed for v1.4.0
 

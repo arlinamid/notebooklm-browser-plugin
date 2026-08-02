@@ -5,7 +5,7 @@ subcategory: audio
 format: "Critique"
 length: "Default"
 source: "Custom"
-use_case: "Évaluation critique d'un outil avant décision d'adoption"
+use_case: "Critical evaluation of a tool before an adoption decision"
 ---
 
 # Critique - Solution Evaluation

@@ -9,6 +9,10 @@
     "newPrompt": "New Prompt",
     "noPrompts": "No prompts found matching your criteria.",
     "clearFilters": "Clear filters",
+    "expandMenu": "Expand menu",
+    "languageLabel": "Interface language",
+    "about": "About",
+    "collapseMenu": "Collapse menu",
     "formats": {
       "slide-deck": "Slides",
       "audio-overview": "Audio",
@@ -83,11 +87,7 @@
       "settings": "Settings",
       "edit": "Edit",
       "delete": "Delete"
-    },
-    "expandMenu": "Expand menu",
-    "collapseMenu": "Collapse menu",
-    "languageLabel": "Interface language",
-    "about": "About"
+    }
   },
   "content": {
     "sectionLabel": "Prompt Template",
@@ -540,7 +540,7 @@
     },
     "studio/audio/brief-executive-summary.md": {
       "title": "Brief - Executive Summary",
-      "description": "Résumé rapide pour partager findings avec équipe management",
+      "description": "Quick summary to share findings with the management team",
       "grounding": null,
       "slotRule": true,
       "slots": [
@@ -550,7 +550,7 @@
     },
     "studio/audio/critique-solution-evaluation.md": {
       "title": "Critique - Solution Evaluation",
-      "description": "Évaluation critique d'un outil avant décision d'adoption",
+      "description": "Critical evaluation of a tool before an adoption decision",
       "grounding": null,
       "slotRule": true,
       "slots": [
@@ -561,7 +561,7 @@
     },
     "studio/audio/debate-opposing-views.md": {
       "title": "Debate - Opposing Views",
-      "description": "Explorer trade-offs d'une décision architecturale avec sources contradictoires",
+      "description": "Explore the trade-offs of an architectural decision using contradictory sources",
       "grounding": null,
       "slotRule": true,
       "slots": [
@@ -573,7 +573,7 @@
     },
     "studio/audio/deep-dive-technical-focus.md": {
       "title": "Deep Dive - Technical Focus",
-      "description": "Deep dive technique sur un pattern architectural avec comparaison de sources",
+      "description": "Technical deep dive into an architectural pattern, comparing sources",
       "grounding": null,
       "slotRule": true,
       "slots": [
@@ -639,7 +639,7 @@
     },
     "studio/infographic/infographic-architecture-data.md": {
       "title": "Infographic — Architecture/Data",
-      "description": "Visualiser architecture data platform avec composants et flux",
+      "description": "Visualise a data platform architecture with its components and flows",
       "grounding": null,
       "slotRule": false,
       "slots": [],
@@ -671,7 +671,7 @@
     },
     "studio/infographic/infographic-executive-kpis.md": {
       "title": "Infographic — Executive/KPIs",
-      "description": "Rapports avec métriques et KPIs pour décisions business",
+      "description": "Reporting with metrics and KPIs for business decisions",
       "grounding": "style",
       "slotRule": false,
       "slots": [],
@@ -719,7 +719,7 @@
     },
     "studio/infographic/infographic-social-media.md": {
       "title": "Infographic — Social Media",
-      "description": "Contenu condensé pour réseaux sociaux avec stat marquante",
+      "description": "Condensed content for social media, built around one striking statistic",
       "grounding": "style",
       "slotRule": false,
       "slots": [],
@@ -811,7 +811,7 @@
     },
     "studio/slide-deck/detailed-deck-standalone-document.md": {
       "title": "Detailed Deck - Standalone Document",
-      "description": "Présentation technique pour architecture review ou RFC",
+      "description": "Technical deck for an architecture review or RFC",
       "grounding": "style",
       "slotRule": true,
       "slots": [
@@ -878,7 +878,7 @@
     },
     "studio/slide-deck/presenter-slides-speaking-support.md": {
       "title": "Presenter Slides - Speaking Support",
-      "description": "Présentation rapide pour partage de connaissances en équipe",
+      "description": "Quick deck for sharing knowledge across the team",
       "grounding": "style",
       "slotRule": true,
       "slots": [
@@ -937,7 +937,7 @@
     },
     "studio/slide-deck/technical-rfc-deck.md": {
       "title": "Technical RFC Deck",
-      "description": "Préparer RFC pour nouvelle architecture de pipeline data",
+      "description": "Prepare an RFC for a new data pipeline architecture",
       "grounding": "style",
       "slotRule": true,
       "slots": [
@@ -955,7 +955,7 @@
     },
     "studio/video/brief-video-quick-explainer.md": {
       "title": "Brief Video - Quick Explainer",
-      "description": "Quick intro à un concept pour onboarding nouveau dev",
+      "description": "Quick intro to a concept for onboarding a new developer",
       "grounding": "style",
       "slotRule": false,
       "slots": [
@@ -965,7 +965,7 @@
     },
     "studio/video/explainer-video-comprehensive.md": {
       "title": "Explainer Video - Comprehensive",
-      "description": "Vidéo explicative complète pour évaluation d'un outil avant POC",
+      "description": "Full explainer video for evaluating a tool before a POC",
       "grounding": "style",
       "slotRule": true,
       "slots": [

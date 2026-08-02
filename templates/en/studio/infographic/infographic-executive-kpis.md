@@ -5,7 +5,7 @@ subcategory: infographic
 orientation: "Square"
 detail_level: "Concise"
 source: "Custom - Validated"
-use_case: "Rapports avec métriques et KPIs pour décisions business"
+use_case: "Reporting with metrics and KPIs for business decisions"
 ---
 
 # Infographic — Executive/KPIs

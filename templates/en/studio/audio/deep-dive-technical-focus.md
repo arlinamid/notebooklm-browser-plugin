@@ -5,7 +5,7 @@ subcategory: audio
 format: "Deep Dive"
 length: "Longer"
 source: "greeden.me"
-use_case: "Deep dive technique sur un pattern architectural avec comparaison de sources"
+use_case: "Technical deep dive into an architectural pattern, comparing sources"
 ---
 
 # Deep Dive - Technical Focus
