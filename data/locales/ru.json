@@ -1,0 +1,529 @@
+{
+  "language": "ru",
+  "languageName": "Russian",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "Просматривайте и применяйте промпты к карточкам NotebookLM Studio",
+    "searchPlaceholder": "Поиск промптов...",
+    "newPrompt": "Новый промпт",
+    "noPrompts": "Промпты по вашим критериям не найдены.",
+    "clearFilters": "Сбросить фильтры",
+    "formats": {
+      "slide-deck": "Слайды",
+      "audio-overview": "Аудио",
+      "video-overview": "Видео",
+      "text-chat": "Чат",
+      "infographic": "Инфографика",
+      "configure-chat": "Настройка",
+      "flashcards": "Карточки",
+      "quiz": "Тест",
+      "report": "Отчёт",
+      "data-table": "Таблица"
+    },
+    "categories": {
+      "all": "Все",
+      "viral": "Вирусные",
+      "professional": "Профессиональные",
+      "studio": "Studio",
+      "productivity": "Продуктивность",
+      "learning": "Обучение",
+      "critical-analysis": "Критический анализ",
+      "troubleshooting": "Устранение проблем",
+      "data-engineering": "Инженерия данных"
+    },
+    "levels": {
+      "all": "Все уровни",
+      "beginner": "Начальный",
+      "intermediate": "Средний",
+      "advanced": "Продвинутый"
+    },
+    "editor": {
+      "createTitle": "Создать новый промпт",
+      "editTitle": "Редактировать промпт",
+      "titleLabel": "Название",
+      "titlePlaceholder": "Напр.: Минималистичный питч-дек",
+      "categoryLabel": "Категория",
+      "levelLabel": "Уровень",
+      "formatLabel": "Формат",
+      "descriptionLabel": "Описание",
+      "descriptionPlaceholder": "Краткое описание...",
+      "promptLabel": "Инструкции промпта",
+      "promptPlaceholder": "Напишите здесь полные инструкции для NotebookLM...",
+      "settingsLabel": "Настройки / метаданные",
+      "settingsPlaceholder": "напр., Источник: пользовательский | Ориентация: альбомная",
+      "cancel": "Отмена",
+      "save": "Сохранить промпт"
+    },
+    "card": {
+      "custom": "Пользовательский",
+      "copy": "Копировать",
+      "copied": "Скопировано!",
+      "apply": "Применить к NLM",
+      "applied": "Применено!",
+      "openedStudio": "Открыта панель Studio",
+      "noStudio": "Сначала откройте один из своих блокнотов — панели Studio есть только там. Вместо этого скопировано.",
+      "noTarget": "Не удалось найти место для вставки. Вместо этого скопировано.",
+      "settings": "Настройки",
+      "edit": "Изменить",
+      "delete": "Удалить"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "Пользовательский аудиообзор с дебатами",
+      "description": "Загрузите противоречащие друг другу документы (например, SQL vs NoSQL для аналитики) → структурированный аудиообзор-дебаты с итоговым решением"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "Сводка по вашим интересам",
+      "description": "Какие самые неожиданные техники оптимизации PostgreSQL? Сфокусируйтесь на стратегиях индексирования, а не на общем синтаксисе SQL."
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "Многопроходная структурная итерация",
+      "description": "Сложные архитектурные решения, требующие синтеза данных из нескольких источников"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "Сравнительная таблица по источникам",
+      "description": "Когда у вас 20+ источников и нужно выявить консенсус и расхождения"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "Текстовый ответ в стиле подкаста",
+      "description": "Превратите сухую техническую документацию в увлекательный разговорный формат для лучшего запоминания"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "Бизнес-стратег и консультант",
+      "description": "Превратите чат в бизнес-консультанта высшего уровня, который применяет структурированные фреймворки (SWOT, Porter's 5 Forces, MECE) для анализа источников и подготовки стратегических рекомендаций"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "Наставник по творческому письму",
+      "description": "Превратите чат в наставника по творческому письму, который помогает превращать исходные материалы в увлекательные повествования, истории и контент"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "Дата-аналитик и извлекатель инсайтов",
+      "description": "Превратите чат в дата-аналитика, который извлекает количественные инсайты, создает структурированные сводки и выявляет закономерности в источниках"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "Оппонент для строгих дебатов",
+      "description": "Превратите чат в интеллектуально строгого партнера по дебатам, который оспаривает каждую позицию, чтобы усилить критическое мышление"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — объясни как пятилетнему",
+      "description": "Превратите чат в мастера объяснений, который может упростить любую сложную тему из источников до кристально ясных объяснений без жаргона, используя повседневные аналогии"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "Тренер по подготовке к экзаменам",
+      "description": "Превратите чат в тренера по подготовке к экзаменам, который создает пробные тесты, выявляет слабые места и строит учебные планы на основе загруженных материалов"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "Фактчекер-исследователь",
+      "description": "Превратите чат в дотошного фактчекера, который оценивает утверждения, выявляет предвзятость и оценивает надежность источников с помощью CRAAP test"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "Языковой наставник с погружением",
+      "description": "Превратите чат в наставника по изучению языка, который использует загруженные материалы как практику чтения с погружением, развитием словарного запаса и объяснениями грамматики"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "Исследователь",
+      "description": "Превратите чат в дотошного исследователя, который анализирует источники с методологической строгостью и выявляет исследовательские возможности"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "Сократический наставник",
+      "description": "Превратите чат в сократического учебного ассистента, который ведет к открытиям через стратегические вопросы, а не дает прямые ответы"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "Технический архитектор",
+      "description": "Превратите чат в старшего технического архитектора, который оценивает выбор технологий, проектирует системы и создает архитектурные решения на основе технической документации"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "Университетский профессор",
+      "description": "Превратите чат в выдающегося профессора, который дает строгий академический анализ с реальным контекстом и научной глубиной"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "Антитезис",
+      "description": "Загрузите whitepaper поставщика → проверьте заявления о производительности/масштабируемости перед внедрением"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "Адвокат дьявола",
+      "description": "Подготовьте архитектурную презентацию → заранее предусмотрите вопросы CTO/команды безопасности перед ревью"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "Диалектическая линза",
+      "description": "Загрузите документацию DLT vs Airbyte → структурированные дебаты о подходах к загрузке данных с цитатами из официальной документации"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "Фильтр отрезвления",
+      "description": "Загрузите документацию \"магического\" фреймворка (например, auto-ML, no-code ETL) → выявите обещания и производственную реальность"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "Сравнение архитектурных решений",
+      "description": "Принимайте обоснованные архитектурные решения на основе сравнений, подкрепленных источниками"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "Код-ревью по лучшим практикам",
+      "description": "Систематическое код-ревью по загруженной документации с лучшими практиками"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "Дизайнер учебной траектории",
+      "description": "Создайте структурированную учебную траекторию для новой технологии дата-инжиниринга"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "Синтез техмониторинга",
+      "description": "После запуска навыка tech-watch синтезируйте выводы в практические рекомендации"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "Генератор технической документации",
+      "description": "Создайте профессиональную документацию из кода + справочных материалов"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "Планировщик активного учебного занятия",
+      "description": "Загрузите главу Kimball о размерном моделировании → создайте 1-часовое занятие с практическими упражнениями по таблицам фактов"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "Карта связей между понятиями",
+      "description": "Загрузите документацию по ETL, ELT, reverse ETL → создайте карту понятий со связями и эволюцией паттернов"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "Генератор ключевых вопросов",
+      "description": "Замените \"lecture slides\" на \"документацию ETL-пайплайна\", чтобы извлечь ключевые понятия из технической документации"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "Дизайнер проекта на основе источников",
+      "description": "Загрузите документацию DLT + руководства по FastAPI + гайды по PostgreSQL → запросите конкретный проект дата-пайплайна, объединяющий все 3 технологии"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "Генератор полного учебного пособия",
+      "description": "Загрузите документацию AWS Lambda + API Gateway + DynamoDB → полное учебное пособие с тестами"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "Анализатор контент-стратегии",
+      "description": "Проанализируйте техническую статью → создайте идеи для блог-постов + контент для соцсетей, чтобы поделиться знаниями"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "Генератор сводки встречи",
+      "description": "Загрузите аудио ежедневного стендапа → структурированная сводка с задачами для каждого разработчика"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "Глобальный синтез - компактная версия",
+      "description": "Краткий обзор при ограниченном времени — результат на 400-800 слов"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "Глобальный синтез - вариант для дата-инжиниринга",
+      "description": "Синтез техмониторинга, оценка инструментов — результат на 800-1200 слов"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "Глобальный синтез - полная версия",
+      "description": "Комплексный анализ перед важным решением — результат на 1500-2500 слов"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "Оптимизированный поиск источников",
+      "description": "DLT data pipelines incremental loading patterns production best practices tutorials"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "Повторяющиеся темы - вариант для изучения домена",
+      "description": "Структурируйте изучение нового домена по загруженной документации"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "Извлечение повторяющихся тем v1 - полная версия",
+      "description": "После загрузки 10+ статей о паттерне (например, event-driven architecture) извлеките консенсус и спорные вопросы"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "Извлечение повторяющихся тем v2 - компактная версия",
+      "description": "Быстрый просмотр новых источников перед углубленным анализом"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "Повторяющиеся темы - вариант оценки решения",
+      "description": "Оценить фреймворк перед POC (например, документация Prefect и отзывы пользователей)"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "Повторяющиеся темы - вариант техобзора",
+      "description": "Свести результаты техобзора перед решением о внедрении"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "Детектор конфликтов источников",
+      "description": "Упорядочить подборку источников перед глубоким анализом"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "Ранжирование источников по релевантности",
+      "description": "После загрузки 20+ источников быстро отобрать 5-10 самых релевантных"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "Бриф - резюме для руководства",
+      "description": "Быстрое резюме для передачи выводов управленческой команде"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "Критика - оценка решения",
+      "description": "Критическая оценка инструмента перед решением о внедрении"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "Дебаты - противоположные взгляды",
+      "description": "Разобрать компромиссы архитектурного решения по противоречивым источникам"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "Глубокий разбор - технический фокус",
+      "description": "Технический глубокий разбор архитектурного паттерна со сравнением источников"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "Интересные истории из пустоты",
+      "description": "Превратить исходные материалы в аудиодраму или повествование с одним ведущим"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "Таблица сравнительного анализа",
+      "description": "Создать параллельную таблицу сравнения понятий, сущностей, продуктов или подходов из исходных материалов со структурированными критериями оценки."
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "Таблица ключевых цитат и доказательств",
+      "description": "Извлечь самые важные цитаты, факты и доказательства из исходных материалов и тематически организовать их в структурированной таблице для быстрого доступа."
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "Таблица исследовательских выводов",
+      "description": "Извлечь и структурировать ключевые исследовательские выводы из нескольких источников в чистую сопоставимую таблицу с колонками для источника, методологии, ключевого вывода и последствий."
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "Карточки для подготовки к экзамену",
+      "description": "Создать экзаменационные карточки с ключевыми фактами, формулами, датами и понятиями, которые наиболее вероятно встретятся в проверочных заданиях."
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "Сфокусированный набор карточек",
+      "description": "Создать сфокусированный набор карточек по конкретной теме или понятию из исходных материалов, подходящий для интервального повторения и активного вспоминания."
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "Инфографика — архитектура/данные",
+      "description": "Визуализировать архитектуру платформы данных с компонентами и потоками"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "Инфографика — бруталистская редакционная",
+      "description": "Ультрасовременная бруталистская редакционная инфографика со швейцарской типографикой, ксерокс-текстурами и красным акцентом"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "Инфографика — сравнение",
+      "description": "Визуальное сравнение двух подходов или решений"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "Инфографика — темный неонуар",
+      "description": "Кинематографичная темная неонуарная инфографика со светотенью и грубой экспрессией масляной живописи"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "Инфографика — руководство/KPI",
+      "description": "Отчеты с метриками и KPI для бизнес-решений"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "Инфографика — выразительный кубистский абстракт",
+      "description": "Креативная художественная инфографика с кубистской геометрической фрагментацией и яркой эстетикой mixed-media"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "Инфографика — геометрическая мозаика",
+      "description": "Декоративная мозаичная инфографика с витражной полигональной композицией и насыщенной тепло-холодной палитрой"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "Инфографика — гибридный концептуальный коллаж",
+      "description": "Редакционная концептуальная инфографика с двойной экспозицией, архитектурным монтажом и наложениями чертежей"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "Инфографика — экспрессионизм mixed-media",
+      "description": "Эмоционально насыщенная mixed-media инфографика с экспрессионистскими мазками и коллажными текстурами"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "Инфографика — процесс/таймлайн",
+      "description": "Пошаговый процесс и последовательные рабочие сценарии"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "Инфографика — соцсети",
+      "description": "Сжатый контент для соцсетей с яркой статистикой"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "Инфографика — популяризация/понятия",
+      "description": "Просто объяснить сложное понятие неспециалистам"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "Тест с выбором ответа",
+      "description": "Создать тест с выбором ответа по конкретной теме из исходных материалов, с понятными вопросами, правдоподобными отвлекающими вариантами и правильными ответами."
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "Открытый тест на знание",
+      "description": "Создать открытые вопросы, требующие более глубокого мышления и синтеза знаний, с примерными ответами для самопроверки."
+    },
+    "studio/report/blog-post.md": {
+      "title": "Блог-пост и экспертная статья",
+      "description": "Превратить исходные материалы в увлекательный и понятный блог-пост или экспертную статью с неожиданными инсайтами и разговорным, но умным тоном."
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "Отчет о конкурентной разведке",
+      "description": "Создать структурированный конкурентный анализ или отчет о рынке на основе предоставленных исходных документов, со стратегическими выводами о позиционировании."
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "Отчет для руководства",
+      "description": "Создать подробный брифинг для руководства со структурированными разделами, ключевыми инсайтами и стратегическими рекомендациями на основе исходных материалов."
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "Презентация Anti-Gravity Artifact",
+      "description": "Футуристичные системные презентации, AI-агенты, спокойная инфраструктура"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "Черный x оранжевый креатив",
+      "description": "Портфолио или питч креативного агентства"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "Классика / поп (скульптура x вейпорвейв)",
+      "description": "Смелый, юмористический, сюрреалистичный ремикс классического искусства и современной поп-культуры"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "Деформированный плоский персонаж",
+      "description": "Простой плоский иллюстративный стиль персонажей"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "Подробная презентация - самостоятельный документ",
+      "description": "Техническая презентация для архитектурного ревью или RFC"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "Диджитал / нео / поп",
+      "description": "Современный, гибкий, дружелюбный дизайн с высокой плотностью информации"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "Журнальный стиль",
+      "description": "Зрелый и милый, изысканный редакционный дизайн"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "Стиль манги",
+      "description": "Увлекательное повествование, упрощение сложных понятий"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "Mincho + рукописный микс",
+      "description": "Стильное ощущение модного журнала со смешанной типографикой"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "Современный газетный стиль",
+      "description": "Эффектные бизнес-презентации с влиянием швейцарской школы и Баухауса"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "Нео-ретро для разработчиков",
+      "description": "Презентации для разработчиков, стартап-питчи, инженерные заметки"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "Розовый уличный стиль",
+      "description": "Поп, энергия и эстетика уличной моды"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "Слайды для выступающего - поддержка речи",
+      "description": "Быстрая презентация для обмена знаниями в команде"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "Королевский синий и красная акварель",
+      "description": "Художественная акварельная эстетика"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "Для семинара (минимум текста)",
+      "description": "Тонкий дизайн для семинаров"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "Минимализм с острыми гранями",
+      "description": "Архитектурный, изысканный портфолио или питч-дек"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "Спортивная энергия",
+      "description": "Энергичные презентации, старт продаж, конкурентный анализ"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio премиум-мокап",
+      "description": "Премиальные витрины продуктов, демо приложений"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "Техно-арт неон",
+      "description": "Авангардные, интеллектуальные, структурные презентации"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "Технический RFC-дек",
+      "description": "Подготовка RFC для новой архитектуры data-пайплайна"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "Желтый x черный editorial",
+      "description": "Модный, поп- и шикарный журнальный дизайн"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "Короткое видео - быстрый эксплейнер",
+      "description": "Краткое введение в концепцию для онбординга нового разработчика"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "Эксплейнер - подробный",
+      "description": "Полное объясняющее видео для оценки инструмента перед POC"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "Обзор синтеза в видео",
+      "description": "Создать видеообзор из сохраненной заметки-синтеза"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "Видеообзор — архитектура/пайплайны",
+      "description": "Визуализация архитектур данных, ETL/ELT-пайплайнов, потоков данных"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "Видеообзор — техническая документация",
+      "description": "API-документация, технические спецификации, справочники"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "Видеообзор — инновации/продукт",
+      "description": "Продуктовые презентации, демо, инновационные питчи"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "Видеообзор — технический онбординг",
+      "description": "Обучение, туториалы, пошаговые инструкции"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "Видеообзор — стейкхолдеры/руководство",
+      "description": "Презентации для лиц, принимающих решения, executive summaries, отчетность"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "Видеообзор — объяснение концепций",
+      "description": "Объяснять сложные концепции доступным языком"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "Отладчик пайплайнов",
+      "description": "Загрузите логи ошибок + код + релевантную документацию для системной отладки"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "Анализ пробелов по источникам",
+      "description": "Разберите, почему пайплайн падает, сравнив код с лучшими практиками из источников"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "Гайд по реализации через сравнение источников",
+      "description": "Баг DLT-пайплайна → сравнить решения из официальной документации vs Stack Overflow vs GitHub Issues"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "Черный x оранжевый креатив",
+      "description": "Портфолио креативного агентства или питч"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "Классика / поп (скульптура x vaporwave)",
+      "description": "Смелый, ироничный, сюрреалистичный ремикс классического искусства и современного попа"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "Деформированный flat-персонаж",
+      "description": "Простой плоский иллюстративный стиль персонажа"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "Digital / Neo / Pop",
+      "description": "Современный, плавный, дружелюбный дизайн с высокой плотностью информации"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "Журнальный стиль",
+      "description": "Зрело-милый, изысканный editorial-дизайн"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "Mincho + рукописный микс",
+      "description": "Стильный вайб модного журнала со смешанной типографикой"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "Розовый уличный стиль",
+      "description": "Поп, энергия и эстетика уличной моды"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "Королевский синий и красная акварель",
+      "description": "Художественная акварельная эстетика"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "Для семинара (минимум текста)",
+      "description": "Тонкий дизайн для семинаров"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "Желтый x черный editorial",
+      "description": "Модный, поп- и шикарный журнальный дизайн"
+    }
+  }
+}

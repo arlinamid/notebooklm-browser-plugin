@@ -38,7 +38,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "data/templates.json"
+        "data/templates.json",
+        "data/locales/*.json"
       ],
       "matches": [
         "*://notebooklm.google.com/*",

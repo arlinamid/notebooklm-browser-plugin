@@ -1,0 +1,529 @@
+{
+  "language": "hi",
+  "languageName": "Hindi",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "NotebookLM Studio कार्ड्स में प्रॉम्प्ट ब्राउज़ और लागू करें",
+    "searchPlaceholder": "प्रॉम्प्ट खोजें...",
+    "newPrompt": "नया प्रॉम्प्ट",
+    "noPrompts": "आपके मानदंडों से मेल खाने वाले कोई प्रॉम्प्ट नहीं मिले।",
+    "clearFilters": "फ़िल्टर साफ़ करें",
+    "formats": {
+      "slide-deck": "स्लाइड्स",
+      "audio-overview": "ऑडियो",
+      "video-overview": "वीडियो",
+      "text-chat": "चैट",
+      "infographic": "इन्फ़ोग्राफ़िक",
+      "configure-chat": "कॉन्फ़िगर करें",
+      "flashcards": "कार्ड्स",
+      "quiz": "क्विज़",
+      "report": "रिपोर्ट",
+      "data-table": "तालिका"
+    },
+    "categories": {
+      "all": "सभी",
+      "viral": "वायरल",
+      "professional": "पेशेवर",
+      "studio": "Studio",
+      "productivity": "उत्पादकता",
+      "learning": "सीखना",
+      "critical-analysis": "आलोचनात्मक विश्लेषण",
+      "troubleshooting": "समस्या निवारण",
+      "data-engineering": "डेटा इंजीनियरिंग"
+    },
+    "levels": {
+      "all": "सभी स्तर",
+      "beginner": "शुरुआती",
+      "intermediate": "मध्यवर्ती",
+      "advanced": "उन्नत"
+    },
+    "editor": {
+      "createTitle": "नया प्रॉम्प्ट बनाएँ",
+      "editTitle": "प्रॉम्प्ट संपादित करें",
+      "titleLabel": "शीर्षक",
+      "titlePlaceholder": "उदा: मिनिमलिस्ट पिच डेक",
+      "categoryLabel": "श्रेणी",
+      "levelLabel": "स्तर",
+      "formatLabel": "फ़ॉर्मैट",
+      "descriptionLabel": "विवरण",
+      "descriptionPlaceholder": "छोटा सारांश...",
+      "promptLabel": "प्रॉम्प्ट निर्देश",
+      "promptPlaceholder": "NotebookLM के लिए पूरे निर्देश यहाँ लिखें...",
+      "settingsLabel": "सेटिंग्स / मेटाडेटा",
+      "settingsPlaceholder": "जैसे, स्रोत: कस्टम | ओरिएंटेशन: लैंडस्केप",
+      "cancel": "रद्द करें",
+      "save": "प्रॉम्प्ट सेव करें"
+    },
+    "card": {
+      "custom": "कस्टम",
+      "copy": "कॉपी",
+      "copied": "कॉपी हो गया!",
+      "apply": "NLM पर लागू करें",
+      "applied": "लागू हो गया!",
+      "openedStudio": "Studio पैनल खुल गया",
+      "noStudio": "पहले अपनी कोई नोटबुक खोलें — Studio पैनल वहीं होते हैं। इसके बजाय कॉपी किया गया।",
+      "noTarget": "इसे रखने की जगह नहीं मिली। इसके बजाय कॉपी किया गया।",
+      "settings": "सेटिंग्स",
+      "edit": "संपादित करें",
+      "delete": "हटाएँ"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "बहस के साथ कस्टम ऑडियो ओवरव्यू",
+      "description": "विरोधाभासी दस्तावेज़ अपलोड करें (e.g., analytics के लिए SQL vs NoSQL) → समाधान के साथ संरचित बहस वाला ऑडियो ओवरव्यू"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "रुचि-आधारित सारांश",
+      "description": "सबसे चौंकाने वाली PostgreSQL optimization techniques कौन-सी हैं? indexing strategies पर ध्यान दें, general SQL syntax पर नहीं."
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "मल्टी-पास संरचित पुनरावृत्ति",
+      "description": "जटिल architectural decisions जिनमें multi-source synthesis चाहिए"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "मल्टी-स्रोत तुलना तालिका",
+      "description": "जब आपके पास 20+ स्रोत हों और consensus vs divergence पहचानना हो"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "पॉडकास्ट-शैली टेक्स्ट उत्तर",
+      "description": "बेहतर retention के लिए सूखे technical docs को engaging conversational format में बदलें"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "व्यावसायिक रणनीतिकार & सलाहकार",
+      "description": "chat को top-tier business consultant में बदलें, जो structured frameworks (SWOT, Porter's 5 Forces, MECE) लागू करके sources का विश्लेषण करे और strategic recommendations दे"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "रचनात्मक लेखन मेंटर",
+      "description": "chat को creative writing mentor में बदलें, जो source material को compelling narratives, stories, और content में बदलने में मदद करे"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "डेटा विश्लेषक & इनसाइट एक्सट्रैक्टर",
+      "description": "chat को data analyst में बदलें, जो quantitative insights निकाले, structured summaries बनाए, और sources में patterns पहचाने"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "Devil's Advocate बहस साथी",
+      "description": "chat को intellectually rigorous debate partner में बदलें, जो critical thinking को मजबूत करने के लिए हर position को चुनौती दे"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — ऐसे समझाएं जैसे मैं 5 साल का हूं",
+      "description": "chat को master explainer में बदलें, जो sources के किसी भी complex topic को everyday analogies के साथ crystal-clear, jargon-free explanations में सरल बना सके"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "परीक्षा तैयारी कोच",
+      "description": "chat को exam preparation coach में बदलें, जो uploaded materials से practice tests बनाए, weak areas पहचाने, और study plans तैयार करे"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "जांच-पड़ताल फैक्ट-चेकर",
+      "description": "chat को meticulous fact-checker में बदलें, जो claims का मूल्यांकन करे, bias पहचाने, और CRAAP test से source reliability rate करे"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "इमर्सिव भाषा ट्यूटर",
+      "description": "chat को language learning tutor में बदलें, जो uploaded materials को vocabulary building और grammar explanations के साथ immersive reading practice की तरह इस्तेमाल करे"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "शोध वैज्ञानिक",
+      "description": "chat को meticulous research scientist में बदलें, जो methodological rigor के साथ sources का विश्लेषण करे और research opportunities पहचाने"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "सॉक्रेटिक ट्यूटर",
+      "description": "chat को Socratic teaching assistant में बदलें, जो direct answers देने के बजाय strategic questioning से discovery को guide करे"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "तकनीकी आर्किटेक्ट",
+      "description": "chat को senior technical architect में बदलें, जो technology choices का मूल्यांकन करे, systems design करे, और technical documentation से architecture decision records बनाए"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "विश्वविद्यालय प्रोफेसर",
+      "description": "chat को distinguished professor में बदलें, जो real-world context और scholarly depth के साथ rigorous academic analysis दे"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "एंटी-थीसिस",
+      "description": "vendor whitepaper अपलोड करें → adoption से पहले performance/scalability claims को stress-test करें"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "Devil's Advocate",
+      "description": "architecture presentation तैयार करें → review से पहले CTO/security team के questions का अनुमान लगाएं"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "द्वंद्वात्मक दृष्टि",
+      "description": "DLT vs Airbyte docs अपलोड करें → official docs के citations के साथ data loading approaches पर structured debate"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "मोहभंग फिल्टर",
+      "description": "'magic' framework (e.g., auto-ML, no-code ETL) की documentation अपलोड करें → promises vs production reality पहचानें"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "आर्किटेक्चर निर्णय तुलना",
+      "description": "source-backed comparisons के साथ informed architectural decisions लें"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "Best Practices के साथ Code Review",
+      "description": "uploaded best practices documentation के आधार पर systematic code review"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "लर्निंग पाथ डिजाइनर",
+      "description": "नई data engineering technology के लिए structured learning path बनाएं"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "Tech Watch संश्लेषण",
+      "description": "tech-watch skill चलाने के बाद, findings को actionable recommendations में synthesize करें"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "तकनीकी दस्तावेज़ जनरेटर",
+      "description": "code + reference materials से professional documentation generate करें"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "सक्रिय सीखने का सेशन प्लानर",
+      "description": "Kimball dimensional modeling chapter अपलोड करें → practical fact table exercises के साथ 1-hour session generate करें"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "कॉन्सेप्ट कनेक्शन मैपर",
+      "description": "ETL, ELT, reverse ETL docs अपलोड करें → relationships और pattern evolution के साथ concept map generate करें"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "मुख्य प्रश्न जनरेटर",
+      "description": "'lecture slides' को 'ETL pipeline documentation' से बदलें ताकि technical docs से core concepts निकाले जा सकें"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "स्रोत-आधारित प्रोजेक्ट डिजाइनर",
+      "description": "DLT docs + FastAPI tutorials + PostgreSQL guides अपलोड करें → सभी 3 technologies को integrate करने वाला concrete data pipeline project मांगें"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "पूर्ण स्टडी गाइड जनरेटर",
+      "description": "AWS Lambda + API Gateway + DynamoDB docs अपलोड करें → quizzes के साथ complete study guide"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "कंटेंट रणनीति विश्लेषक",
+      "description": "technical article का विश्लेषण करें → learnings share करने के लिए blog post ideas + social media content generate करें"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "मीटिंग सारांश जनरेटर",
+      "description": "daily standup audio अपलोड करें → हर developer के action items के साथ structured summary"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "वैश्विक संश्लेषण - संक्षिप्त संस्करण",
+      "description": "समय कम होने पर quick overview — 400-800 words output"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "वैश्विक संश्लेषण - डेटा इंजीनियरिंग वैरिएंट",
+      "description": "Tech watch synthesis, tool evaluation — 800-1200 words output"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "वैश्विक संश्लेषण - पूर्ण संस्करण",
+      "description": "major decision से पहले comprehensive analysis — 1500-2500 words output"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "ऑप्टिमाइज़्ड स्रोत खोज",
+      "description": "DLT data pipelines incremental loading patterns production best practices tutorials"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "Recurring Topics - Domain Learning वैरिएंट",
+      "description": "uploaded docs से नए domain की learning को structure करें"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "Recurring Topics Extractor v1 - पूर्ण",
+      "description": "किसी pattern पर 10+ articles अपलोड करने के बाद (e.g., event-driven architecture), consensus और controversies निकालें"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "Recurring Topics Extractor v2 - संक्षिप्त",
+      "description": "in-depth analysis से पहले new sources का quick scan"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "दोहराए जाने वाले विषय - समाधान मूल्यांकन वैरिएंट",
+      "description": "POC से पहले फ्रेमवर्क का मूल्यांकन करें (जैसे, Prefect दस्तावेज़ बनाम उपयोगकर्ता आलोचनाएँ)"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "दोहराए जाने वाले विषय - टेक वॉच वैरिएंट",
+      "description": "अपनाने का निर्णय लेने से पहले टेक-वॉच कौशल के परिणामों का सार निकालें"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "स्रोत विरोध डिटेक्टर",
+      "description": "गहन विश्लेषण से पहले स्रोत संग्रह साफ़ करें"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "स्रोत प्रासंगिकता रैंकर",
+      "description": "20+ स्रोत अपलोड करने के बाद, 5-10 सबसे प्रासंगिक स्रोत जल्दी छाँटें"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "संक्षिप्त - कार्यकारी सारांश",
+      "description": "प्रबंधन टीम के साथ findings साझा करने के लिए त्वरित सारांश"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "समालोचना - समाधान मूल्यांकन",
+      "description": "अपनाने के निर्णय से पहले किसी टूल का आलोचनात्मक मूल्यांकन"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "बहस - विरोधी दृष्टिकोण",
+      "description": "विरोधाभासी स्रोतों के साथ आर्किटेक्चर निर्णय के trade-offs समझें"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "डीप डाइव - तकनीकी फोकस",
+      "description": "स्रोत तुलना के साथ आर्किटेक्चर पैटर्न पर तकनीकी डीप डाइव"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "शून्य से रोचक कहानियाँ",
+      "description": "स्रोत सामग्री को सिंगल-होस्ट ऑडियो ड्रामा/कहानी अनुभव में बदलें"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "तुलनात्मक विश्लेषण तालिका",
+      "description": "स्रोत सामग्री से अवधारणाओं, इकाइयों, उत्पादों या तरीकों की संरचित मूल्यांकन मानदंडों के साथ साथ-साथ तुलना तालिका बनाएँ।"
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "मुख्य उद्धरण और साक्ष्य तालिका",
+      "description": "स्रोत सामग्री से सबसे महत्वपूर्ण उद्धरण, तथ्य और साक्ष्य निकालें और आसान संदर्भ के लिए उन्हें संरचित तालिका में विषयवार व्यवस्थित करें।"
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "शोध निष्कर्ष तालिका",
+      "description": "कई स्रोतों से मुख्य शोध निष्कर्ष निकालकर उन्हें स्रोत, पद्धति, मुख्य निष्कर्ष और निहितार्थों वाले स्तंभों के साथ साफ़, तुलनीय तालिका में व्यवस्थित करें।"
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "परीक्षा तैयारी फ्लैशकार्ड",
+      "description": "मूल्यांकन में आने की सबसे अधिक संभावना वाले मुख्य तथ्यों, सूत्रों, तिथियों और अवधारणाओं को उभारने वाले परीक्षा-केंद्रित फ्लैशकार्ड बनाएँ।"
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "केंद्रित फ्लैशकार्ड सेट",
+      "description": "स्रोत सामग्री से किसी विशिष्ट विषय या अवधारणा पर केंद्रित फ्लैशकार्ड सेट बनाएँ, जो spaced repetition और active recall अभ्यास के लिए उपयुक्त हो।"
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "इन्फोग्राफिक — आर्किटेक्चर/डेटा",
+      "description": "घटकों और प्रवाहों के साथ डेटा प्लेटफ़ॉर्म आर्किटेक्चर दिखाएँ"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "इन्फोग्राफिक — ब्रूटलिस्ट एडिटोरियल",
+      "description": "Swiss typography, xerox textures और लाल accent के साथ अल्ट्रा-आधुनिक ब्रूटलिस्ट एडिटोरियल इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "इन्फोग्राफिक — तुलना",
+      "description": "दो तरीकों या समाधानों की दृश्य तुलना"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "इन्फोग्राफिक — डार्क नियो-नॉयर",
+      "description": "chiaroscuro lighting और gritty oil-paint expressionism के साथ सिनेमैटिक डार्क नियो-नॉयर इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "इन्फोग्राफिक — कार्यकारी/KPIs",
+      "description": "व्यावसायिक निर्णयों के लिए मेट्रिक्स और KPIs वाली रिपोर्ट"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "इन्फोग्राफिक — एक्सप्रेसिव क्यूबिस्ट एब्सट्रैक्ट",
+      "description": "cubist geometric fragmentation और जीवंत mixed-media aesthetic के साथ रचनात्मक फाइन आर्ट इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "इन्फोग्राफिक — ज्योमेट्रिक मोज़ेक",
+      "description": "stained-glass polygonal composition और समृद्ध warm-cool palette के साथ सजावटी मोज़ेक इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "इन्फोग्राफिक — हाइब्रिड कॉन्सेप्चुअल कोलाज",
+      "description": "double exposure, architectural montage और blueprint overlays के साथ एडिटोरियल कॉन्सेप्चुअल इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "इन्फोग्राफिक — मिक्स्ड-मीडिया एक्सप्रेशनिस्ट",
+      "description": "expressionist brushwork और collage textures के साथ भावनात्मक मिक्स्ड-मीडिया इन्फोग्राफिक"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "इन्फोग्राफिक — प्रक्रिया/टाइमलाइन",
+      "description": "चरण-दर-चरण प्रक्रियाएँ और क्रमिक workflows"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "इन्फोग्राफिक — सोशल मीडिया",
+      "description": "प्रमुख आँकड़े के साथ सोशल मीडिया के लिए संक्षिप्त सामग्री"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "इन्फोग्राफिक — सरल व्याख्या/अवधारणाएँ",
+      "description": "गैर-विशेषज्ञों को जटिल अवधारणा सरलता से समझाएँ"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "बहुविकल्पीय क्विज़",
+      "description": "स्रोत सामग्री से किसी विशिष्ट विषय पर स्पष्ट प्रश्नों, विश्वसनीय distractors और सही उत्तरों वाला बहुविकल्पीय क्विज़ बनाएँ।"
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "ओपन-एंडेड ज्ञान क्विज़",
+      "description": "गहन सोच और ज्ञान-संश्लेषण माँगने वाले ओपन-एंडेड क्विज़ प्रश्न बनाएँ, self-assessment के लिए मॉडल उत्तरों सहित।"
+    },
+    "studio/report/blog-post.md": {
+      "title": "ब्लॉग पोस्ट और थॉट लीडरशिप",
+      "description": "स्रोत सामग्री को आश्चर्यजनक insights और संवादात्मक पर बुद्धिमत्तापूर्ण लहजे वाले आकर्षक, सुलभ ब्लॉग पोस्ट या thought leadership लेख में बदलें।"
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "प्रतिस्पर्धी इंटेलिजेंस रिपोर्ट",
+      "description": "दिए गए स्रोत दस्तावेज़ों के आधार पर रणनीतिक positioning insights के साथ संरचित प्रतिस्पर्धी विश्लेषण या बाज़ार इंटेलिजेंस रिपोर्ट बनाएँ।"
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "कार्यकारी ब्रीफिंग रिपोर्ट",
+      "description": "स्रोत सामग्री के आधार पर संरचित अनुभागों, मुख्य insights और रणनीतिक सिफ़ारिशों वाला व्यापक कार्यकारी ब्रीफिंग दस्तावेज़ बनाएँ।"
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "एंटी-ग्रैविटी आर्टिफैक्ट डेक",
+      "description": "भविष्यवादी सिस्टम प्रस्तुतियाँ, AI agents, शांत infrastructure"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "ब्लैक x ऑरेंज क्रिएटिव",
+      "description": "क्रिएटिव एजेंसी पोर्टफोलियो या pitch"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "क्लासिक / पॉप (स्कल्प्चर x वेपरवेव)",
+      "description": "शास्त्रीय कला और आधुनिक पॉप का बोल्ड, हास्यपूर्ण, surreal remix"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "डीफॉर्म्ड फ्लैट पर्सोना",
+      "description": "सरल, फ्लैट, illustrative persona शैली"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "विस्तृत डेक - स्टैंडअलोन दस्तावेज़",
+      "description": "architecture review या RFC के लिए तकनीकी प्रस्तुति"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "डिजिटल / नियो / पॉप",
+      "description": "आधुनिक, fluid, friendly, उच्च सूचना-घनत्व डिज़ाइन"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "मैगज़ीन शैली",
+      "description": "mature-cute, sophisticated editorial डिज़ाइन"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "मंगा शैली",
+      "description": "रोचक storytelling, जटिल अवधारणाओं को सरल बनाना"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "Mincho + Handwritten Mix",
+      "description": "मिश्रित typography के साथ stylish fashion magazine feel"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "आधुनिक अखबार शैली",
+      "description": "Swiss/Bauhaus प्रभाव वाली प्रभावशाली बिजनेस प्रस्तुतियां"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "नियो-रेट्रो Dev डेक",
+      "description": "डेवलपर-केंद्रित प्रस्तुतियां, स्टार्टअप पिच, इंजीनियरिंग नोट्स"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "पिंक स्ट्रीट स्टाइल",
+      "description": "पॉप, ऊर्जावान, स्ट्रीट फैशन सौंदर्य"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "प्रस्तुतकर्ता स्लाइड्स - बोलने में सहायता",
+      "description": "टीम में ज्ञान साझा करने के लिए त्वरित प्रस्तुति"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "रॉयल ब्लू & रेड वाटरकलर",
+      "description": "कलात्मक, वाटरकलर सौंदर्य"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "सेमिनार उपयोग (कम टेक्स्ट)",
+      "description": "सेमिनारों के लिए संवेदनशील डिजाइन"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "शार्प-एज्ड मिनिमलिज्म",
+      "description": "आर्किटेक्चरल, परिष्कृत पोर्टफोलियो या पिच डेक"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "स्पोर्ट्स एथलेटिक एनर्जी",
+      "description": "ऊर्जावान प्रस्तुतियां, सेल्स किकऑफ, प्रतिस्पर्धी विश्लेषण"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio मॉकअप प्रीमियम",
+      "description": "प्रीमियम प्रोडक्ट शोकेस, ऐप डेमो"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "टेक आर्ट नियॉन",
+      "description": "अवां-गार्ड, बौद्धिक, संरचनात्मक प्रस्तुतियां"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "टेक्निकल RFC डेक",
+      "description": "नई डेटा पाइपलाइन आर्किटेक्चर के लिए RFC तैयार करें"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "येलो x ब्लैक एडिटोरियल",
+      "description": "फैशन, पॉप, और चिक एडिटोरियल डिजाइन"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "संक्षिप्त वीडियो - त्वरित व्याख्या",
+      "description": "नए dev की onboarding के लिए किसी अवधारणा का त्वरित परिचय"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "व्याख्यात्मक वीडियो - व्यापक",
+      "description": "POC से पहले किसी टूल के मूल्यांकन के लिए पूरी व्याख्यात्मक वीडियो"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "सिंथेसिस से वीडियो ओवरव्यू",
+      "description": "सेव किए गए synthesis note से वीडियो ओवरव्यू बनाएं"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "वीडियो ओवरव्यू — आर्किटेक्चर/पाइपलाइन",
+      "description": "डेटा आर्किटेक्चर, ETL/ELT पाइपलाइन, डेटा फ्लो विजुअलाइज करें"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "वीडियो ओवरव्यू — तकनीकी डॉक्यूमेंटेशन",
+      "description": "API डॉक्यूमेंटेशन, तकनीकी स्पेक्स, रेफरेंस गाइड"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "वीडियो ओवरव्यू — नवाचार/प्रोडक्ट",
+      "description": "प्रोडक्ट प्रस्तुतियां, डेमो, इनोवेशन पिच"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "वीडियो ओवरव्यू — तकनीकी onboarding",
+      "description": "ट्रेनिंग, ट्यूटोरियल, चरण-दर-चरण गाइड"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "वीडियो ओवरव्यू — स्टेकहोल्डर/एक्जीक्यूटिव",
+      "description": "निर्णयकर्ताओं के लिए प्रस्तुतियां, एक्जीक्यूटिव सारांश, रिपोर्टिंग"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "वीडियो ओवरव्यू — सरल व्याख्या/कॉन्सेप्ट",
+      "description": "जटिल अवधारणाओं को सुलभ तरीके से समझाएं"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "पाइपलाइन डीबगर",
+      "description": "व्यवस्थित debugging के लिए error logs + अपना code + प्रासंगिक documentation अपलोड करें"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "सोर्स-आधारित गैप एनालिसिस इंजन",
+      "description": "अपने code की source best practices से तुलना करके जानें कि आपकी pipeline क्यों fail होती है"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "सोर्स-तुलना इम्प्लीमेंटेशन गाइड",
+      "description": "DLT pipeline bug → official docs vs Stack Overflow posts vs GitHub issues से solutions की तुलना करें"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "ब्लैक x ऑरेंज क्रिएटिव",
+      "description": "क्रिएटिव एजेंसी पोर्टफोलियो या पिच"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "क्लासिक / पॉप (स्कल्पचर x Vaporwave)",
+      "description": "शास्त्रीय कला और आधुनिक पॉप का बोल्ड, हास्यपूर्ण, सुररियल रीमिक्स"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "डिफॉर्म्ड फ्लैट पर्सोना",
+      "description": "सरल, फ्लैट, इलस्ट्रेटिव पर्सोना शैली"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "डिजिटल / नियो / पॉप",
+      "description": "आधुनिक, तरल, दोस्ताना, उच्च सूचना घनत्व वाला डिजाइन"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "मैगजीन स्टाइल",
+      "description": "मैच्योर-क्यूट, परिष्कृत एडिटोरियल डिजाइन"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "Mincho + हस्तलिखित मिक्स",
+      "description": "मिश्रित टाइपोग्राफी के साथ स्टाइलिश फैशन मैगजीन अहसास"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "पिंक स्ट्रीट स्टाइल",
+      "description": "पॉप, ऊर्जावान, स्ट्रीट फैशन सौंदर्य"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "रॉयल ब्लू & रेड वाटरकलर",
+      "description": "कलात्मक, वाटरकलर सौंदर्य"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "सेमिनार उपयोग (कम टेक्स्ट)",
+      "description": "सेमिनारों के लिए संवेदनशील डिजाइन"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "येलो x ब्लैक एडिटोरियल",
+      "description": "फैशन, पॉप, और चिक एडिटोरियल डिजाइन"
+    }
+  }
+}

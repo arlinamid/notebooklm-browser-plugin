@@ -279,6 +279,9 @@ async function init() {
         console.error('[PA] Storage init error:', e);
     }
 
+    // Locale data for the selected language (no-op for en / hu)
+    await loadLocale(language);
+
     // Inject plugin stylesheet once
     injectGlobalStyles();
 
@@ -512,7 +515,7 @@ function createTemplateSection(templates, textarea, format) {
                 const match = text.match(/\[AI FOCUS\]\n([\s\S]*?)$/i);
                 if (match) text = match[1].trim();
             }
-            setNativeValue(textarea, text);
+            setNativeValue(textarea, withOutputLanguage(text, format));
             textarea.focus();
             flashToast(I18N[language].applied);
             // Studio generates in one shot — surface any [SLOTS] before Generate
@@ -755,7 +758,7 @@ function injectChatButton() {
         if (template) {
             // Re-resolve: Angular may have swapped the textarea since injection
             const live = document.querySelector('textarea.query-box-input') || chatTextarea;
-            setNativeValue(live, template.prompt);
+            setNativeValue(live, withOutputLanguage(template.prompt, 'text-chat'));
             live.focus();
             select.selectedIndex = 0;
             flashToast(I18N[language].applied);
@@ -970,11 +973,51 @@ function getTemplatesForFormat(format) {
     const langTemplates = allTemplates.filter(p => {
         if (p.format !== format) return false;
         if (!p.lang) return true;                              // legacy entries without lang tag
+        // Prompt bodies exist only for en and hu; other languages use English
+        // bodies with titles translated from the locale file.
+        if (!NATIVE_BODY_LANGS.has(language)) return p.lang === 'en';
         if (p.lang === language) return true;                  // exact match
         if (language === 'hu' && p.lang === 'en' && !huIds.has(p.id)) return true; // EN fallback
         return false;
     });
-    return [...userPrompts.filter(p => p.format === format), ...langTemplates];
+    return [...userPrompts.filter(p => p.format === format), ...langTemplates.map(localizedTemplate)];
+}
+
+// ===== Locale =====
+// Only English and Hungarian ship translated prompt bodies. Every other language
+// gets English bodies with a translated title/description, plus a generated
+// output-language line. Measured 2026-08-02: an English prompt against Hungarian
+// sources answers in English, so that line is what actually steers the output.
+const NATIVE_BODY_LANGS = new Set(['en', 'hu']);
+let locale = null;
+
+async function loadLocale(lang) {
+    locale = null;
+    // en and hu ship native prompt bodies and bundled UI strings — no locale file,
+    // and attempting the fetch would log a 404 on every page load.
+    if (!lang || NATIVE_BODY_LANGS.has(lang)) return;
+    try {
+        const res = await fetch(chrome.runtime.getURL(`data/locales/${lang}.json`));
+        if (res.ok) locale = await res.json();
+    } catch (e) {
+        console.warn('[PA] locale load failed for', lang, e);
+    }
+}
+
+function localizedTemplate(p) {
+    const tr = locale && locale.templates && locale.templates[p.id];
+    if (!tr) return p;
+    return { ...p, title: tr.title || p.title, description: tr.description || p.description };
+}
+
+/**
+ * Chat has no output-language control, so an English body would answer in
+ * English. Studio dialogs have their own language selector and are left alone.
+ */
+function withOutputLanguage(text, format) {
+    if (format !== 'text-chat' && format !== 'configure-chat') return text;
+    if (!locale || !locale.languageName) return text;          // en / hu keep native bodies
+    return `${text}\n\nAnswer in ${locale.languageName}.`;
 }
 
 function setNativeValue(element, value) {
@@ -1093,7 +1136,7 @@ async function applyFromPopup(msg) {
         if (!textarea) return { success: false, reason: 'dialog-timeout' };
     }
 
-    setNativeValue(textarea, msg.prompt);
+    setNativeValue(textarea, withOutputLanguage(msg.prompt, format));
     textarea.focus();
     textarea.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
@@ -1125,6 +1168,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
     if (changes.language) {
         language = changes.language.newValue || 'en';
+        loadLocale(language);
         needsRefresh = true;
         console.log('[PA] language synced from storage:', language);
     }

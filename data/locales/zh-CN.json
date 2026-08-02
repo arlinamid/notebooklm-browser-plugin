@@ -1,0 +1,529 @@
+{
+  "language": "zh-CN",
+  "languageName": "Simplified Chinese",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "浏览并应用提示词到 NotebookLM Studio 卡片",
+    "searchPlaceholder": "搜索提示词...",
+    "newPrompt": "新建提示词",
+    "noPrompts": "未找到符合条件的提示词。",
+    "clearFilters": "清除筛选",
+    "formats": {
+      "slide-deck": "幻灯片",
+      "audio-overview": "音频",
+      "video-overview": "视频",
+      "text-chat": "聊天",
+      "infographic": "信息图",
+      "configure-chat": "配置",
+      "flashcards": "卡片",
+      "quiz": "测验",
+      "report": "报告",
+      "data-table": "表格"
+    },
+    "categories": {
+      "all": "全部",
+      "viral": "热门",
+      "professional": "专业",
+      "studio": "Studio",
+      "productivity": "效率",
+      "learning": "学习",
+      "critical-analysis": "批判分析",
+      "troubleshooting": "故障排查",
+      "data-engineering": "数据工程"
+    },
+    "levels": {
+      "all": "全部级别",
+      "beginner": "入门",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "editor": {
+      "createTitle": "创建新提示词",
+      "editTitle": "编辑提示词",
+      "titleLabel": "标题",
+      "titlePlaceholder": "例：极简路演幻灯片",
+      "categoryLabel": "类别",
+      "levelLabel": "级别",
+      "formatLabel": "格式",
+      "descriptionLabel": "描述",
+      "descriptionPlaceholder": "简短摘要...",
+      "promptLabel": "提示词说明",
+      "promptPlaceholder": "在此编写 NotebookLM 的完整说明...",
+      "settingsLabel": "设置 / 元数据",
+      "settingsPlaceholder": "例如：来源：自定义 | 方向：横向",
+      "cancel": "取消",
+      "save": "保存提示词"
+    },
+    "card": {
+      "custom": "自定义",
+      "copy": "复制",
+      "copied": "已复制!",
+      "apply": "应用到 NLM",
+      "applied": "已应用!",
+      "openedStudio": "已打开 Studio 面板",
+      "noStudio": "请先打开你自己的一个笔记本 — Studio 面板只在那里可用。已改为复制。",
+      "noTarget": "找不到可放置的位置。已改为复制。",
+      "settings": "设置",
+      "edit": "编辑",
+      "delete": "删除"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "带辩论的自定义音频概览",
+      "description": "上传相互矛盾的文档 (e.g., 分析场景中的 SQL vs NoSQL) → 生成带结论的结构化辩论音频概览"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "兴趣驱动摘要",
+      "description": "最令人意外的 PostgreSQL 优化技巧有哪些? 聚焦索引策略, 而非一般 SQL 语法。"
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "多轮结构化迭代",
+      "description": "需要综合多来源信息的复杂架构决策"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "多来源对比表",
+      "description": "当你有 20+ 个来源, 需要识别共识与分歧时"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "播客式文本回复",
+      "description": "将枯燥的技术文档转为引人入胜的对话格式, 便于记忆"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "商业战略顾问",
+      "description": "将聊天转换为顶级商业顾问, 运用结构化框架 (SWOT, Porter's 5 Forces, MECE) 分析来源并给出战略建议"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "创意写作导师",
+      "description": "将聊天转换为创意写作导师, 帮助把来源材料转化为有吸引力的叙事、故事和内容"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "数据分析师与洞察提取器",
+      "description": "将聊天转换为数据分析师, 提取量化洞察、创建结构化摘要, 并识别跨来源模式"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "反方辩论伙伴",
+      "description": "将聊天转换为严谨的辩论伙伴, 挑战每个立场以强化批判性思维"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — 像对5岁孩子一样解释",
+      "description": "将聊天转换为解释大师, 能把来源中的任何复杂主题简化为清晰、无术语的说明, 并使用日常类比"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "备考教练",
+      "description": "将聊天转换为备考教练, 根据上传材料创建练习测试、识别薄弱环节并制定学习计划"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "调查型事实核查员",
+      "description": "将聊天转换为严谨的事实核查员, 使用 CRAAP 测试评估声明、识别偏见并评级来源可靠性"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "沉浸式语言导师",
+      "description": "将聊天转换为语言学习导师, 使用上传材料进行沉浸式阅读练习, 并提供词汇积累和语法讲解"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "研究科学家",
+      "description": "将聊天转换为严谨的研究科学家, 以方法论严谨性分析来源并识别研究机会"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "苏格拉底式导师",
+      "description": "将聊天转换为苏格拉底式助教, 通过策略性提问引导发现, 而非直接给出答案"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "技术架构师",
+      "description": "将聊天转换为资深技术架构师, 评估技术选择、设计系统, 并根据技术文档创建架构决策记录"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "大学教授",
+      "description": "将聊天转换为杰出教授, 结合现实背景与学术深度, 提供严谨的学术分析"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "反命题",
+      "description": "上传供应商白皮书 → 在采用前压力测试性能/可扩展性声明"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "反方视角",
+      "description": "准备架构演示 → 在评审前预判 CTO/安全团队的问题"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "辩证视角",
+      "description": "上传 DLT vs Airbyte 文档 → 基于官方文档引用, 对数据加载方法进行结构化辩论"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "祛魅过滤器",
+      "description": "上传某个 'magic' 框架的文档 (e.g., auto-ML, no-code ETL) → 识别承诺与生产现实的差距"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "架构决策对比",
+      "description": "通过有来源支撑的对比做出明智的架构决策"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "最佳实践代码审查",
+      "description": "依据上传的最佳实践文档进行系统化代码审查"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "学习路径设计器",
+      "description": "为新的数据工程技术创建结构化学习路径"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "技术观察综合",
+      "description": "运行 tech-watch 技能后, 将发现综合为可执行建议"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "技术文档生成器",
+      "description": "根据代码 + 参考材料生成专业文档"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "主动学习课程规划器",
+      "description": "上传 Kimball 维度建模章节 → 生成 1 小时课程, 包含实用事实表练习"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "概念连接图谱器",
+      "description": "上传 ETL, ELT, reverse ETL 文档 → 生成包含关系与模式演进的概念图"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "核心问题生成器",
+      "description": "将 'lecture slides' 替换为 'ETL pipeline documentation', 以从技术文档中提取核心概念"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "基于来源的项目设计器",
+      "description": "上传 DLT 文档 + FastAPI 教程 + PostgreSQL 指南 → 请求一个整合全部 3 项技术的具体数据管道项目"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "完整学习指南生成器",
+      "description": "上传 AWS Lambda + API Gateway + DynamoDB 文档 → 生成包含测验的完整学习指南"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "内容策略分析器",
+      "description": "分析技术文章 → 生成博客文章创意 + 用于分享学习成果的社交媒体内容"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "会议摘要生成器",
+      "description": "上传每日站会音频 → 生成结构化摘要, 包含每位开发者的行动项"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "全局综合 - 简明版",
+      "description": "时间有限时的快速概览 — 输出 400-800 字"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "全局综合 - 数据工程版",
+      "description": "技术观察综合、工具评估 — 输出 800-1200 字"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "全局综合 - 完整版",
+      "description": "重大决策前的全面分析 — 输出 1500-2500 字"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "优化来源发现",
+      "description": "DLT 数据管道 增量加载模式 生产最佳实践 教程"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "重复主题 - 领域学习版",
+      "description": "根据上传文档组织新领域学习"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "重复主题提取器 v1 - 完整版",
+      "description": "上传 10+ 篇关于某一模式的文章后 (e.g., event-driven architecture), 提取共识与争议"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "重复主题提取器 v2 - 简明版",
+      "description": "深入分析前快速扫描新来源"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "周期主题 - 方案评估版",
+      "description": "POC 前评估框架（例如 Prefect 文档 vs 用户批评）"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "周期主题 - 技术观察版",
+      "description": "在采用决策前综合技术观察技能结果"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "来源冲突检测器",
+      "description": "深度分析前清理来源集合"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "来源相关性排序器",
+      "description": "上传 20+ 个来源后，快速筛出最相关的 5-10 个"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "简报 - 高管摘要",
+      "description": "快速摘要，便于与管理团队分享发现"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "评审 - 方案评估",
+      "description": "采用决策前对工具进行批判性评估"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "辩论 - 对立观点",
+      "description": "结合相互矛盾的来源，探索架构决策的取舍"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "深度解析 - 技术焦点",
+      "description": "围绕架构模式进行技术深挖，并比较多个来源"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "虚空奇谈",
+      "description": "将来源材料转化为单主持人的音频剧/故事体验"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "对比分析表",
+      "description": "基于来源材料，按结构化评估标准创建概念、实体、产品或方案的并列表格。"
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "关键引用与证据表",
+      "description": "从来源材料中提取最重要的引用、事实和证据，并按主题整理成结构化表格，便于查阅。"
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "研究发现表",
+      "description": "从多个来源中提取并结构化关键研究发现，整理为清晰可比的表格，包含来源、方法、关键发现和影响等列。"
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "备考闪卡",
+      "description": "生成面向考试的闪卡，突出最可能出现在测评中的关键事实、公式、日期和概念。"
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "聚焦闪卡集",
+      "description": "根据来源材料围绕特定主题或概念生成聚焦闪卡，适合间隔重复和主动回忆练习。"
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "信息图 — 架构/数据",
+      "description": "可视化数据平台架构，展示组件与流程"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "信息图 — 粗野主义编辑风",
+      "description": "超现代粗野主义编辑风信息图，采用瑞士排版、复印纹理和红色强调色"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "信息图 — 对比",
+      "description": "两种方法或解决方案的视觉对比"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "信息图 — 暗黑新黑色电影风",
+      "description": "电影感暗黑新黑色电影风信息图，带明暗对照光影和粗粝油画表现主义"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "信息图 — 高管/KPI",
+      "description": "面向业务决策的指标与 KPI 报告"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "信息图 — 表现主义立体抽象",
+      "description": "创意美术风信息图，采用立体主义几何碎片和鲜明混合媒介美学"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "信息图 — 几何马赛克",
+      "description": "装饰性马赛克信息图，采用彩色玻璃式多边形构图和丰富冷暖色调"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "信息图 — 混合概念拼贴",
+      "description": "编辑概念风信息图，结合双重曝光、建筑蒙太奇和蓝图叠层"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "信息图 — 混合媒介表现主义",
+      "description": "情绪张力强的混合媒介信息图，带表现主义笔触和拼贴纹理"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "信息图 — 流程/时间线",
+      "description": "分步流程和顺序工作流"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "信息图 — 社交媒体",
+      "description": "面向社交网络的精简内容，突出关键数据"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "信息图 — 科普/概念",
+      "description": "向非专业人士简单解释复杂概念"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "选择题测验",
+      "description": "基于来源材料中的特定主题生成选择题测验，包含清晰题目、可信干扰项和正确答案。"
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "开放式知识测验",
+      "description": "生成需要深入思考和知识整合的开放式测验题，并提供用于自评的参考答案。"
+    },
+    "studio/report/blog-post.md": {
+      "title": "博客文章与思想领导力",
+      "description": "将来源材料转化为引人入胜、通俗易懂的博客文章或思想领导力文章，包含意外洞见，并采用对话式但有深度的语气。"
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "竞争情报报告",
+      "description": "基于提供的来源文档创建结构化竞争分析或市场情报报告，并提供战略定位洞见。"
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "高管简报报告",
+      "description": "基于来源材料创建全面的高管简报文档，包含结构化章节、关键洞见和战略建议。"
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "反重力工件演示文稿",
+      "description": "未来感系统演示、AI 代理、冷静基础设施"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "黑色 x 橙色创意",
+      "description": "创意机构作品集或提案"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "古典 / 流行 (雕塑 x 蒸汽波)",
+      "description": "大胆、幽默、超现实地混搭古典艺术与现代流行"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "变形扁平人物",
+      "description": "简洁、扁平、插画式人物风格"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "详细演示文稿 - 独立文档",
+      "description": "用于架构评审或 RFC 的技术演示"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "数字 / 新潮 / 流行",
+      "description": "现代、流动、友好、高信息密度设计"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "杂志风格",
+      "description": "成熟可爱、精致的编辑设计"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "漫画风格",
+      "description": "引人入胜的叙事，简化复杂概念"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "明朝体 + 手写混搭",
+      "description": "混合字体营造时尚杂志感"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "现代报纸风格",
+      "description": "融合瑞士/包豪斯风格的高冲击力商务演示"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "新复古开发者演示",
+      "description": "面向开发者的演示、创业路演、工程笔记"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "粉色街头风",
+      "description": "流行、活力、街头时尚美学"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "演讲者幻灯片 - 演讲辅助",
+      "description": "用于团队知识分享的快速演示"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "宝蓝与红色水彩",
+      "description": "艺术感水彩美学"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "研讨会用（极简文字）",
+      "description": "适合研讨会的高质感设计"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "锐利极简主义",
+      "description": "建筑感、精致的作品集或路演演示"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "运动竞技能量",
+      "description": "高能量演示、销售启动会、竞争分析"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio 高级样机",
+      "description": "高端产品展示、应用演示"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "科技艺术霓虹",
+      "description": "前卫、理性、结构化演示"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "技术 RFC 演示",
+      "description": "为新的数据管道架构准备 RFC"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "黄 x 黑编辑风",
+      "description": "时尚、流行、精致的编辑设计"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "简短视频 - 快速讲解",
+      "description": "为新开发者入门快速介绍一个概念"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "讲解视频 - 完整版",
+      "description": "用于 POC 前工具评估的完整讲解视频"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "综合笔记转视频概览",
+      "description": "从已保存的综合笔记生成视频概览"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "视频概览 — 架构/管道",
+      "description": "可视化数据架构、ETL/ELT 管道、数据流"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "视频概览 — 技术文档",
+      "description": "API 文档、技术规格、参考指南"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "视频概览 — 创新/产品",
+      "description": "产品演示、Demo、创新路演"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "视频概览 — 技术入门",
+      "description": "培训、教程、分步指南"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "视频概览 — 利益相关方/高管",
+      "description": "面向决策者的演示、高管摘要、报告"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "视频概览 — 科普/概念",
+      "description": "用易懂方式解释复杂概念"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "管道调试器",
+      "description": "上传错误日志 + 你的代码 + 相关文档，进行系统化调试"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "基于源资料的差距分析引擎",
+      "description": "通过对比你的代码与源资料最佳实践，分析管道失败原因"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "源资料对比实施指南",
+      "description": "DLT 管道 bug → 对比官方文档、Stack Overflow 帖子与 GitHub issues 中的解决方案"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "黑 x 橙创意风",
+      "description": "创意机构作品集或路演"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "经典 / 流行（雕塑 x Vaporwave）",
+      "description": "大胆、幽默、超现实地混搭古典艺术与现代流行"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "变形扁平人物",
+      "description": "简洁、扁平、插画式人物风格"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "数字 / 新潮 / 流行",
+      "description": "现代、流动、友好、高信息密度设计"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "杂志风格",
+      "description": "成熟可爱、精致的编辑设计"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "明朝体 + 手写混排",
+      "description": "混合字体打造时尚杂志感"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "粉色街头风",
+      "description": "流行、活力、街头时尚美学"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "宝蓝与红色水彩",
+      "description": "艺术感水彩美学"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "研讨会用（极简文字）",
+      "description": "适合研讨会的高质感设计"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "黄 x 黑编辑风",
+      "description": "时尚、流行、精致的编辑设计"
+    }
+  }
+}

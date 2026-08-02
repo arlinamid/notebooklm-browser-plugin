@@ -1,0 +1,529 @@
+{
+  "language": "ja",
+  "languageName": "Japanese",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "NotebookLM Studioカードのプロンプトを閲覧 & 適用",
+    "searchPlaceholder": "プロンプトを検索...",
+    "newPrompt": "新規プロンプト",
+    "noPrompts": "条件に一致するプロンプトが見つかりません。",
+    "clearFilters": "フィルターをクリア",
+    "formats": {
+      "slide-deck": "スライド",
+      "audio-overview": "音声",
+      "video-overview": "動画",
+      "text-chat": "チャット",
+      "infographic": "インフォグラフィック",
+      "configure-chat": "設定",
+      "flashcards": "カード",
+      "quiz": "クイズ",
+      "report": "レポート",
+      "data-table": "表"
+    },
+    "categories": {
+      "all": "すべて",
+      "viral": "バイラル",
+      "professional": "プロ向け",
+      "studio": "Studio",
+      "productivity": "生産性",
+      "learning": "学習",
+      "critical-analysis": "批判的分析",
+      "troubleshooting": "トラブルシューティング",
+      "data-engineering": "データエンジニアリング"
+    },
+    "levels": {
+      "all": "すべてのレベル",
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    },
+    "editor": {
+      "createTitle": "新規プロンプトを作成",
+      "editTitle": "プロンプトを編集",
+      "titleLabel": "タイトル",
+      "titlePlaceholder": "例: ミニマルなピッチデック",
+      "categoryLabel": "カテゴリー",
+      "levelLabel": "レベル",
+      "formatLabel": "形式",
+      "descriptionLabel": "説明",
+      "descriptionPlaceholder": "短い概要...",
+      "promptLabel": "プロンプト指示",
+      "promptPlaceholder": "NotebookLM向けの詳しい指示をここに入力...",
+      "settingsLabel": "設定 / メタデータ",
+      "settingsPlaceholder": "例: ソース: カスタム | 向き: 横向き",
+      "cancel": "キャンセル",
+      "save": "プロンプトを保存"
+    },
+    "card": {
+      "custom": "カスタム",
+      "copy": "コピー",
+      "copied": "コピーしました!",
+      "apply": "NLMに適用",
+      "applied": "適用しました!",
+      "openedStudio": "Studioパネルを開きました",
+      "noStudio": "まず自分のノートブックを開いてください — Studioパネルはそこにのみあります。代わりにコピーしました。",
+      "noTarget": "入力先が見つかりませんでした。代わりにコピーしました。",
+      "settings": "設定",
+      "edit": "編集",
+      "delete": "削除"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "討論付きカスタム音声概要",
+      "description": "矛盾するドキュメント（例: 分析向けSQLとNoSQL）をアップロード → 解決案付きの構造化された討論型音声概要"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "関心主導の要約",
+      "description": "最も意外なPostgreSQL最適化テクニックは何ですか？一般的なSQL構文ではなく、インデックス戦略に焦点を当ててください。"
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "複数回の構造化反復",
+      "description": "複数ソースの統合が必要な複雑なアーキテクチャ判断"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "複数ソース比較表",
+      "description": "20+件のソースがあり、合意点と相違点を見極める必要がある場合"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "ポッドキャスト風テキスト回答",
+      "description": "無味乾燥な技術文書を、記憶に残りやすい魅力的な会話形式に変換"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "ビジネス戦略家・コンサルタント",
+      "description": "チャットを、構造化フレームワーク（SWOT、Porter's 5 Forces、MECE）でソースを分析し、戦略的提言を行う一流のビジネスコンサルタントに変える"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "創作ライティングメンター",
+      "description": "チャットを、ソース素材を魅力的なナラティブ、ストーリー、コンテンツへ変える支援をする創作ライティングメンターに変える"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "データ分析者・洞察抽出者",
+      "description": "チャットを、定量的な洞察を抽出し、構造化された要約を作成し、複数ソースにまたがるパターンを特定するデータ分析者に変える"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "悪魔の代弁者ディベート相手",
+      "description": "チャットを、批判的思考を鍛えるためにあらゆる立場に異議を唱える、知的に厳密なディベート相手に変える"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — 5歳にもわかる説明",
+      "description": "チャットを、日常的なたとえを使って、ソース内のどんな複雑なテーマも明快で専門用語のない説明に簡略化できる説明の達人に変える"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "試験対策コーチ",
+      "description": "チャットを、アップロード資料から練習問題を作成し、弱点を特定し、学習計画を組み立てる試験対策コーチに変える"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "調査型ファクトチェッカー",
+      "description": "チャットを、主張を評価し、バイアスを特定し、CRAAPテストでソースの信頼性を評価する綿密なファクトチェッカーに変える"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "没入型語学チューター",
+      "description": "チャットを、アップロード資料を語彙強化と文法解説付きの没入型リーディング練習として活用する語学学習チューターに変える"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "研究者",
+      "description": "チャットを、方法論的な厳密さでソースを分析し、研究機会を特定する綿密な研究者に変える"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "ソクラテス式チューター",
+      "description": "チャットを、直接答えを与えるのではなく、戦略的な問いかけで発見を導くソクラテス式の教育アシスタントに変える"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "テクニカルアーキテクト",
+      "description": "チャットを、技術選定を評価し、システムを設計し、技術文書からアーキテクチャ決定記録を作成するシニアテクニカルアーキテクトに変える"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "大学教授",
+      "description": "チャットを、現実世界の文脈と学術的な深みを備えた厳密な学術分析を行う卓越した教授に変える"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "アンチテーゼ",
+      "description": "ベンダーのホワイトペーパーをアップロード → 導入前に性能・スケーラビリティの主張をストレステスト"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "悪魔の代弁者",
+      "description": "アーキテクチャ発表の準備 → レビュー前にCTO・セキュリティチームからの質問を予測"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "弁証法的レンズ",
+      "description": "DLTとAirbyteのドキュメントをアップロード → 公式ドキュメントからの引用付きでデータロード手法を構造化討論"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "幻滅フィルター",
+      "description": "'魔法'のフレームワーク（例: auto-ML、ノーコードETL）のドキュメントをアップロード → 約束と本番環境の現実を見極める"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "アーキテクチャ判断比較",
+      "description": "ソースに基づく比較で、十分な根拠のあるアーキテクチャ判断を行う"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "ベストプラクティス付きコードレビュー",
+      "description": "アップロードしたベストプラクティス文書に照らした体系的なコードレビュー"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "学習パス設計者",
+      "description": "新しいデータエンジニアリング技術のための構造化された学習パスを作成"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "技術ウォッチ統合",
+      "description": "tech-watchスキル実行後、調査結果を実行可能な推奨事項に統合"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "技術文書ジェネレーター",
+      "description": "コード + 参考資料からプロ向けのドキュメントを生成"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "アクティブラーニング計画者",
+      "description": "Kimballのディメンショナルモデリング章をアップロード → 実践的なファクトテーブル演習付きの1時間セッションを生成"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "概念接続マッパー",
+      "description": "ETL、ELT、リバースETLのドキュメントをアップロード → 関係性とパターンの進化を含む概念マップを生成"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "本質的な問いジェネレーター",
+      "description": "'講義スライド'を'ETLパイプライン文書'に置き換えて、技術文書から中核概念を抽出"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "ソース準拠プロジェクト設計者",
+      "description": "DLTドキュメント + FastAPIチュートリアル + PostgreSQLガイドをアップロード → 3つすべての技術を統合した具体的なデータパイプラインプロジェクトを依頼"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "完全学習ガイドジェネレーター",
+      "description": "AWS Lambda + API Gateway + DynamoDBのドキュメントをアップロード → クイズ付きの完全学習ガイド"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "コンテンツ戦略アナライザー",
+      "description": "技術記事を分析 → 学びを共有するためのブログ投稿アイデア + SNSコンテンツを生成"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "会議要約ジェネレーター",
+      "description": "毎日のスタンドアップ音声をアップロード → 各開発者のアクション項目付き構造化要約"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "全体統合 - コンパクト版",
+      "description": "時間が限られているときのクイック概要 — 400-800語の出力"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "全体統合 - データエンジニアリング版",
+      "description": "技術ウォッチ統合、ツール評価 — 800-1200語の出力"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "全体統合 - フル版",
+      "description": "重要な意思決定前の包括的分析 — 1500-2500語の出力"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "最適化ソース発見",
+      "description": "DLTデータパイプラインの差分ロードパターン、本番ベストプラクティス、チュートリアル"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "繰り返しトピック - ドメイン学習版",
+      "description": "アップロードしたドキュメントから新しいドメインの学習を構造化"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "繰り返しトピック抽出 v1 - 完全版",
+      "description": "あるパターン（例: イベント駆動アーキテクチャ）に関する10+本の記事をアップロード後、合意点と論点を抽出"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "繰り返しトピック抽出 v2 - コンパクト版",
+      "description": "詳細分析前に新しいソースを素早くスキャン"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "繰り返しトピック - ソリューション評価版",
+      "description": "POC前にフレームワークを評価（例: Prefect docsとユーザー批評の比較）"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "繰り返しトピック - 技術ウォッチ版",
+      "description": "採用判断前に技術ウォッチの結果を統合"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "ソース矛盾検出",
+      "description": "詳細分析の前にソース集を整理"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "ソース関連度ランカー",
+      "description": "20件以上のソースをアップロード後、最も関連性の高い5-10件にすばやく絞り込み"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "ブリーフ - エグゼクティブサマリー",
+      "description": "マネジメントチームと共有するための findings のクイック要約"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "批評 - ソリューション評価",
+      "description": "採用判断前のツールの批判的評価"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "ディベート - 対立する見解",
+      "description": "矛盾するソースをもとに、アーキテクチャ判断の trade-offs を検討"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "ディープダイブ - 技術フォーカス",
+      "description": "ソース比較を交えたアーキテクチャパターンの技術的ディープダイブ"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "虚空からの興味深い物語",
+      "description": "ソース素材を、単独ホストの音声ドラマ/ストーリーテリング体験に変換"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "比較分析表",
+      "description": "ソース素材から概念、エンティティ、製品、アプローチを横並びで比較する表を、構造化された評価基準付きで作成。"
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "重要引用・根拠表",
+      "description": "ソース素材から最重要の引用、事実、根拠を抽出し、参照しやすい構造化表としてテーマ別に整理。"
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "研究結果表",
+      "description": "複数ソースの主要な研究結果を抽出し、ソース、方法論、主要知見、示唆の列を持つ見やすい比較表に構造化。"
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "試験対策フラッシュカード",
+      "description": "評価に出やすい重要事実、公式、日付、概念に焦点を当てた試験向けフラッシュカードを生成。"
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "集中フラッシュカードセット",
+      "description": "ソース素材内の特定トピックや概念に絞ったフラッシュカードセットを生成。間隔反復や能動的想起の練習に最適。"
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "インフォグラフィック — アーキテクチャ/データ",
+      "description": "コンポーネントとフローを含むデータプラットフォームアーキテクチャを可視化"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "インフォグラフィック — ブルータリスト・エディトリアル",
+      "description": "スイス・タイポグラフィ、ゼロックス風テクスチャ、赤のアクセントを用いた超モダンなブルータリスト・エディトリアルインフォグラフィック"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "インフォグラフィック — 比較",
+      "description": "2つのアプローチまたはソリューションの視覚的比較"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "インフォグラフィック — ダーク・ネオノワール",
+      "description": "キアロスクーロ照明と荒々しい油彩表現主義を取り入れた、映画的なダーク・ネオノワールインフォグラフィック"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "インフォグラフィック — エグゼクティブ/KPI",
+      "description": "ビジネス判断のための指標とKPIを含むレポート"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "インフォグラフィック — 表現的キュビスム抽象",
+      "description": "キュビスム的な幾何学的断片化と鮮やかなミクストメディア美学による、創造的なファインアート風インフォグラフィック"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "インフォグラフィック — 幾何学モザイク",
+      "description": "ステンドグラス風の多角形構成と豊かな暖寒色パレットによる装飾的なモザイクインフォグラフィック"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "インフォグラフィック — ハイブリッド概念コラージュ",
+      "description": "二重露光、建築的モンタージュ、設計図オーバーレイを用いたエディトリアルな概念インフォグラフィック"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "インフォグラフィック — ミクストメディア表現主義",
+      "description": "表現主義的な筆致とコラージュテクスチャを用いた、感情に訴えるミクストメディアインフォグラフィック"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "インフォグラフィック — プロセス/タイムライン",
+      "description": "段階的なプロセスと順序立てたワークフロー"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "インフォグラフィック — ソーシャルメディア",
+      "description": "印象的な統計を添えた、SNS向けの凝縮コンテンツ"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "インフォグラフィック — 平易な解説/概念",
+      "description": "複雑な概念を非専門家にわかりやすく説明"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "多肢選択クイズ",
+      "description": "ソース素材の特定トピックについて、明確な設問、もっともらしい誤答、正解を含む多肢選択クイズを生成。"
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "記述式知識クイズ",
+      "description": "より深い思考と知識の統合を求める記述式クイズを、自己評価用の模範解答付きで生成。"
+    },
+    "studio/report/blog-post.md": {
+      "title": "ブログ記事・ソートリーダーシップ",
+      "description": "ソース素材を、意外な洞察と会話調ながら知的なトーンを備えた、読みやすく魅力的なブログ記事またはソートリーダーシップ記事に変換。"
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "競合インテリジェンスレポート",
+      "description": "提供されたソース文書をもとに、戦略的ポジショニングの洞察を含む、構造化された競合分析または市場インテリジェンスレポートを作成。"
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "エグゼクティブブリーフィングレポート",
+      "description": "ソース素材をもとに、構造化されたセクション、主要な洞察、戦略的提言を含む包括的なエグゼクティブブリーフィング文書を作成。"
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "反重力アーティファクトデッキ",
+      "description": "未来的なシステムプレゼン、AIエージェント、静かなインフラ"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "ブラック x オレンジ・クリエイティブ",
+      "description": "クリエイティブエージェンシーのポートフォリオまたはピッチ"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "クラシック / ポップ（彫刻 x ヴェイパーウェーブ）",
+      "description": "古典美術と現代ポップを、大胆でユーモラスかつシュールにリミックス"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "デフォルメ・フラットペルソナ",
+      "description": "シンプルでフラットなイラスト風ペルソナスタイル"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "詳細デッキ - 単体ドキュメント",
+      "description": "アーキテクチャレビューまたはRFC向けの技術プレゼン"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "デジタル / ネオ / ポップ",
+      "description": "モダンで流動的、親しみやすく、情報密度の高いデザイン"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "マガジンスタイル",
+      "description": "大人かわいい、洗練されたエディトリアルデザイン"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "マンガスタイル",
+      "description": "複雑な概念をわかりやすくする、魅力的なストーリーテリング"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "明朝 + 手書きミックス",
+      "description": "ミックス書体による、おしゃれなファッション誌風"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "モダン新聞スタイル",
+      "description": "スイス/バウハウスの影響を受けた、訴求力の高いビジネスプレゼン"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "ネオレトロ開発者デック",
+      "description": "開発者向けプレゼン、スタートアップピッチ、技術メモ"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "ピンクストリートスタイル",
+      "description": "ポップでエネルギッシュなストリートファッション風"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "発表者スライド - 登壇サポート",
+      "description": "チーム内のナレッジ共有向けクイックプレゼン"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "ロイヤルブルー & レッド水彩",
+      "description": "アーティスティックな水彩スタイル"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "セミナー用 (最小限テキスト)",
+      "description": "セミナー向けの感度の高いデザイン"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "シャープエッジ・ミニマリズム",
+      "description": "建築的で洗練されたポートフォリオやピッチデック"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "スポーツ・アスレチックエネルギー",
+      "description": "高揚感のあるプレゼン、営業キックオフ、競合分析"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio モックアップ プレミアム",
+      "description": "高級感のある製品紹介、アプリデモ"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "テックアート ネオン",
+      "description": "前衛的で知的、構造的なプレゼン"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "技術 RFC デック",
+      "description": "新しいデータパイプラインアーキテクチャ向け RFC の準備"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "イエロー x ブラック エディトリアル",
+      "description": "ファッション、ポップ、シックなエディトリアルデザイン"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "短編動画 - クイック解説",
+      "description": "新任開発者のオンボーディング向けコンセプト紹介"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "解説動画 - 詳細版",
+      "description": "POC 前のツール評価向け総合解説動画"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "統合メモから動画概要",
+      "description": "保存済みの統合メモから動画概要を生成"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "動画概要 — アーキテクチャ/パイプライン",
+      "description": "データアーキテクチャ、ETL/ELT パイプライン、データフローを可視化"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "動画概要 — 技術ドキュメント",
+      "description": "API ドキュメント、技術仕様、リファレンスガイド"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "動画概要 — イノベーション/製品",
+      "description": "製品プレゼン、デモ、イノベーションピッチ"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "動画概要 — 技術オンボーディング",
+      "description": "研修、チュートリアル、手順ガイド"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "動画概要 — ステークホルダー/経営層",
+      "description": "意思決定者向けプレゼン、エグゼクティブサマリー、レポート"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "動画概要 — 概念のやさしい解説",
+      "description": "複雑な概念をわかりやすく説明"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "パイプラインデバッガー",
+      "description": "エラーログ + コード + 関連ドキュメントをアップロードして体系的にデバッグ"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "ソースベース差分分析エンジン",
+      "description": "コードと公式ベストプラクティスを比較し、パイプライン失敗の原因を分析"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "ソース比較実装ガイド",
+      "description": "DLT パイプラインのバグ → 公式ドキュメント vs Stack Overflow 投稿 vs GitHub Issue の解決策を比較"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "ブラック x オレンジ クリエイティブ",
+      "description": "クリエイティブエージェンシーのポートフォリオやピッチ"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "クラシック / ポップ (彫刻 x ヴェイパーウェイブ)",
+      "description": "古典芸術とモダンポップを大胆でユーモラス、シュールにリミックス"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "デフォルメ・フラットペルソナ",
+      "description": "シンプルでフラットなイラスト調ペルソナスタイル"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "デジタル / ネオ / ポップ",
+      "description": "モダンで流動的、親しみやすく情報密度の高いデザイン"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "マガジンスタイル",
+      "description": "大人かわいい、洗練されたエディトリアルデザイン"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "明朝 + 手書きミックス",
+      "description": "書体を組み合わせた、おしゃれなファッション誌風"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "ピンクストリートスタイル",
+      "description": "ポップでエネルギッシュなストリートファッション風"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "ロイヤルブルー & レッド水彩",
+      "description": "アーティスティックな水彩スタイル"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "セミナー用 (最小限テキスト)",
+      "description": "セミナー向けの感度の高いデザイン"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "イエロー x ブラック エディトリアル",
+      "description": "ファッション、ポップ、シックなエディトリアルデザイン"
+    }
+  }
+}

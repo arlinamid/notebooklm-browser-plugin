@@ -1,0 +1,529 @@
+{
+  "language": "de",
+  "languageName": "German",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "Prompts für NotebookLM Studio-Karten durchsuchen & anwenden",
+    "searchPlaceholder": "Prompts suchen...",
+    "newPrompt": "Neuer Prompt",
+    "noPrompts": "Keine Prompts gefunden, die deinen Kriterien entsprechen.",
+    "clearFilters": "Filter löschen",
+    "formats": {
+      "slide-deck": "Folien",
+      "audio-overview": "Audio",
+      "video-overview": "Video",
+      "text-chat": "Chat",
+      "infographic": "Infografik",
+      "configure-chat": "Konfigurieren",
+      "flashcards": "Karten",
+      "quiz": "Quiz",
+      "report": "Bericht",
+      "data-table": "Tabelle"
+    },
+    "categories": {
+      "all": "Alle",
+      "viral": "Viral",
+      "professional": "Professionell",
+      "studio": "Studio",
+      "productivity": "Produktivität",
+      "learning": "Lernen",
+      "critical-analysis": "Kritische Analyse",
+      "troubleshooting": "Fehlerbehebung",
+      "data-engineering": "Data Engineering"
+    },
+    "levels": {
+      "all": "Alle Level",
+      "beginner": "Anfänger",
+      "intermediate": "Fortgeschritten",
+      "advanced": "Experte"
+    },
+    "editor": {
+      "createTitle": "Neuen Prompt erstellen",
+      "editTitle": "Prompt bearbeiten",
+      "titleLabel": "Titel",
+      "titlePlaceholder": "Bsp.: Minimalistisches Pitch Deck",
+      "categoryLabel": "Kategorie",
+      "levelLabel": "Level",
+      "formatLabel": "Format",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Eine kurze Zusammenfassung...",
+      "promptLabel": "Prompt-Anweisungen",
+      "promptPlaceholder": "Schreibe hier die vollständigen Anweisungen für NotebookLM...",
+      "settingsLabel": "Einstellungen / Metadaten",
+      "settingsPlaceholder": "z. B., Quelle: Benutzerdefiniert | Ausrichtung: Querformat",
+      "cancel": "Abbrechen",
+      "save": "Prompt speichern"
+    },
+    "card": {
+      "custom": "Benutzerdefiniert",
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "apply": "Auf NLM anwenden",
+      "applied": "Angewendet!",
+      "openedStudio": "Studio-Panel geöffnet",
+      "noStudio": "Öffne zuerst eines deiner eigenen Notizbücher — Studio-Panels gibt es nur dort. Stattdessen kopiert.",
+      "noTarget": "Kein passender Ort dafür gefunden. Stattdessen kopiert.",
+      "settings": "Einstellungen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "Benutzerdefinierter Audio-Überblick mit Debatte",
+      "description": "Lade widersprüchliche Dokumente hoch (e.g., SQL vs NoSQL für Analytics) → strukturierter Debatten-Audio-Überblick mit Fazit"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "Interessengeleitete Zusammenfassung",
+      "description": "Was sind die überraschendsten PostgreSQL-Optimierungstechniken? Fokus auf Indexierungsstrategien, nicht auf allgemeine SQL-Syntax."
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "Strukturierte Mehrfach-Iteration",
+      "description": "Komplexe Architekturentscheidungen, die eine Multi-Source-Synthese erfordern"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "Multi-Source-Vergleichstabelle",
+      "description": "Wenn du 20+ Quellen hast und Konsens vs Divergenz erkennen musst"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "Textantwort im Podcast-Stil",
+      "description": "Trockene technische Dokumente in ein ansprechendes Gesprächsformat für bessere Erinnerung verwandeln"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "Business-Stratege & Berater",
+      "description": "Verwandle den Chat in einen erstklassigen Unternehmensberater, der strukturierte Frameworks (SWOT, Porter's 5 Forces, MECE) anwendet, um Quellen zu analysieren und strategische Empfehlungen zu liefern"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "Mentor für kreatives Schreiben",
+      "description": "Verwandle den Chat in einen Mentor für kreatives Schreiben, der hilft, Quellenmaterial in überzeugende Narrative, Geschichten und Inhalte zu verwandeln"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "Datenanalyst & Insight-Extraktor",
+      "description": "Verwandle den Chat in einen Datenanalysten, der quantitative Erkenntnisse extrahiert, strukturierte Zusammenfassungen erstellt und Muster über Quellen hinweg erkennt"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "Debattenpartner als Devil's Advocate",
+      "description": "Verwandle den Chat in einen intellektuell strengen Debattenpartner, der jede Position herausfordert, um kritisches Denken zu stärken"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — Erklär es mir, als wäre ich 5",
+      "description": "Verwandle den Chat in einen meisterhaften Erklärer, der jedes komplexe Thema aus den Quellen in glasklare, jargonfreie Erklärungen mit Alltagsanalogien vereinfacht"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "Coach für Prüfungsvorbereitung",
+      "description": "Verwandle den Chat in einen Coach für Prüfungsvorbereitung, der Übungstests erstellt, Schwachstellen erkennt und Lernpläne aus hochgeladenen Materialien aufbaut"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "Investigativer Faktenchecker",
+      "description": "Verwandle den Chat in einen akribischen Faktenchecker, der Behauptungen bewertet, Bias erkennt und die Zuverlässigkeit von Quellen mit dem CRAAP-Test einordnet"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "Immersiver Sprachlehrer",
+      "description": "Verwandle den Chat in einen Sprachlern-Tutor, der hochgeladene Materialien als immersive Leseübung mit Wortschatzaufbau und Grammatikerklärungen nutzt"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "Forschungswissenschaftler",
+      "description": "Verwandle den Chat in einen akribischen Forschungswissenschaftler, der Quellen mit methodischer Strenge analysiert und Forschungschancen erkennt"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "Sokratischer Tutor",
+      "description": "Verwandle den Chat in einen sokratischen Lehrassistenten, der Entdeckung durch strategische Fragen lenkt, statt direkte Antworten zu geben"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "Technischer Architekt",
+      "description": "Verwandle den Chat in einen erfahrenen technischen Architekten, der Technologieentscheidungen bewertet, Systeme entwirft und Architekturentscheidungsprotokolle aus technischer Dokumentation erstellt"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "Universitätsprofessor",
+      "description": "Verwandle den Chat in einen angesehenen Professor, der rigorose akademische Analysen mit realem Kontext und wissenschaftlicher Tiefe liefert"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "Die Anti-These",
+      "description": "Lade ein Anbieter-Whitepaper hoch → Performance-/Skalierbarkeitsversprechen vor der Einführung einem Stresstest unterziehen"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "Der Devil's Advocate",
+      "description": "Bereite eine Architekturpräsentation vor → Fragen von CTO/Sicherheitsteam vor dem Review antizipieren"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "Die dialektische Linse",
+      "description": "Lade DLT- vs Airbyte-Dokumente hoch → strukturierte Debatte über Datenladeansätze mit Zitaten aus offiziellen Dokumenten"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "Der Ernüchterungsfilter",
+      "description": "Lade Dokumentation eines 'magischen' Frameworks hoch (e.g., Auto-ML, No-Code-ETL) → Versprechen vs Produktionsrealität erkennen"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "Vergleich von Architekturentscheidungen",
+      "description": "Fundierte Architekturentscheidungen mit quellenbasierten Vergleichen treffen"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "Code-Review mit Best Practices",
+      "description": "Systematisches Code-Review anhand hochgeladener Best-Practices-Dokumentation"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "Lernpfad-Designer",
+      "description": "Strukturierten Lernpfad für neue Data-Engineering-Technologie erstellen"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "Tech-Watch-Synthese",
+      "description": "Nach Ausführung des Tech-Watch-Skills Ergebnisse zu umsetzbaren Empfehlungen verdichten"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "Generator für technische Dokumentation",
+      "description": "Professionelle Dokumentation aus Code + Referenzmaterialien generieren"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "Planer für aktive Lerneinheiten",
+      "description": "Lade ein Kapitel zu Kimball-Dimensional-Modeling hoch → 1-stündige Session mit praktischen Faktentabellen-Übungen generieren"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "Mapper für Konzeptverbindungen",
+      "description": "Lade ETL-, ELT- und Reverse-ETL-Dokumente hoch → Konzeptkarte mit Beziehungen und Musterentwicklung generieren"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "Generator für Kernfragen",
+      "description": "Ersetze 'lecture slides' durch 'ETL pipeline documentation', um Kernkonzepte aus technischen Dokumenten zu extrahieren"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "Quellenbasierter Projekt-Designer",
+      "description": "Lade DLT-Dokumente + FastAPI-Tutorials + PostgreSQL-Leitfäden hoch → konkretes Datenpipeline-Projekt anfordern, das alle 3 Technologien integriert"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "Generator für vollständige Lernleitfäden",
+      "description": "Lade AWS Lambda + API Gateway + DynamoDB-Dokumente hoch → vollständiger Lernleitfaden mit Quizfragen"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "Content-Strategie-Analyst",
+      "description": "Technischen Artikel analysieren → Blogpost-Ideen + Social-Media-Inhalte generieren, um Learnings zu teilen"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "Meeting-Zusammenfassungs-Generator",
+      "description": "Lade tägliches Standup-Audio hoch → strukturierte Zusammenfassung mit Action Items für jeden Entwickler"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "Globale Synthese - Kompaktversion",
+      "description": "Schneller Überblick bei Zeitdruck — Ausgabe mit 400-800 Wörtern"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "Globale Synthese - Data-Engineering-Variante",
+      "description": "Tech-Watch-Synthese, Tool-Bewertung — Ausgabe mit 800-1200 Wörtern"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "Globale Synthese - Vollversion",
+      "description": "Umfassende Analyse vor einer wichtigen Entscheidung — Ausgabe mit 1500-2500 Wörtern"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "Optimierte Quellenentdeckung",
+      "description": "DLT-Datenpipelines, inkrementelle Ladepatterns, Produktions-Best-Practices, Tutorials"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "Wiederkehrende Themen - Domain-Learning-Variante",
+      "description": "Lernen einer neuen Domäne aus hochgeladenen Dokumenten strukturieren"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "Extraktor für wiederkehrende Themen v1 - Vollständig",
+      "description": "Nach dem Hochladen von 10+ Artikeln zu einem Muster (e.g., event-driven architecture), Konsens und Kontroversen extrahieren"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "Extraktor für wiederkehrende Themen v2 - Kompakt",
+      "description": "Schneller Scan neuer Quellen vor der Tiefenanalyse"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "Wiederkehrende Themen - Lösungsbewertung",
+      "description": "Framework vor dem POC bewerten (z. B. Prefect-Doku vs. Nutzerkritik)"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "Wiederkehrende Themen - Tech-Watch",
+      "description": "Tech-Watch-Ergebnisse vor der Einführungsentscheidung zusammenfassen"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "Quellenkonflikt-Erkennung",
+      "description": "Quellensammlung vor der Tiefenanalyse bereinigen"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "Quellenrelevanz-Ranking",
+      "description": "Nach dem Hochladen von 20+ Quellen schnell auf die 5-10 relevantesten filtern"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "Kurzbriefing - Executive Summary",
+      "description": "Schnelle Zusammenfassung, um Findings mit dem Management-Team zu teilen"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "Kritik - Lösungsbewertung",
+      "description": "Kritische Bewertung eines Tools vor der Einführungsentscheidung"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "Debatte - Gegensätzliche Sichtweisen",
+      "description": "Trade-offs einer Architekturentscheidung anhand widersprüchlicher Quellen ausloten"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "Deep Dive - Technischer Fokus",
+      "description": "Technischer Deep Dive zu einem Architekturmuster mit Quellenvergleich"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "Interessante Geschichten aus der Leere",
+      "description": "Quellmaterial in ein Audio-Drama oder Storytelling-Erlebnis mit Einzelmoderation verwandeln"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "Vergleichsanalyse-Tabelle",
+      "description": "Eine direkte Vergleichstabelle zu Konzepten, Entitäten, Produkten oder Ansätzen aus dem Quellmaterial mit strukturierten Bewertungskriterien erstellen."
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "Tabelle mit Kernzitaten & Belegen",
+      "description": "Die wichtigsten Zitate, Fakten und Belege aus dem Quellmaterial extrahieren und thematisch in einer strukturierten Tabelle zur schnellen Referenz organisieren."
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "Tabelle mit Forschungsergebnissen",
+      "description": "Zentrale Forschungsergebnisse aus mehreren Quellen in einer übersichtlichen, vergleichbaren Tabelle mit Spalten für Quelle, Methodik, Kernaussage und Implikationen strukturieren."
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "Lernkarten zur Prüfungsvorbereitung",
+      "description": "Prüfungsorientierte Lernkarten erstellen, die zentrale Fakten, Formeln, Daten und Konzepte hervorheben, die wahrscheinlich in Prüfungen vorkommen."
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "Fokussiertes Lernkarten-Set",
+      "description": "Ein fokussiertes Lernkarten-Set zu einem bestimmten Thema oder Konzept aus dem Quellmaterial erstellen, ideal für Spaced Repetition und aktives Abrufen."
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "Infografik — Architektur/Daten",
+      "description": "Datenplattform-Architektur mit Komponenten und Flüssen visualisieren"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "Infografik — Brutalistisches Editorial",
+      "description": "Ultramoderne brutalistische Editorial-Infografik mit Schweizer Typografie, Xerox-Texturen und rotem Akzent"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "Infografik — Vergleich",
+      "description": "Visueller Vergleich zweier Ansätze oder Lösungen"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "Infografik — Dark Neo-Noir",
+      "description": "Filmische Dark-Neo-Noir-Infografik mit Chiaroscuro-Licht und rauem Ölmalerei-Expressionismus"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "Infografik — Executive/KPIs",
+      "description": "Berichte mit Metriken und KPIs für Geschäftsentscheidungen"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "Infografik — Expressive kubistische Abstraktion",
+      "description": "Kreative Fine-Art-Infografik mit kubistischer geometrischer Fragmentierung und lebendiger Mixed-Media-Ästhetik"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "Infografik — Geometrisches Mosaik",
+      "description": "Dekorative Mosaik-Infografik mit polygonaler Glasmalerei-Komposition und reichhaltiger Warm-Kalt-Palette"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "Infografik — Hybride Konzeptcollage",
+      "description": "Editoriale Konzept-Infografik mit Doppelbelichtung, Architekturmontage und Blueprint-Overlays"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "Infografik — Mixed-Media-Expressionismus",
+      "description": "Emotional aufgeladene Mixed-Media-Infografik mit expressionistischem Pinselduktus und Collage-Texturen"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "Infografik — Prozess/Zeitleiste",
+      "description": "Schritt-für-Schritt-Prozess und sequenzielle Workflows"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "Infografik — Social Media",
+      "description": "Verdichteter Content für soziale Medien mit markanter Statistik"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "Infografik — Einordnung/Konzepte",
+      "description": "Ein komplexes Konzept für Nichtfachleute einfach erklären"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "Multiple-Choice-Quiz",
+      "description": "Ein Multiple-Choice-Quiz zu einem bestimmten Thema aus dem Quellmaterial erstellen, mit klaren Fragen, plausiblen Ablenkern und richtigen Antworten."
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "Offenes Wissensquiz",
+      "description": "Offene Quizfragen erstellen, die vertieftes Denken und Wissenssynthese erfordern, mit Musterantworten zur Selbsteinschätzung."
+    },
+    "studio/report/blog-post.md": {
+      "title": "Blogbeitrag & Thought Leadership",
+      "description": "Quellmaterial in einen ansprechenden, zugänglichen Blogbeitrag oder Thought-Leadership-Artikel mit überraschenden Erkenntnissen und einem dialogischen, zugleich intelligenten Ton verwandeln."
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "Competitive-Intelligence-Bericht",
+      "description": "Einen strukturierten Wettbewerbsanalyse- oder Marktintelligenzbericht auf Basis der bereitgestellten Quelldokumente erstellen, mit Erkenntnissen zur strategischen Positionierung."
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "Executive-Briefing-Bericht",
+      "description": "Ein umfassendes Executive-Briefing-Dokument mit strukturierten Abschnitten, zentralen Erkenntnissen und strategischen Empfehlungen auf Basis des Quellmaterials erstellen."
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "Anti-Gravity-Artifact-Deck",
+      "description": "Futuristische Systempräsentationen, AI Agents, ruhige Infrastruktur"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "Schwarz x Orange Kreativ",
+      "description": "Portfolio oder Pitch einer Kreativagentur"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "Klassik / Pop (Skulptur x Vaporwave)",
+      "description": "Mutiger, humorvoller, surrealer Remix aus klassischer Kunst und modernem Pop"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "Verformte Flat-Persona",
+      "description": "Einfacher, flacher, illustrativer Persona-Stil"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "Detailliertes Deck - Eigenständiges Dokument",
+      "description": "Technische Präsentation für Architektur-Review oder RFC"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "Digital / Neo / Pop",
+      "description": "Modernes, fluides, freundliches Design mit hoher Informationsdichte"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "Magazinstil",
+      "description": "Reif-niedliches, anspruchsvolles Editorial-Design"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "Manga-Stil",
+      "description": "Fesselndes Storytelling, das komplexe Konzepte vereinfacht"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "Mincho + Handschrift-Mix",
+      "description": "Stilvoller Fashion-Magazin-Look mit gemischter Typografie"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "Moderner Zeitungsstil",
+      "description": "Wirkungsstarke Business-Präsentationen mit Schweizer/Bauhaus-Einfluss"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "Neo-Retro-Dev-Deck",
+      "description": "Entwicklerzentrierte Präsentationen, Startup-Pitches, Engineering-Notizen"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "Pink Street Style",
+      "description": "Pop, energiegeladen, Street-Fashion-Ästhetik"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "Präsentationsfolien - Sprechhilfe",
+      "description": "Schnelle Präsentation zum Wissensaustausch im Team"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "Königsblau & Rot Aquarell",
+      "description": "Künstlerische Aquarell-Ästhetik"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "Seminareinsatz (Minimaler Text)",
+      "description": "Anspruchsvolles Design für Seminare"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "Kantiger Minimalismus",
+      "description": "Architektonisches, elegantes Portfolio oder Pitch Deck"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "Sportliche Energie",
+      "description": "Energiegeladene Präsentationen, Sales-Kickoffs, Wettbewerbsanalysen"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio Mockup Premium",
+      "description": "Hochwertige Produktpräsentationen, App-Demos"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "Tech Art Neon",
+      "description": "Avantgardistische, intellektuelle, strukturelle Präsentationen"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "Technisches RFC-Deck",
+      "description": "RFC für neue Data-Pipeline-Architektur vorbereiten"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "Gelb x Schwarz Editorial",
+      "description": "Fashion-, Pop- und Chic-Editorial-Design"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "Kurzvideo - Schneller Erklärer",
+      "description": "Kurze Einführung in ein Konzept für das Onboarding neuer Devs"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "Erklärvideo - Umfassend",
+      "description": "Umfassendes Erklärvideo zur Bewertung eines Tools vor dem POC"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "Synthese zu Videoüberblick",
+      "description": "Erstelle einen Videoüberblick aus einer gespeicherten Synthesenotiz"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "Videoüberblick — Architektur/Pipelines",
+      "description": "Datenarchitekturen, ETL/ELT-Pipelines, Datenflüsse visualisieren"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "Videoüberblick — Technische Dokumentation",
+      "description": "API-Dokumentation, technische Spezifikationen, Referenzhandbücher"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "Videoüberblick — Innovation/Produkt",
+      "description": "Produktpräsentationen, Demos, Innovations-Pitches"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "Videoüberblick — Technisches Onboarding",
+      "description": "Schulungen, Tutorials, Schritt-für-Schritt-Anleitungen"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "Videoüberblick — Stakeholder/Executive",
+      "description": "Präsentationen für Entscheider, Executive Summaries, Reporting"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "Videoüberblick — Vermittlung/Konzepte",
+      "description": "Komplexe Konzepte verständlich erklären"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "Pipeline-Debugger",
+      "description": "Fehlerlogs + deinen Code + relevante Dokumentation für systematisches Debugging hochladen"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "Quellenbasierte Gap-Analyse-Engine",
+      "description": "Analysiere, warum deine Pipeline fehlschlägt, indem du deinen Code mit Best Practices aus Quellen vergleichst"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "Implementierungsleitfaden mit Quellenvergleich",
+      "description": "DLT-Pipeline-Bug → Lösungen aus offiziellen Docs vs Stack-Overflow-Beiträgen vs GitHub-Issues vergleichen"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "Schwarz x Orange Kreativ",
+      "description": "Kreativagentur-Portfolio oder Pitch"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "Klassik / Pop (Skulptur x Vaporwave)",
+      "description": "Mutiger, humorvoller, surrealer Remix aus klassischer Kunst und modernem Pop"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "Deformierte Flat-Persona",
+      "description": "Einfacher, flacher, illustrativer Persona-Stil"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "Digital / Neo / Pop",
+      "description": "Modernes, fließendes, freundliches Design mit hoher Informationsdichte"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "Magazin-Stil",
+      "description": "Reif-süßes, anspruchsvolles Editorial-Design"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "Mincho + Handschrift-Mix",
+      "description": "Stilvolles Modemagazin-Feeling mit gemischter Typografie"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "Pink Street Style",
+      "description": "Pop, energiegeladen, Street-Fashion-Ästhetik"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "Königsblau & Rot Aquarell",
+      "description": "Künstlerische Aquarell-Ästhetik"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "Seminareinsatz (Minimaler Text)",
+      "description": "Anspruchsvolles Design für Seminare"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "Gelb x Schwarz Editorial",
+      "description": "Fashion-, Pop- und Chic-Editorial-Design"
+    }
+  }
+}

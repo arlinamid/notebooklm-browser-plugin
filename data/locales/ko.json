@@ -1,0 +1,529 @@
+{
+  "language": "ko",
+  "languageName": "Korean",
+  "ui": {
+    "appTitle": "Prompt Architect",
+    "subtitle": "NotebookLM Studio 카드용 프롬프트 탐색 & 적용",
+    "searchPlaceholder": "프롬프트 검색...",
+    "newPrompt": "새 프롬프트",
+    "noPrompts": "조건에 맞는 프롬프트가 없습니다.",
+    "clearFilters": "필터 지우기",
+    "formats": {
+      "slide-deck": "슬라이드",
+      "audio-overview": "오디오",
+      "video-overview": "동영상",
+      "text-chat": "채팅",
+      "infographic": "인포그래픽",
+      "configure-chat": "설정",
+      "flashcards": "카드",
+      "quiz": "퀴즈",
+      "report": "보고서",
+      "data-table": "표"
+    },
+    "categories": {
+      "all": "전체",
+      "viral": "바이럴",
+      "professional": "전문가용",
+      "studio": "Studio",
+      "productivity": "생산성",
+      "learning": "학습",
+      "critical-analysis": "비판적 분석",
+      "troubleshooting": "문제 해결",
+      "data-engineering": "데이터 엔지니어링"
+    },
+    "levels": {
+      "all": "모든 수준",
+      "beginner": "초급",
+      "intermediate": "중급",
+      "advanced": "고급"
+    },
+    "editor": {
+      "createTitle": "새 프롬프트 만들기",
+      "editTitle": "프롬프트 편집",
+      "titleLabel": "제목",
+      "titlePlaceholder": "예: 미니멀 피치덱",
+      "categoryLabel": "카테고리",
+      "levelLabel": "수준",
+      "formatLabel": "형식",
+      "descriptionLabel": "설명",
+      "descriptionPlaceholder": "짧은 요약...",
+      "promptLabel": "프롬프트 지침",
+      "promptPlaceholder": "NotebookLM용 전체 지침을 여기에 작성하세요...",
+      "settingsLabel": "설정 / 메타데이터",
+      "settingsPlaceholder": "예: 출처: 사용자 지정 | 방향: 가로",
+      "cancel": "취소",
+      "save": "프롬프트 저장"
+    },
+    "card": {
+      "custom": "사용자 지정",
+      "copy": "복사",
+      "copied": "복사됨!",
+      "apply": "NLM에 적용",
+      "applied": "적용됨!",
+      "openedStudio": "Studio 패널 열림",
+      "noStudio": "먼저 내 노트북 중 하나를 여세요 — Studio 패널은 그 안에만 있습니다. 대신 복사했습니다.",
+      "noTarget": "여기에 넣을 위치를 찾을 수 없습니다. 대신 복사했습니다.",
+      "settings": "설정",
+      "edit": "편집",
+      "delete": "삭제"
+    }
+  },
+  "templates": {
+    "advanced-techniques/custom-audio-overview-with-debate.md": {
+      "title": "토론형 맞춤 오디오 개요",
+      "description": "상반된 문서 업로드(예: 분석용 SQL vs NoSQL) → 결론이 포함된 구조화된 토론 오디오 개요"
+    },
+    "advanced-techniques/interest-driven-summarization.md": {
+      "title": "관심사 기반 요약",
+      "description": "가장 놀라운 PostgreSQL 최적화 기법은 무엇인가요? 일반 SQL 문법이 아니라 인덱싱 전략에 집중하세요."
+    },
+    "advanced-techniques/multi-pass-structured-iteration.md": {
+      "title": "다단계 구조화 반복",
+      "description": "여러 소스를 종합해야 하는 복잡한 아키텍처 의사결정"
+    },
+    "advanced-techniques/multi-source-comparison-table.md": {
+      "title": "다중 소스 비교표",
+      "description": "20개 이상의 소스에서 합의점과 차이점을 찾아야 할 때"
+    },
+    "advanced-techniques/podcast-style-text-response.md": {
+      "title": "팟캐스트 스타일 텍스트 응답",
+      "description": "딱딱한 기술 문서를 기억에 잘 남는 흥미로운 대화 형식으로 변환"
+    },
+    "configure-chat/business-strategist.md": {
+      "title": "비즈니스 전략가 & 컨설턴트",
+      "description": "채팅을 구조화된 프레임워크(SWOT, Porter's 5 Forces, MECE)를 적용해 소스를 분석하고 전략적 권고를 제시하는 최고 수준의 비즈니스 컨설턴트로 변환"
+    },
+    "configure-chat/creative-writer.md": {
+      "title": "창의적 글쓰기 멘토",
+      "description": "채팅을 소스 자료를 매력적인 내러티브, 이야기, 콘텐츠로 바꾸는 창의적 글쓰기 멘토로 변환"
+    },
+    "configure-chat/data-analyst.md": {
+      "title": "데이터 분석가 & 인사이트 추출기",
+      "description": "채팅을 정량적 인사이트를 추출하고, 구조화된 요약을 만들고, 소스 전반의 패턴을 식별하는 데이터 분석가로 변환"
+    },
+    "configure-chat/debate-partner.md": {
+      "title": "악마의 대변자 토론 파트너",
+      "description": "채팅을 비판적 사고를 강화하기 위해 모든 입장에 도전하는 지적으로 엄격한 토론 파트너로 변환"
+    },
+    "configure-chat/eli5-explainer.md": {
+      "title": "ELI5 — 5살도 이해하게 설명",
+      "description": "채팅을 소스의 어떤 복잡한 주제든 일상적 비유로 아주 명확하고 전문용어 없이 쉽게 설명하는 설명 전문가로 변환"
+    },
+    "configure-chat/exam-coach.md": {
+      "title": "시험 준비 코치",
+      "description": "채팅을 업로드한 자료로 모의시험을 만들고, 취약점을 찾고, 학습 계획을 세우는 시험 준비 코치로 변환"
+    },
+    "configure-chat/fact-checker.md": {
+      "title": "탐사형 팩트체커",
+      "description": "채팅을 CRAAP test를 사용해 주장 평가, 편향 식별, 소스 신뢰도 평가를 수행하는 꼼꼼한 팩트체커로 변환"
+    },
+    "configure-chat/language-tutor.md": {
+      "title": "몰입형 언어 튜터",
+      "description": "채팅을 업로드한 자료를 몰입형 읽기 연습으로 활용하고 어휘 학습과 문법 설명을 제공하는 언어 학습 튜터로 변환"
+    },
+    "configure-chat/research-scientist.md": {
+      "title": "연구 과학자",
+      "description": "채팅을 방법론적 엄밀함으로 소스를 분석하고 연구 기회를 식별하는 꼼꼼한 연구 과학자로 변환"
+    },
+    "configure-chat/socratic-tutor.md": {
+      "title": "소크라테스식 튜터",
+      "description": "채팅을 직접 답을 주기보다 전략적 질문으로 발견을 이끄는 소크라테스식 조교로 변환"
+    },
+    "configure-chat/technical-architect.md": {
+      "title": "기술 아키텍트",
+      "description": "채팅을 기술 문서에서 기술 선택을 평가하고, 시스템을 설계하고, 아키텍처 결정 기록을 만드는 시니어 기술 아키텍트로 변환"
+    },
+    "configure-chat/university-professor.md": {
+      "title": "대학 교수",
+      "description": "채팅을 현실 맥락과 학문적 깊이를 갖춘 엄격한 학술 분석을 제공하는 저명한 교수로 변환"
+    },
+    "critical-analysis/the-anti-thesis.md": {
+      "title": "안티테제",
+      "description": "벤더 백서 업로드 → 도입 전 성능/확장성 주장 스트레스 테스트"
+    },
+    "critical-analysis/the-devils-advocate.md": {
+      "title": "악마의 대변자",
+      "description": "아키텍처 발표 준비 → 검토 전 CTO/보안팀 질문 예측"
+    },
+    "critical-analysis/the-dialectical-lens.md": {
+      "title": "변증법적 렌즈",
+      "description": "DLT vs Airbyte 문서 업로드 → 공식 문서 인용과 함께 데이터 로딩 접근 방식에 대한 구조화된 토론"
+    },
+    "critical-analysis/the-disillusionment-filter.md": {
+      "title": "환상 제거 필터",
+      "description": "'마법 같은' 프레임워크 문서 업로드(예: auto-ML, no-code ETL) → 약속과 프로덕션 현실 구분"
+    },
+    "data-engineering-specific/architecture-decision-comparison.md": {
+      "title": "아키텍처 결정 비교",
+      "description": "소스 근거 비교로 정보에 기반한 아키텍처 결정 내리기"
+    },
+    "data-engineering-specific/code-review-with-best-practices.md": {
+      "title": "모범 사례 기반 코드 리뷰",
+      "description": "업로드한 모범 사례 문서를 기준으로 체계적인 코드 리뷰 수행"
+    },
+    "data-engineering-specific/learning-path-designer.md": {
+      "title": "학습 경로 설계자",
+      "description": "새 데이터 엔지니어링 기술을 위한 구조화된 학습 경로 만들기"
+    },
+    "data-engineering-specific/tech-watch-synthesis.md": {
+      "title": "기술 동향 종합",
+      "description": "tech-watch 스킬 실행 후, 조사 결과를 실행 가능한 권고로 종합"
+    },
+    "data-engineering-specific/technical-documentation-generator.md": {
+      "title": "기술 문서 생성기",
+      "description": "코드 + 참고 자료에서 전문적인 문서 생성"
+    },
+    "learning/active-learning-session-planner.md": {
+      "title": "능동 학습 세션 플래너",
+      "description": "Kimball 차원 모델링 챕터 업로드 → 실전 팩트 테이블 연습이 포함된 1시간 세션 생성"
+    },
+    "learning/concept-connection-mapper.md": {
+      "title": "개념 연결 매퍼",
+      "description": "ETL, ELT, reverse ETL 문서 업로드 → 관계와 패턴 진화를 담은 개념 지도 생성"
+    },
+    "learning/essential-questions-generator.md": {
+      "title": "핵심 질문 생성기",
+      "description": "'강의 슬라이드'를 'ETL 파이프라인 문서'로 바꿔 기술 문서에서 핵심 개념 추출"
+    },
+    "learning/source-grounded-project-designer.md": {
+      "title": "소스 기반 프로젝트 설계자",
+      "description": "DLT 문서 + FastAPI 튜토리얼 + PostgreSQL 가이드 업로드 → 3가지 기술을 모두 통합한 구체적인 데이터 파이프라인 프로젝트 요청"
+    },
+    "productivity/complete-study-guide-generator.md": {
+      "title": "완성형 학습 가이드 생성기",
+      "description": "AWS Lambda + API Gateway + DynamoDB 문서 업로드 → 퀴즈가 포함된 완성형 학습 가이드"
+    },
+    "productivity/content-strategy-analyzer.md": {
+      "title": "콘텐츠 전략 분석기",
+      "description": "기술 아티클 분석 → 배운 내용을 공유할 블로그 글 아이디어 + 소셜 미디어 콘텐츠 생성"
+    },
+    "productivity/meeting-summary-generator.md": {
+      "title": "회의 요약 생성기",
+      "description": "일일 스탠드업 오디오 업로드 → 개발자별 실행 항목이 포함된 구조화된 요약"
+    },
+    "source-management/global-synthesis-compact.md": {
+      "title": "전체 종합 - 압축 버전",
+      "description": "시간이 부족할 때 빠른 개요 — 400-800단어 출력"
+    },
+    "source-management/global-synthesis-data-engineering.md": {
+      "title": "전체 종합 - 데이터 엔지니어링 변형",
+      "description": "기술 동향 종합, 도구 평가 — 800-1200단어 출력"
+    },
+    "source-management/global-synthesis-full.md": {
+      "title": "전체 종합 - 전체 버전",
+      "description": "중요한 의사결정 전 종합 분석 — 1500-2500단어 출력"
+    },
+    "source-management/optimized-source-discovery.md": {
+      "title": "최적화된 소스 발견",
+      "description": "DLT data pipelines incremental loading patterns production best practices tutorials"
+    },
+    "source-management/recurring-topics-domain-learning-variant.md": {
+      "title": "반복 주제 - 도메인 학습 변형",
+      "description": "업로드한 문서로 새 도메인 학습 구조화"
+    },
+    "source-management/recurring-topics-extractor-v1-complete.md": {
+      "title": "반복 주제 추출기 v1 - 전체",
+      "description": "패턴 관련 아티클 10개 이상 업로드 후(예: event-driven architecture), 합의점과 논쟁점 추출"
+    },
+    "source-management/recurring-topics-extractor-v2-compact.md": {
+      "title": "반복 주제 추출기 v2 - 압축",
+      "description": "심층 분석 전에 새 소스를 빠르게 훑어보기"
+    },
+    "source-management/recurring-topics-solution-evaluation-variant.md": {
+      "title": "반복 주제 - 솔루션 평가 버전",
+      "description": "POC 전에 프레임워크를 평가합니다(예: Prefect 문서 vs 사용자 비평)"
+    },
+    "source-management/recurring-topics-tech-watch-variant.md": {
+      "title": "반복 주제 - 기술 동향 버전",
+      "description": "도입 결정 전에 기술 동향 스킬 결과를 종합합니다"
+    },
+    "source-management/source-conflict-detector.md": {
+      "title": "출처 충돌 감지기",
+      "description": "심층 분석 전에 출처 모음을 정리합니다"
+    },
+    "source-management/source-relevance-ranker.md": {
+      "title": "출처 관련도 순위",
+      "description": "20개 이상의 출처를 업로드한 뒤, 가장 관련 있는 5-10개를 빠르게 선별합니다"
+    },
+    "studio/audio/brief-executive-summary.md": {
+      "title": "브리프 - 임원 요약",
+      "description": "경영진과 findings를 공유하기 위한 빠른 요약"
+    },
+    "studio/audio/critique-solution-evaluation.md": {
+      "title": "비평 - 솔루션 평가",
+      "description": "도입 결정 전 도구에 대한 비판적 평가"
+    },
+    "studio/audio/debate-opposing-views.md": {
+      "title": "토론 - 상반된 관점",
+      "description": "상충하는 출처로 아키텍처 결정의 trade-offs를 탐색합니다"
+    },
+    "studio/audio/deep-dive-technical-focus.md": {
+      "title": "심층 분석 - 기술 중심",
+      "description": "출처 비교와 함께 아키텍처 패턴을 기술적으로 심층 분석합니다"
+    },
+    "studio/audio/interesting-stories-void-drama.md": {
+      "title": "공허에서 건진 흥미로운 이야기",
+      "description": "원본 자료를 1인 진행 오디오 드라마/스토리텔링 경험으로 바꿉니다"
+    },
+    "studio/data-table/comparative-analysis.md": {
+      "title": "비교 분석 표",
+      "description": "원본 자료의 개념, 엔터티, 제품 또는 접근법을 구조화된 평가 기준으로 나란히 비교하는 표를 만듭니다."
+    },
+    "studio/data-table/key-quotes.md": {
+      "title": "핵심 인용문 및 증거 표",
+      "description": "원본 자료에서 가장 중요한 인용문, 사실, 증거를 추출하고 쉽게 참고할 수 있도록 주제별 구조화 표로 정리합니다."
+    },
+    "studio/data-table/research-findings.md": {
+      "title": "연구 결과 표",
+      "description": "여러 출처의 핵심 연구 결과를 추출해 출처, 방법론, 핵심 발견, 시사점 열이 있는 깔끔하고 비교 가능한 표로 구조화합니다."
+    },
+    "studio/flashcards/exam-prep-flashcards.md": {
+      "title": "시험 대비 플래시카드",
+      "description": "평가에 나올 가능성이 높은 핵심 사실, 공식, 날짜, 개념을 강조한 시험 중심 플래시카드를 생성합니다."
+    },
+    "studio/flashcards/focused-flashcards.md": {
+      "title": "집중 플래시카드 세트",
+      "description": "원본 자료의 특정 주제나 개념에 집중한 플래시카드 세트를 생성합니다. 간격 반복과 능동 회상 연습에 적합합니다."
+    },
+    "studio/infographic/infographic-architecture-data.md": {
+      "title": "인포그래픽 — 아키텍처/데이터",
+      "description": "컴포넌트와 흐름이 포함된 데이터 플랫폼 아키텍처를 시각화합니다"
+    },
+    "studio/infographic/infographic-brutalist-editorial.md": {
+      "title": "인포그래픽 — 브루탈리스트 에디토리얼",
+      "description": "스위스 타이포그래피, 제록스 질감, 빨간 포인트가 있는 초현대적 브루탈리스트 에디토리얼 인포그래픽"
+    },
+    "studio/infographic/infographic-comparison.md": {
+      "title": "인포그래픽 — 비교",
+      "description": "두 접근법 또는 솔루션의 시각적 비교"
+    },
+    "studio/infographic/infographic-dark-neo-noir.md": {
+      "title": "인포그래픽 — 다크 네오 누아르",
+      "description": "키아로스쿠로 조명과 거친 유화 표현주의가 담긴 영화적 다크 네오 누아르 인포그래픽"
+    },
+    "studio/infographic/infographic-executive-kpis.md": {
+      "title": "인포그래픽 — 임원/KPIs",
+      "description": "비즈니스 의사결정을 위한 지표와 KPIs 보고서"
+    },
+    "studio/infographic/infographic-expressive-cubist.md": {
+      "title": "인포그래픽 — 표현주의 큐비즘 추상",
+      "description": "큐비즘식 기하학적 분할과 생동감 있는 혼합 매체 미학의 창의적 파인아트 인포그래픽"
+    },
+    "studio/infographic/infographic-geometric-mosaic.md": {
+      "title": "인포그래픽 — 기하학 모자이크",
+      "description": "스테인드글라스 같은 다각형 구성과 풍부한 난색-한색 팔레트의 장식적 모자이크 인포그래픽"
+    },
+    "studio/infographic/infographic-hybrid-collage.md": {
+      "title": "인포그래픽 — 하이브리드 콘셉트 콜라주",
+      "description": "이중 노출, 건축적 몽타주, 청사진 오버레이가 있는 에디토리얼 콘셉트 인포그래픽"
+    },
+    "studio/infographic/infographic-mixed-media-expressionist.md": {
+      "title": "인포그래픽 — 혼합 매체 표현주의",
+      "description": "표현주의적 붓질과 콜라주 질감이 담긴 감정적인 혼합 매체 인포그래픽"
+    },
+    "studio/infographic/infographic-process-timeline.md": {
+      "title": "인포그래픽 — 프로세스/타임라인",
+      "description": "단계별 프로세스와 순차적 워크플로"
+    },
+    "studio/infographic/infographic-social-media.md": {
+      "title": "인포그래픽 — 소셜 미디어",
+      "description": "눈에 띄는 통계를 담은 소셜 미디어용 압축 콘텐츠"
+    },
+    "studio/infographic/infographic-vulgarisation.md": {
+      "title": "인포그래픽 — 쉬운 설명/개념",
+      "description": "복잡한 개념을 비전문가에게 쉽게 설명합니다"
+    },
+    "studio/quiz/multiple-choice-quiz.md": {
+      "title": "객관식 퀴즈",
+      "description": "원본 자료의 특정 주제에 대해 명확한 질문, 그럴듯한 오답, 정답이 포함된 객관식 퀴즈를 생성합니다."
+    },
+    "studio/quiz/open-ended-quiz.md": {
+      "title": "서술형 지식 퀴즈",
+      "description": "더 깊은 사고와 지식 종합이 필요한 서술형 퀴즈 질문을 생성하고, 자기 평가용 모범 답안을 제공합니다."
+    },
+    "studio/report/blog-post.md": {
+      "title": "블로그 글 및 사고 리더십",
+      "description": "원본 자료를 놀라운 인사이트와 대화체이면서도 지적인 톤의 흥미롭고 접근하기 쉬운 블로그 글 또는 사고 리더십 아티클로 바꿉니다."
+    },
+    "studio/report/competitive-intelligence.md": {
+      "title": "경쟁 정보 보고서",
+      "description": "제공된 원본 문서를 바탕으로 전략적 포지셔닝 인사이트가 포함된 구조화된 경쟁 분석 또는 시장 정보 보고서를 만듭니다."
+    },
+    "studio/report/executive-briefing.md": {
+      "title": "임원 브리핑 보고서",
+      "description": "원본 자료를 바탕으로 구조화된 섹션, 핵심 인사이트, 전략적 권고가 포함된 종합 임원 브리핑 문서를 만듭니다."
+    },
+    "studio/slide-deck/anti-gravity-artifact.md": {
+      "title": "Anti-Gravity Artifact 덱",
+      "description": "미래형 시스템 프레젠테이션, AI 에이전트, 차분한 인프라"
+    },
+    "studio/slide-deck/black-orange-creative.md": {
+      "title": "블랙 x 오렌지 크리에이티브",
+      "description": "크리에이티브 에이전시 포트폴리오 또는 피치"
+    },
+    "studio/slide-deck/classic-pop-sculpture.md": {
+      "title": "클래식 / 팝 (조각 x 베이퍼웨이브)",
+      "description": "고전 미술과 현대 팝의 대담하고 유머러스하며 초현실적인 리믹스"
+    },
+    "studio/slide-deck/deformed-flat-persona.md": {
+      "title": "변형 플랫 페르소나",
+      "description": "단순하고 평면적인 일러스트 페르소나 스타일"
+    },
+    "studio/slide-deck/detailed-deck-standalone-document.md": {
+      "title": "상세 덱 - 독립 문서",
+      "description": "아키텍처 리뷰 또는 RFC를 위한 기술 프레젠테이션"
+    },
+    "studio/slide-deck/digital-neo-pop.md": {
+      "title": "디지털 / 네오 / 팝",
+      "description": "현대적이고 유연하며 친근한 고정보 밀도 디자인"
+    },
+    "studio/slide-deck/magazine-style.md": {
+      "title": "매거진 스타일",
+      "description": "성숙하면서 귀엽고 세련된 에디토리얼 디자인"
+    },
+    "studio/slide-deck/manga-style.md": {
+      "title": "만화 스타일",
+      "description": "몰입감 있는 스토리텔링, 복잡한 개념의 단순화"
+    },
+    "studio/slide-deck/mincho-handwritten-mix.md": {
+      "title": "명조 + 손글씨 믹스",
+      "description": "혼합 타이포그래피로 연출한 세련된 패션 매거진 느낌"
+    },
+    "studio/slide-deck/modern-newspaper.md": {
+      "title": "모던 신문 스타일",
+      "description": "스위스/바우하우스 감성의 강렬한 비즈니스 프레젠테이션"
+    },
+    "studio/slide-deck/neo-retro-dev.md": {
+      "title": "네오 레트로 개발자 덱",
+      "description": "개발자 중심 프레젠테이션, 스타트업 피치, 엔지니어링 노트"
+    },
+    "studio/slide-deck/pink-street-style.md": {
+      "title": "핑크 스트리트 스타일",
+      "description": "팝하고 활기찬 스트리트 패션 감성"
+    },
+    "studio/slide-deck/presenter-slides-speaking-support.md": {
+      "title": "발표자 슬라이드 - 발표 지원",
+      "description": "팀 지식 공유를 위한 빠른 프레젠테이션"
+    },
+    "studio/slide-deck/royal-blue-red-watercolor.md": {
+      "title": "로열 블루 & 레드 수채화",
+      "description": "예술적인 수채화 감성"
+    },
+    "studio/slide-deck/seminar-minimal-text.md": {
+      "title": "세미나용 (최소 텍스트)",
+      "description": "세미나에 어울리는 세련된 디자인"
+    },
+    "studio/slide-deck/sharp-edged-minimalism.md": {
+      "title": "샤프한 미니멀리즘",
+      "description": "건축적이고 세련된 포트폴리오 또는 피치 덱"
+    },
+    "studio/slide-deck/sports-athletic.md": {
+      "title": "스포츠 애슬레틱 에너지",
+      "description": "에너지 넘치는 프레젠테이션, 세일즈 킥오프, 경쟁 분석"
+    },
+    "studio/slide-deck/studio-mockup-premium.md": {
+      "title": "Studio 목업 프리미엄",
+      "description": "고급 제품 쇼케이스, 앱 데모"
+    },
+    "studio/slide-deck/tech-art-neon.md": {
+      "title": "테크 아트 네온",
+      "description": "전위적이고 지적인 구조형 프레젠테이션"
+    },
+    "studio/slide-deck/technical-rfc-deck.md": {
+      "title": "기술 RFC 덱",
+      "description": "새 데이터 파이프라인 아키텍처를 위한 RFC 준비"
+    },
+    "studio/slide-deck/yellow-black-editorial.md": {
+      "title": "옐로 x 블랙 에디토리얼",
+      "description": "패션, 팝, 시크한 에디토리얼 디자인"
+    },
+    "studio/video/brief-video-quick-explainer.md": {
+      "title": "짧은 영상 - 빠른 설명",
+      "description": "신규 개발자 온보딩을 위한 개념 빠른 소개"
+    },
+    "studio/video/explainer-video-comprehensive.md": {
+      "title": "설명 영상 - 종합형",
+      "description": "POC 전 도구 평가를 위한 종합 설명 영상"
+    },
+    "studio/video/synthesis-to-video-overview.md": {
+      "title": "종합 노트를 영상 개요로",
+      "description": "저장된 종합 노트에서 영상 개요 생성"
+    },
+    "studio/video/video-architecture-pipeline.md": {
+      "title": "영상 개요 — 아키텍처/파이프라인",
+      "description": "데이터 아키텍처, ETL/ELT 파이프라인, 데이터 흐름 시각화"
+    },
+    "studio/video/video-documentation-technique.md": {
+      "title": "영상 개요 — 기술 문서",
+      "description": "API 문서, 기술 사양, 레퍼런스 가이드"
+    },
+    "studio/video/video-innovation-produit.md": {
+      "title": "영상 개요 — 혁신/제품",
+      "description": "제품 프레젠테이션, 데모, 혁신 피치"
+    },
+    "studio/video/video-onboarding-technique.md": {
+      "title": "영상 개요 — 기술 온보딩",
+      "description": "교육, 튜토리얼, 단계별 가이드"
+    },
+    "studio/video/video-stakeholders-executive.md": {
+      "title": "영상 개요 — 이해관계자/임원",
+      "description": "의사결정자를 위한 프레젠테이션, 임원 요약, 보고"
+    },
+    "studio/video/video-vulgarisation-concepts.md": {
+      "title": "영상 개요 — 쉬운 개념 설명",
+      "description": "복잡한 개념을 이해하기 쉽게 설명"
+    },
+    "troubleshooting/pipeline-debugger.md": {
+      "title": "파이프라인 디버거",
+      "description": "오류 로그 + 코드 + 관련 문서를 업로드해 체계적으로 디버깅"
+    },
+    "troubleshooting/source-based-gap-analysis-engine.md": {
+      "title": "소스 기반 갭 분석 엔진",
+      "description": "코드와 소스 모범 사례를 비교해 파이프라인 실패 원인 분석"
+    },
+    "troubleshooting/source-comparison-implementation-guide.md": {
+      "title": "소스 비교 구현 가이드",
+      "description": "DLT 파이프라인 버그 → 공식 문서 vs Stack Overflow 게시글 vs GitHub 이슈의 해결책 비교"
+    },
+    "visual-styles/black-orange-creative.md": {
+      "title": "블랙 x 오렌지 크리에이티브",
+      "description": "크리에이티브 에이전시 포트폴리오 또는 피치"
+    },
+    "visual-styles/classic-pop-sculpture.md": {
+      "title": "클래식 / 팝 (조각 x 베이퍼웨이브)",
+      "description": "고전 예술과 현대 팝을 대담하고 유머러스하며 초현실적으로 리믹스"
+    },
+    "visual-styles/deformed-flat-persona.md": {
+      "title": "디포메이션 플랫 페르소나",
+      "description": "단순하고 평면적인 일러스트 페르소나 스타일"
+    },
+    "visual-styles/digital-neo-pop.md": {
+      "title": "디지털 / 네오 / 팝",
+      "description": "모던하고 유연하며 친근한 고정보밀도 디자인"
+    },
+    "visual-styles/magazine-style.md": {
+      "title": "매거진 스타일",
+      "description": "성숙하면서 귀여운 세련된 에디토리얼 디자인"
+    },
+    "visual-styles/mincho-handwritten-mix.md": {
+      "title": "명조 + 손글씨 믹스",
+      "description": "혼합 타이포그래피로 살린 세련된 패션 매거진 무드"
+    },
+    "visual-styles/pink-street-style.md": {
+      "title": "핑크 스트리트 스타일",
+      "description": "팝하고 활기찬 스트리트 패션 감성"
+    },
+    "visual-styles/royal-blue-red-watercolor.md": {
+      "title": "로열 블루 & 레드 수채화",
+      "description": "예술적인 수채화 감성"
+    },
+    "visual-styles/seminar-minimal-text.md": {
+      "title": "세미나용 (최소 텍스트)",
+      "description": "세미나에 어울리는 세련된 디자인"
+    },
+    "visual-styles/yellow-black-editorial.md": {
+      "title": "옐로 x 블랙 에디토리얼",
+      "description": "패션, 팝, 시크한 에디토리얼 디자인"
+    }
+  }
+}
