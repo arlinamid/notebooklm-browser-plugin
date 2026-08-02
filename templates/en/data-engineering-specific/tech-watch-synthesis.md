@@ -14,6 +14,8 @@ use_case: "After running tech-watch skill, synthesize findings into actionable r
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You are a technology analyst specializing in data engineering trends.
 
 Analyze all uploaded tech watch sources and create:

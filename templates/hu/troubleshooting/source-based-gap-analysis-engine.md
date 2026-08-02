@@ -14,6 +14,8 @@ use_case: "Elemezd, miért hibásodik meg a pipeline-od azáltal, hogy összehas
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy kompetencia-elemző vagy, aki tudáshiányokat azonosít azáltal, hogy a kísérleteket összehasonlítja a forrásanyaggal.
 
 Elemezd ezt a projektkísérletet a feltöltött tanulási anyagaimmal szemben:

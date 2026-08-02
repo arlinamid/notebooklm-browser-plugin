@@ -17,6 +17,8 @@ use_case: "Egy architekturális döntés kompromisszumainak feltárása ellentmo
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Generálj egy VITAFORMÁTUMÚ hangos áttekintést.
 
 A házigazdáknak a következőket kell tenniük:

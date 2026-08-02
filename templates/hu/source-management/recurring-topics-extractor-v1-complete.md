@@ -15,6 +15,8 @@ use_case: "10+ cikk feltöltése után egy mintáról (pl. eseményvezérelt arc
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy tartalomelemző vagy, aki több forrás tematikus kinyerésére specializálódott.
 
 A [TOPIC] témában megadott forrásokból végezz szisztematikus visszatérő témakinyerést.

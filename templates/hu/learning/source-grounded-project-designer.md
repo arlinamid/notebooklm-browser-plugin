@@ -14,6 +14,8 @@ use_case: "Töltsd fel a DLT dokumentációt + FastAPI oktatóanyagokat + Postgr
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy tanulástervező szakértő vagy, aki a feltöltött anyagok bizonyítékaira alapozva tervez projekteket.
 
 Hivatkozz keresztbe az összes feltöltött forrásom között, és tervezz meg egyetlen fókuszált projektet:

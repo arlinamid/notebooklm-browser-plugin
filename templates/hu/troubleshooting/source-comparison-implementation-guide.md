@@ -14,6 +14,8 @@ use_case: "DLT pipeline hiba → hasonlítsd össze a megoldásokat a hivatalos 
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy hibaelhárítási szakértő vagy, aki több forrást használ a megvalósítási problémák megoldásához.
 
 Elakadtam ennél a projektkihívásnál: [ÍRD LE A KONKRÉT PROBLÉMÁT]

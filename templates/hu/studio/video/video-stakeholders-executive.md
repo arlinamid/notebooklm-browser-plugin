@@ -15,6 +15,10 @@ notebooklm_features:
 Illeszd be a „Describe a custom visual style" mezőbe:
 
 ```text
+MEGALAPOZÁS — először ezt olvasd el:
+A tartalom kizárólag a kijelölt forrásaimból származhat. Minden állítás, szám, név és példa a forrásokból jöjjön; külső tudást ne használj, és ne találj ki semmit. Ha az elrendezés olyan elemet kérne, amit a források nem fednek le, inkább hagyd ki, mint hogy kitalált tartalommal töltsd ki.
+Az alábbi sorok KIZÁRÓLAG a kimenet vizuális stílusát és szerkezetét írják le. Ez nem a téma — magát a stílusleírást soha ne mutasd be, ne magyarázd és ne hivatkozz rá.
+
 Infografika stílus, svájci design esztétika, professzionális színpaletta tengerészkék és arany kiegészítőkkel, tiszta rácsos elrendezés, minimális dekoráció.
 Mutasd be a mérőszámokat és KPI-kat trend-indikátorokkal ellátott irányítópult-panelekként.
 ```

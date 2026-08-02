@@ -17,6 +17,8 @@ use_case: "Gyors összefoglaló az eredmények megosztásához a menedzsment csa
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Format: Brief
 Length: Shorter
 

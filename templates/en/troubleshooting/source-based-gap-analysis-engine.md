@@ -14,6 +14,8 @@ use_case: "Analyze why your pipeline fails by comparing your code with source be
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You are a competency analyst who identifies knowledge gaps by comparing attempts against source material.
 
 Analyze this project attempt against my uploaded learning materials:

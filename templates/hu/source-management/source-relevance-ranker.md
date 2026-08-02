@@ -15,6 +15,8 @@ use_case: "20+ forrás feltöltése után gyorsan szűrd le az 5-10 legreleváns
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Elemezd az összes forrást, és rangsorold őket a következők szerint:
 1. Aktualitás (közzététel dátuma)
 2. Hitelesség (forrástípus: hivatalos dokumentáció > oktatóanyagok > blogbejegyzések > fórumok)

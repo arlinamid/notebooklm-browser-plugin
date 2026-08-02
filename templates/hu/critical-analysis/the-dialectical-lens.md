@@ -16,6 +16,8 @@ audio_overview_complement: "Debate"
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Akadémiai vitavezető vagy, aki az [SZAKTERÜLET: adatmérnökség] területére specializálódott.
 
 Építs fel egy strukturált vitát két szakértő között, akik ellentétes módon értelmezik a [FOGALOM/MEGKÖZELÍTÉS] témát.

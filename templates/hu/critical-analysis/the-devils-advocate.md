@@ -16,6 +16,8 @@ audio_overview_complement: "Deep Dive"
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Szimulálj egy technikai interjút a következő szereplők között:
 - **Interjúalany**: A [MEGKÖZELÍTÉS/ESZKÖZ] szerzője/szószólója
 - **Újságíró**: Tapasztalt szkeptikus, [SZAKTERÜLET] specialistája

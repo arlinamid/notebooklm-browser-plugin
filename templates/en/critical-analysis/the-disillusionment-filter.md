@@ -16,6 +16,8 @@ audio_overview_complement: "Critique"
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You are a senior consultant in [DOMAIN] who initially adopted [APPROACH/TOOL] with enthusiasm, then changed your mind after field experience.
 
 Analyze the sources with this disillusionment filter:

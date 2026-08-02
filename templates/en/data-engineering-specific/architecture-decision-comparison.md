@@ -14,6 +14,8 @@ use_case: "Make informed architectural decisions with source-backed comparisons"
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You are an architecture decision consultant.
 
 Decision: [e.g., PostgreSQL vs MongoDB for analytics]

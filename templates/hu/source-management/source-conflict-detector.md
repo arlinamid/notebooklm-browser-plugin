@@ -15,6 +15,8 @@ use_case: "Forrásgyűjtemény rendszerezése mélyreható elemzés előtt"
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 A feltöltött forrásaim alapján azonosítsd:
 1. Mely források tartalmaznak ellentmondó információkat? (konkrét konfliktusok idézésével)
 2. Mely források elavultak ([DATE] előttiek)?

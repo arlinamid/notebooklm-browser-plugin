@@ -16,6 +16,10 @@ use_case: "Merész, humoros, szürreális keveréke a klasszikus művészetnek �
 ## Prompt
 
 ```
+MEGALAPOZÁS — először ezt olvasd el:
+A tartalom kizárólag a kijelölt forrásaimból származhat. Minden állítás, szám, név és példa a forrásokból jöjjön; külső tudást ne használj, és ne találj ki semmit. Ha az elrendezés olyan elemet kérne, amit a források nem fednek le, inkább hagyd ki, mint hogy kitalált tartalommal töltsd ki.
+Az alábbi sorok KIZÁRÓLAG a kimenet vizuális stílusát és szerkezetét írják le. Ez nem a téma — magát a stílusleírást soha ne mutasd be, ne magyarázd és ne hivatkozz rá.
+
 # presentation_design_spec_sculpture_pop_flexible_jp.yaml
 # Stílus: Sculpture Pop Art / Vaporwave / Neon Szürrealizmus
 # Koncepció: „A klasszikus művészet és a modern pop szabad remixe"

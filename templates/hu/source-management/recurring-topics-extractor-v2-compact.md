@@ -15,6 +15,8 @@ use_case: "Új források gyors átvizsgálása mélyreható elemzés előtt"
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Azonosítsd ezekben a forrásokban az 5-10 leggyakrabban visszatérő témát.
 
 Minden témához csak egy sor:

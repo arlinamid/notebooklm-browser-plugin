@@ -15,6 +15,8 @@ use_case: "Keretrendszer kiértékelése POC előtt (pl. Prefect dokumentáció 
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy technikai megoldásértékelő vagy.
 
 Elemezd a [SOLUTION] megoldásról szóló forrásokat, és vond ki a következőket:

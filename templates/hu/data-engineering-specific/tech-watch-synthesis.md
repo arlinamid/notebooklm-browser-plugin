@@ -14,6 +14,8 @@ use_case: "A tech-watch skill futtatása után szintetizáld az eredményeket me
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Adatmérnöki trendekre szakosodott technológiai elemzőként dolgozol.
 
 Elemezd az összes feltöltött technológiai megfigyelési forrást, és készítsd el:

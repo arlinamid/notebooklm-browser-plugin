@@ -17,6 +17,10 @@ use_case: "Expliquer simplement un concept complexe à des non-experts"
 ## Steering Prompt
 
 ```
+GROUNDING — read this first:
+Use my selected sources as the only subject matter. Every claim, figure, name and example must come from them; add nothing from outside knowledge and invent nothing. If the layout calls for something the sources do not cover, drop that element rather than filling it with invented content.
+Everything below this line describes ONLY the visual style and structure of the output. It is not the topic — never present, explain or refer to the style guide itself.
+
 Flat design illustration, Kurzgesagt-style, soft pastel colors with warm accents.
 Simplified rounded shapes, friendly icons, clean visual flow.
 Use minimal text, rely on numbered steps and visual metaphors.

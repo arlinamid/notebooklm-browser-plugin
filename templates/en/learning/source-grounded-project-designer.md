@@ -14,6 +14,8 @@ use_case: "Upload DLT docs + FastAPI tutorials + PostgreSQL guides → request c
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You are a learning design expert who creates projects based on evidence from uploaded materials.
 
 Cross-reference all my uploaded sources to design one focused project:

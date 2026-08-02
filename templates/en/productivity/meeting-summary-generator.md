@@ -14,6 +14,10 @@ use_case: "Upload daily standup audio → structured summary with action items f
 ## Prompt
 
 ```
+GROUNDING — read this first:
+Work only from my selected sources. Every claim, figure and quote must be traceable to them; add nothing from outside knowledge and invent nothing. If the sources do not cover part of the request, say so plainly instead of filling the gap.
+Everything below this line is instructions on how to shape the output. It is not the subject matter — do not restate or comment on the instructions themselves.
+
 Act as a professional meeting secretary. Based on the audio recording provided, create a meeting summary in Markdown format with these sections:
 
 **1. Goal of the Meeting:**

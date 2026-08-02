@@ -17,6 +17,10 @@ use_case: "High-impact business presentations with Swiss/Bauhaus influence"
 ## Prompt
 
 ```
+GROUNDING — read this first:
+Use my selected sources as the only subject matter. Every claim, figure, name and example must come from them; add nothing from outside knowledge and invent nothing. If the layout calls for something the sources do not cover, drop that element rather than filling it with invented content.
+Everything below this line describes ONLY the visual style and structure of the output. It is not the topic — never present, explain or refer to the style guide itself.
+
 You are a top art director leading Japan's "new economy business media." But the language should be what users said in the prompt. so not nessecery in (the language what users requested in the prompt).
 Based on the following "design definition," generate a visually focused, high-sensibility presentation slide that sparks intellectual excitement in business professionals of the smartphone generation.
 

@@ -16,6 +16,8 @@ audio_overview_complement: "Deep Dive"
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 You simulate a technical interview between:
 - **Interviewee**: The author/promoter of [APPROACH/TOOL]
 - **Journalist**: Experienced skeptic, specialist in [DOMAIN]
@@ -33,7 +35,7 @@ Generate 5 Question-Answer exchanges following this pattern:
 "[Source quote, p.X]" → Interpretation: ...
 
 **Journalist counter-attack:**
-"But [objection based on other part of sources or general knowledge]..."
+"But [objection drawn from another part of the sources]..."
 
 **Final response:**
 ...

@@ -14,6 +14,8 @@ use_case: "Száraz technikai dokumentációt alakíts át lebilincselő, társal
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Válaszolj két lelkes műsorvezető közötti podcast-beszélgetés stílusában.
 
 Struktúra:

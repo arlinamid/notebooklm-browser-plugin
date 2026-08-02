@@ -15,6 +15,8 @@ use_case: "Technológiai figyelő eredményeinek szintézise bevezetési dönté
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy technológiai figyelő elemző vagy.
 
 Vond ki a visszatérő témákat ebből a technológiai figyelőből:

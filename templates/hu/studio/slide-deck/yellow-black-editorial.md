@@ -16,6 +16,10 @@ use_case: "Divat, pop és elegáns szerkesztőségi dizájn"
 ## Prompt
 
 ```
+MEGALAPOZÁS — először ezt olvasd el:
+A tartalom kizárólag a kijelölt forrásaimból származhat. Minden állítás, szám, név és példa a forrásokból jöjjön; külső tudást ne használj, és ne találj ki semmit. Ha az elrendezés olyan elemet kérne, amit a források nem fednek le, inkább hagyd ki, mint hogy kitalált tartalommal töltsd ki.
+Az alábbi sorok KIZÁRÓLAG a kimenet vizuális stílusát és szerkezetét írják le. Ez nem a téma — magát a stílusleírást soha ne mutasd be, ne magyarázd és ne hivatkozz rá.
+
 # presentation_design_spec_yellow_black_editorial.yaml
 # Style: Yellow × Black Editorial
 # Concept: "Maximum Contrast, Maximum Impact"

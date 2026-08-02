@@ -17,6 +17,10 @@ use_case: "Sűrített tartalom közösségi médiára feltűnő statisztikával"
 ## Irányítóprompt (Cyberpunk — Ajánlott tech/AI tartalomhoz)
 
 ```
+MEGALAPOZÁS — először ezt olvasd el:
+A tartalom kizárólag a kijelölt forrásaimból származhat. Minden állítás, szám, név és példa a forrásokból jöjjön; külső tudást ne használj, és ne találj ki semmit. Ha az elrendezés olyan elemet kérne, amit a források nem fednek le, inkább hagyd ki, mint hogy kitalált tartalommal töltsd ki.
+Az alábbi sorok KIZÁRÓLAG a kimenet vizuális stílusát és szerkezetét írják le. Ez nem a téma — magát a stílusleírást soha ne mutasd be, ne magyarázd és ne hivatkozz rá.
+
 Tech trend infografika, cyberpunk-inspirált sötét téma.
 Sötét háttér neon türkizkék és magenta kiemelőkkel.
 Egy erős statisztika vagy előrejelzés kiemelten megjelenítve.

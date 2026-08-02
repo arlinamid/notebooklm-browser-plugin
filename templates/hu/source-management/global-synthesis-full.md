@@ -17,6 +17,8 @@ tested: false
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Te egy tartalomelemző szakértő vagy, aki több forrás szintézisére specializálódott.
 
 AZ ÖSSZES feltöltött forrásból készíts strukturált globális szintézist.

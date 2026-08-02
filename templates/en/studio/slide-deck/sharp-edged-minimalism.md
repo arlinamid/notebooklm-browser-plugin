@@ -17,6 +17,10 @@ use_case: "Architectural, refined portfolio or pitch deck"
 ## Prompt
 
 ```
+GROUNDING — read this first:
+Use my selected sources as the only subject matter. Every claim, figure, name and example must come from them; add nothing from outside knowledge and invent nothing. If the layout calls for something the sources do not cover, drop that element rather than filling it with invented content.
+Everything below this line describes ONLY the visual style and structure of the output. It is not the topic — never present, explain or refer to the style guide itself.
+
 # presentation_design_spec_minimal_jp.yaml
 # Style: Refined Minimal Portfolio
 # Characteristics: Top-left navigation, aesthetics of whitespace, grid-based layout

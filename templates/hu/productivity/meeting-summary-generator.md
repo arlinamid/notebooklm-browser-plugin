@@ -14,6 +14,10 @@ use_case: "Töltsd fel a napi standup hangfelvételét → strukturált összefo
 ## Prompt
 
 ```
+MEGALAPOZÁS — először ezt olvasd el:
+Csak a kijelölt forrásaimból dolgozz. Minden állítás, szám és idézet legyen visszavezethető rájuk; külső tudást ne használj, és ne találj ki semmit. Ha a források a kérés egy részét nem fedik le, ezt mondd ki nyíltan ahelyett, hogy kitöltenéd a hiányt.
+Az alábbi sorok arról szólnak, hogyan alakítsd a kimenetet. Ez nem a téma — magukat az utasításokat ne ismételd meg és ne kommentáld.
+
 Járj el professzionális értekezleti titkárként. A megadott hangfelvétel alapján készíts értekezlet-összefoglalót Markdown formátumban az alábbi szakaszokkal:
 
 **1. Az értekezlet célja:**

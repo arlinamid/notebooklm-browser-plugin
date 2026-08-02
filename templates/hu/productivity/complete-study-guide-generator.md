@@ -14,6 +14,12 @@ use_case: "Töltsd fel az AWS Lambda + API Gateway + DynamoDB dokumentációkat 
 ## Prompt
 
 ```
+MEGALAPOZÁS — először ezt olvasd el:
+Csak a kijelölt forrásaimból dolgozz. Minden állítás, szám és idézet legyen visszavezethető rájuk; külső tudást ne használj, és ne találj ki semmit. Ha a források a kérés egy részét nem fedik le, ezt mondd ki nyíltan ahelyett, hogy kitöltenéd a hiányt.
+Az alábbi sorok arról szólnak, hogyan alakítsd a kimenetet. Ez nem a téma — magukat az utasításokat ne ismételd meg és ne kommentáld.
+
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 Járj el elkötelezett tutorként. A [TOPIC] témában biztosított összes tanulmányi anyag alapján készíts egy „Teljes Tanulmányi Útmutató Csomagot", amely tartalmazza:
 
 **1. Az alapfogalmak összefoglalása:**

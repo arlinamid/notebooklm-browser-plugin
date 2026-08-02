@@ -16,6 +16,8 @@ use_case: "Érett-aranyos, kifinomult szerkesztőségi dizájn"
 ## Prompt
 
 ```
+A [SZÖGLETES ZÁRÓJELBEN] álló részek általam kitöltendő helyek. Ha valamelyik kitöltetlen maradt, következtesd ki az értékét a forrásokból és folytasd — ne kérdezz vissza, és a zárójeles szöveget soha ne írd bele a válaszba.
+
 # Utasítások
 Kérlek, rendezd össze a [Forrásadatokat] egy [érett-aranyos, kifinomult magazinstílusú szerkesztőségi dizájnban].
 

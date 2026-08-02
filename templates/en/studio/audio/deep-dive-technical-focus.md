@@ -17,6 +17,8 @@ use_case: "Deep dive technique sur un pattern architectural avec comparaison de 
 ## Prompt
 
 ```
+Text in [SQUARE BRACKETS] marks a slot for me to fill in. If any slot is still unfilled when you run this, infer a sensible value from the sources and carry on — never ask me to fill it in, and never repeat the bracketed text in your output.
+
 Format: Deep Dive
 Length: Longer
 
