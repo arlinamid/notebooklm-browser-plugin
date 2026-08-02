@@ -1,16 +1,17 @@
 # Chrome Web Store listing copy
 
 Plain text — the Store does not render Markdown. Copy the blocks below as-is.
+Current for **v1.4.0**.
 
 ---
 
 ## Short description (132 char limit)
 
 ```
-229 one-click prompts for NotebookLM — better podcasts, slide decks, infographics and study guides.
+229 one-click prompts for NotebookLM, in 12 languages — better podcasts, slide decks and study guides.
 ```
 
-*(98 characters)*
+*(101 characters)*
 
 ---
 
@@ -22,6 +23,13 @@ You fed NotebookLM 40 sources. It handed back a summary that sounds like every o
 The sources weren't the problem. The prompt was.
 
 Prompt Architect puts 229 ready-made prompts one click away — right inside NotebookLM's Studio panels and above the chat box. Pick one. It fills the box. Hit Generate.
+
+
+🌍 NOW IN 12 LANGUAGES
+
+English, Hungarian, Spanish, Portuguese, French, German, Italian, Japanese, Korean, Chinese, Hindi and Russian.
+
+Not just the menus — the prompts themselves. Titles, descriptions and the full prompt text you actually read and edit. Because a prompt you can't read is a prompt you can't adapt.
 
 
 🎨 SLIDE DECKS PEOPLE ACTUALLY LOOK AT
@@ -60,19 +68,12 @@ It's the difference between a prompt that reads well and a prompt that answers t
 
 Studio generates in one shot — no back and forth. So a leftover [TOPIC] in your prompt goes straight to the model, and nobody warns you.
 
-Now a small form pops up listing exactly what's missing. Fill it in, hit Generate, done.
+Now a small form pops up listing exactly what's missing. Fill it in, hit Generate, done. It works in every language — the placeholders are translated too.
 
 
 💾 YOUR PROMPTS, EVERYWHERE
 
 Found a prompt that works? Save it from any NotebookLM text box with one click. It shows up in the dropdowns next to the built-ins — and follows you to every Chrome you're signed into.
-
-
-🌍 ENGLISH AND HUNGARIAN
-
-Both the interface and all 229 templates. Properly translated, not run through a machine. Switch with one click.
-
-Light and dark theme, automatically.
 
 
 🔒 FREE, AND IT STAYS ON YOUR MACHINE
@@ -91,7 +92,12 @@ GETTING STARTED
 
 One note: NotebookLM only shows Studio panels in notebooks you own — shared and featured notebooks don't have them, so the Studio dropdowns won't appear there. The chat picker works everywhere.
 
-Works on notebook.google.com and the old notebooklm.google.com address.
+
+⚠️ IF IT STOPPED WORKING FOR YOU IN JULY
+
+Google renamed NotebookLM to Gemini Notebook and moved it to notebook.google.com. Extensions pointing at the old address went silent overnight — including this one.
+
+Fixed. Both addresses work again. If you tried it during that window and gave up, update and try once more.
 
 
 Prompt Architect is an independent extension. It is not affiliated with, associated with, or endorsed by Google LLC. NotebookLM and Gemini are trademarks of Google LLC.
@@ -101,28 +107,22 @@ Prompt Architect is an independent extension. It is not affiliated with, associa
 
 ## Notes for the listing owner
 
-### Facts corrected from the previous version
+### What changed for v1.4.0
 
-| Old | Correct |
+- **12 languages is the new headline**, placed second — right after the hook, before the visual formats. It is the single biggest reason a new user in Spain, Brazil or Japan would install this over an English-only competitor.
+- Added the **July migration notice** near the end. It is aimed squarely at the people who installed, hit the dead version, and left a one-star review. Naming the cause and saying "try once more" recovers more of them than silence.
+- The placeholder section now mentions that slots are translated too.
+
+### Facts kept current
+
+| | |
 |---|---|
-| "216 templates" / "200+" | **229** |
-| "108 English and 108 Hungarian" | **114 EN + 115 HU** |
-| "Open notebooklm.google.com" | **notebook.google.com** since July 2026 |
-| "saved in your Chrome **local** storage" | `chrome.storage.**sync**` — prompts follow the user across devices |
-| "Fill in any [BRACKETED] variables" | The extension fills them now |
-
-The storage one mattered most: cross-device sync has shipped since v1.1.0 and the old copy told people the opposite.
-
-### What this version does differently
-
-**Leads with the reader's problem, not the mechanism.** The old opening explained what the extension *is*. This one opens on the moment of disappointment every NotebookLM user has had, then offers the fix.
-
-**Sells the visual formats first.** 62 slide styles and 25 infographic styles are the most immediately appealing thing here, and they were buried in a bullet list. Naming them — manga, brutalist editorial, neo-noir — does more than "presentation slides, infographics, data tables".
-
-**Turns the grounding work into a benefit.** Nobody buys "source-grounded prompt preambles". They do recognise "a beautiful deck about the style guide instead of your research."
-
-**Keeps the awkward truth, placed low.** Studio panels only existing in your own notebooks is a predictable source of 1-star "doesn't work" reviews. Stating it plainly near the end costs a little and prevents that.
+| Templates | 229 (114 EN + 115 HU bodies; other languages use translated bodies) |
+| Languages | 12 |
+| Domain | `notebook.google.com` (old one still supported) |
+| Storage | `chrome.storage.sync` — follows the user across devices |
 
 ### Deliberately avoided
 
-*Unlock, supercharge, revolutionise, game-changer, seamlessly, perfectly, powerful, effortlessly.* Marketing copy earns attention with specifics, not intensifiers — the previous draft's *perfectly* ×4 and *seamlessly* ×2 were the clearest tell that no one had actually written it.
+*Unlock, supercharge, revolutionise, game-changer, seamlessly, perfectly, powerful, effortlessly.*
+Marketing copy earns attention with specifics, not intensifiers.
