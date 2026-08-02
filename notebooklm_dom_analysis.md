@@ -227,6 +227,38 @@ would fall through to "whatever studio card was clicked last". It must be matche
 
 ---
 
+## Localization — what is translated and what is not
+
+The interface language follows the user's Google account, so **any selector built on visible text or
+`aria-label` will break for most of the world**. Verified on the live site in German and Japanese,
+2026-08-02:
+
+| Signal | Translated? | Example |
+|---|---|---|
+| `aria-label` on studio cards | ❌ **yes, translated** | EN `Slide Deck` → DE `Präsentation` → JA `スライド資料` |
+| `aria-label` on edit buttons | ❌ **yes** | EN `Customize Slide Deck` → DE `Präsentation anpassen` |
+| `aria-label` on prompt textareas | ❌ **yes** | DE `Beschreiben Sie die Präsentation, die Sie erstellen möchten` |
+| **`mat-icon` ligature text** | ✅ **never** | `tablet`, `audio_magic_eraser`, `stacked_bar_chart`, `tune` — identical in every locale |
+| CSS classes | ✅ never | `.create-artifact-button-container`, `.edit-button`, `.custom-input-textarea` |
+| Custom element names | ✅ never | `configurable-form-dialog`, `configure-notebook-settings` |
+| `formcontrolname` | ✅ never | `customizeButtonSelected`, `customizeCustomPrompt` |
+
+**Rule: identify things by `mat-icon` text, CSS class, tag name or `formcontrolname`.** Treat any
+English `aria-label` match as a last-resort fallback only, never as the primary path.
+
+Verified working end to end in `de` and `ja`: dropdown injection into all eight Studio formats and
+Configure Chat, plus the popup's Apply routing. The console log shows the mechanism — the icon
+resolves the format while the localized label is ignored:
+
+```
+[PA] User opened format: slide-deck (icon: tablet / label: präsentation)
+[PA] User opened format: slide-deck (icon: tablet / label: スライド資料)
+```
+
+One piece is still English/Hungarian only: the keyword sniffing at the end of `detectDialogFormat()`.
+It is the third fallback, reachable only if both the icon lookup and the click tracker fail — i.e.
+if Google renames an icon. Worth remembering as the thing to fix first if that ever happens.
+
 ## Development notes
 
 - Still Angular Material — `mat-*` tags and classes remain the most stable anchors, but
