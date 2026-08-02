@@ -1,7 +1,7 @@
 # Chrome Web Store listing copy
 
 Plain text — the Store does not render Markdown. Copy the blocks below as-is.
-Current for **v1.4.0**.
+Current for **v1.4.3**.
 
 ---
 
