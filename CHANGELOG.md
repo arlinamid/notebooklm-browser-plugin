@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.1] — 2026-08-02
+
+### Fixed
+- ⛓ **Chains never got past their first step.** NotebookLM unmounts the composer's submit button
+  while an answer streams and restores it about a second *after* the answer's action toolbar
+  appears — and that toolbar is the signal the runner uses to decide the answer is complete. The
+  runner asked for the button once inside that gap, found nothing, and stopped with "chat input not
+  found". Step 1 always worked because the button is present at the start; step 2 always failed.
+  It now waits for the composer to come back rather than assuming it already has.
+- 🌐 **Header tooltips were hardcoded English** in every language — the language picker, the About
+  button and the New Prompt button.
+
 ## [1.6.0] — 2026-08-02
 
 ### Changed
@@ -26,15 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   answer "where else does my search hit?" — empty tabs dim before you click them.
 
 ### Fixed
-- ⛓ **Chains died at step 2, every time.** NotebookLM unmounts the submit button while an answer
-  streams and restores it about a second *after* the answer's action toolbar appears — which is the
-  signal the runner waits on. The runner queried for the button once in that gap and gave up with
-  "chat input not found", so no chain ever got past its first prompt. It now waits for the composer
-  to come back instead of assuming it already has.
 - 🌐 **"Clear filters" was never translated.** The string existed in all twelve languages; it was
   simply never applied to the button.
-- 🌐 **Header tooltips were hardcoded English** on every language — the language picker, the About
-  button and the New Prompt button.
 - On the Chains tab, the empty state offered "Clear filters", which filters nothing there. It now
   offers to create the first chain.
 - The chain count on the rail did not refresh after saving or deleting a chain.

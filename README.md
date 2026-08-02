@@ -7,7 +7,7 @@
 **A browser extension that brings 229 curated prompt templates in 12 languages directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.1-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
 [![12 languages](https://img.shields.io/badge/Languages-12-orange.svg)](#-internationalization)
@@ -250,6 +250,10 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.6.1] — 2026-08-02
+- ⛓ **Chains never got past their first step** — the runner asked for the composer's submit button in the one-second window where NotebookLM had not yet restored it
+- 🌐 Language picker, About and New Prompt tooltips were hardcoded English in every language
 
 ### [v1.6.0] — 2026-08-02
 - 📐 **Collapsible format rail** — icon column that opens on hover/focus or pins open; replaces the cramped horizontal tab strip

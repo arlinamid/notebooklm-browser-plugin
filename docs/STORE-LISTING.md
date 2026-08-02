@@ -1,7 +1,7 @@
 # Chrome Web Store listing copy
 
 Plain text — the Store does not render Markdown. Copy the blocks below as-is.
-Current for **v1.4.3**.
+Current for **v1.6.1**.
 
 ---
 
@@ -51,6 +51,15 @@ Turn your sources into a real debate between two hosts. Or a critique that pokes
 Plus 68 chat prompts for the everyday work — synthesis across sources, conflict detection, study guides, gap analysis.
 
 And study aids: flashcards, quizzes, reports, data tables.
+
+
+⛓ ONE QUESTION LEADS TO THE NEXT
+
+Good research is rarely one prompt. You summarise, then you dig into what the summary raised, then you ask what it left out.
+
+Build that once as a chain and run it with a click. Each step goes into the same chat, so every step can build on the answers before it. Steps can be templates from the library or one-offs you type yourself.
+
+The blanks are filled in once, before it starts — then it runs unattended while you read.
 
 
 ✅ ANSWERS FROM YOUR SOURCES — NOT FROM THE PROMPT
@@ -107,6 +116,17 @@ Prompt Architect is an independent extension. It is not affiliated with, associa
 
 ## Notes for the listing owner
 
+### What changed for v1.6.1
+
+- **Chains get their own section**, placed just before the grounding pitch. It is the one thing here
+  that NotebookLM cannot do at all, and it came directly out of a store review asking to "select
+  prompts in sequence" — so it belongs above the fold rather than in a feature list.
+- The section leads with the *reason* a chain exists (research is iterative) rather than the
+  mechanism, because the mechanism only reads as valuable once the need is obvious.
+- No screenshot copy is included here. The popup was rebuilt in 1.6.0 — collapsible format rail,
+  two-column cards — so **every existing store screenshot is now out of date** and needs retaking
+  before this listing goes up.
+
 ### What changed for v1.4.0
 
 - **12 languages is the new headline**, placed second — right after the hook, before the visual formats. It is the single biggest reason a new user in Spain, Brazil or Japan would install this over an English-only competitor.
@@ -120,7 +140,8 @@ Prompt Architect is an independent extension. It is not affiliated with, associa
 | Templates | 229 (114 EN + 115 HU bodies; other languages use translated bodies) |
 | Languages | 12 |
 | Domain | `notebook.google.com` (old one still supported) |
-| Storage | `chrome.storage.sync` — follows the user across devices |
+| Storage | `chrome.storage.sync`, sharded across keys — follows the user across devices |
+| Chains | Chat only; Studio generates once from a single brief |
 
 ### Deliberately avoided
 
