@@ -84,7 +84,9 @@
       "note": "Las cadenas se ejecutan en el chat de NotebookLM. Studio genera una vez a partir de una única instrucción, así que no hay nada en lo que basar un paso posterior."
     },
     "expandMenu": "Expandir menú",
-    "collapseMenu": "Contraer menú"
+    "collapseMenu": "Contraer menú",
+    "languageLabel": "Idioma de la interfaz",
+    "about": "Acerca de"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

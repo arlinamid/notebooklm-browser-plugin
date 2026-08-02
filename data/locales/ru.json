@@ -84,7 +84,9 @@
       "note": "Цепочки выполняются в чате NotebookLM. Studio генерирует один раз по одному заданию, поэтому последующему шагу не на что опираться."
     },
     "expandMenu": "Развернуть меню",
-    "collapseMenu": "Свернуть меню"
+    "collapseMenu": "Свернуть меню",
+    "languageLabel": "Язык интерфейса",
+    "about": "О расширении"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

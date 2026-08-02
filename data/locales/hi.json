@@ -84,7 +84,9 @@
       "note": "श्रृंखलाएं NotebookLM चैट में चलती हैं। Studio एक ही ब्रीफ से एक बार जनरेट करता है, इसलिए बाद के चरण के लिए आगे बनाने को कुछ नहीं होता।"
     },
     "expandMenu": "मेन्यू खोलें",
-    "collapseMenu": "मेन्यू छोटा करें"
+    "collapseMenu": "मेन्यू छोटा करें",
+    "languageLabel": "इंटरफ़ेस की भाषा",
+    "about": "परिचय"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

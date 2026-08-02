@@ -84,7 +84,9 @@
       "note": "链在 NotebookLM 聊天中运行。Studio 只会根据一份简报生成一次，因此没有后续步骤可继续构建。"
     },
     "expandMenu": "展开菜单",
-    "collapseMenu": "收起菜单"
+    "collapseMenu": "收起菜单",
+    "languageLabel": "界面语言",
+    "about": "关于"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

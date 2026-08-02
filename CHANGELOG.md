@@ -25,6 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Live **per-format result counts** on the rail. Every filter except format is applied, so the numbers
   answer "where else does my search hit?" — empty tabs dim before you click them.
 
+### Fixed
+- ⛓ **Chains died at step 2, every time.** NotebookLM unmounts the submit button while an answer
+  streams and restores it about a second *after* the answer's action toolbar appears — which is the
+  signal the runner waits on. The runner queried for the button once in that gap and gave up with
+  "chat input not found", so no chain ever got past its first prompt. It now waits for the composer
+  to come back instead of assuming it already has.
+- 🌐 **"Clear filters" was never translated.** The string existed in all twelve languages; it was
+  simply never applied to the button.
+- 🌐 **Header tooltips were hardcoded English** on every language — the language picker, the About
+  button and the New Prompt button.
+- On the Chains tab, the empty state offered "Clear filters", which filters nothing there. It now
+  offers to create the first chain.
+- The chain count on the rail did not refresh after saving or deleting a chain.
+- Format tabs accumulated a duplicate click handler on every language change.
+
 ## [1.5.0] — 2026-08-02
 
 ### Added

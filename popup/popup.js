@@ -193,6 +193,14 @@ function initUI() {
         };
     });
 
+    // Header control labels. These were hardcoded English, so the globe, the
+    // info button and the + read as untranslated on every non-English UI.
+    const langWrap = document.querySelector('.pa-lang-wrap');
+    if (langWrap) langWrap.title = t.languageLabel;
+    if (langSelect) langSelect.setAttribute('aria-label', t.languageLabel);
+    document.getElementById('btnAbout').title = t.about;
+    document.getElementById('btnNewPrompt').title = t.newPrompt;
+
     // Rail toggle. Hover and focus already open the rail; this pins it so the
     // labels stay up for users who do not want to hover every time.
     const rail = document.getElementById('formatTabs');

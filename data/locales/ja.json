@@ -84,7 +84,9 @@
       "note": "チェーンはNotebookLMチャットで実行されます。Studioは1つのブリーフから一度だけ生成するため、後続ステップが積み上げる内容はありません。"
     },
     "expandMenu": "メニューを展開",
-    "collapseMenu": "メニューを折りたたむ"
+    "collapseMenu": "メニューを折りたたむ",
+    "languageLabel": "表示言語",
+    "about": "このツールについて"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

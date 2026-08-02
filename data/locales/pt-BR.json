@@ -84,7 +84,9 @@
       "note": "As sequências rodam no chat do NotebookLM. O Studio gera uma vez a partir de um único resumo, então não há nada para uma etapa posterior aproveitar."
     },
     "expandMenu": "Expandir menu",
-    "collapseMenu": "Recolher menu"
+    "collapseMenu": "Recolher menu",
+    "languageLabel": "Idioma da interface",
+    "about": "Sobre"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

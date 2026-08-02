@@ -84,7 +84,9 @@
       "note": "체인은 NotebookLM 채팅에서 실행됩니다. Studio는 하나의 브리프로 한 번만 생성하므로 이후 단계가 이어받을 내용이 없습니다."
     },
     "expandMenu": "메뉴 펼치기",
-    "collapseMenu": "메뉴 접기"
+    "collapseMenu": "메뉴 접기",
+    "languageLabel": "인터페이스 언어",
+    "about": "정보"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

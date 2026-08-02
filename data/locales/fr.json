@@ -84,7 +84,9 @@
       "note": "Les chaînes s’exécutent dans le chat NotebookLM. Studio génère une seule fois à partir d’un brief unique, donc aucune étape suivante ne peut s’appuyer dessus."
     },
     "expandMenu": "Développer le menu",
-    "collapseMenu": "Réduire le menu"
+    "collapseMenu": "Réduire le menu",
+    "languageLabel": "Langue de l'interface",
+    "about": "À propos"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

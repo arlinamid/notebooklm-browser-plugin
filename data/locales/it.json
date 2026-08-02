@@ -84,7 +84,9 @@
       "note": "Le catene vengono eseguite nella chat di NotebookLM. Studio genera una sola volta da un unico brief, quindi non c'è nulla su cui un passaggio successivo possa basarsi."
     },
     "expandMenu": "Espandi menu",
-    "collapseMenu": "Comprimi menu"
+    "collapseMenu": "Comprimi menu",
+    "languageLabel": "Lingua dell'interfaccia",
+    "about": "Informazioni"
   },
   "templates": {
     "advanced-techniques/custom-audio-overview-with-debate.md": {

@@ -85,7 +85,9 @@
       "delete": "Delete"
     },
     "expandMenu": "Expand menu",
-    "collapseMenu": "Collapse menu"
+    "collapseMenu": "Collapse menu",
+    "languageLabel": "Interface language",
+    "about": "About"
   },
   "content": {
     "sectionLabel": "Prompt Template",

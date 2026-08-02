@@ -1435,9 +1435,18 @@ async function runChain(chain, vars) {
             if (chainCancelled) break;
             updateChainProgress(panel, i, chain.steps.length, t);
 
-            const textarea = document.querySelector('textarea.query-box-input');
-            const submit = document.querySelector('button.submit-button');
-            if (!textarea || !submit) throw new Error('chat input not found');
+            // NotebookLM unmounts the submit button while an answer streams and
+            // restores it about a second AFTER the answer's action toolbar shows
+            // up — which is what waitForAnswer keys on. Querying once here caught
+            // that gap and killed every chain at step 2, so wait for the composer
+            // to come back instead of assuming it already has.
+            const composer = await waitFor(() => {
+                const ta = document.querySelector('textarea.query-box-input');
+                const sb = document.querySelector('button.submit-button');
+                return ta && sb ? { ta, sb } : null;
+            }, 15000);
+            if (!composer) throw new Error('chat input not found');
+            const textarea = composer.ta;
 
             const text = applyVars(resolveStep(chain.steps[i]), vars);
             if (!text.trim()) continue;
