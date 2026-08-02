@@ -4,13 +4,13 @@
 
 # Prompt Architect for NotebookLM
 
-**A browser extension that brings 229 curated, multilingual prompt templates directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
+**A browser extension that brings 229 curated prompt templates in 12 languages directly into Google NotebookLM's Studio panels and chat input — without leaving the page.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](CHANGELOG.md)
 [![Chrome](https://img.shields.io/badge/Chrome-Manifest%20V3-4285F4?logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
 [![NotebookLM](https://img.shields.io/badge/Works%20with-NotebookLM-34A853?logo=google&logoColor=white)](https://notebooklm.google.com)
-[![EN + HU](https://img.shields.io/badge/Languages-EN%20%7C%20HU-orange.svg)](#-internationalization)
+[![12 languages](https://img.shields.io/badge/Languages-12-orange.svg)](#-internationalization)
 
 <br>
 
@@ -54,7 +54,7 @@
 | 🎯 | **Studio Integration** | Injects template dropdowns into Audio, Video, Slides, Infographic, Configure Chat, Flashcards, Quiz, Report, and Data Table panels |
 | 💬 | **Chat Templates** | Adds a compact template selector above the NotebookLM chat input |
 | 📚 | **229 Templates** | 114 English + 115 Hungarian prompts across 10+ categories |
-| 🌍 | **Bilingual UI** | Full EN / HU interface with one-click language switching |
+| 🌍 | **12 Languages** | Interface *and* full template library — titles, descriptions and prompt bodies |
 | 🌙 | **Auto Dark/Light Mode** | Completely adapts to OS theme — no manual toggle needed |
 | ✏️ | **Custom Prompts** | Create, edit, and delete your own prompt templates |
 | 📋 | **Copy to Clipboard** | One-click copy of any prompt |
@@ -250,6 +250,12 @@ notebooklm-browser-plugin/
 ---
 
 ## 📦 Releases
+
+### [v1.4.0] — 2026-08-02
+- 🌍 **Ten new languages** — Spanish, Brazilian Portuguese, French, German, Italian, Japanese, Korean, Simplified Chinese, Hindi and Russian, alongside English and Hungarian
+- 📝 **Prompt bodies are translated too**, not just labels — a prompt you cannot read is one you cannot adapt
+- 🈁 Language picker in the popup header, languages shown under their own names
+- 🐛 The injected UI used to crash outright in any language beyond EN/HU
 
 ### [v1.3.1] — 2026-08-02
 - 🎯 **Apply from the popup went to the chat box regardless of format** — an Audio Overview brief or a Configure Chat persona all landed in chat. Apply now opens the panel that matches the prompt and writes into its field.
